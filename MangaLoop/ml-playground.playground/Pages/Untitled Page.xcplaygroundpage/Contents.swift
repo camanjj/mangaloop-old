@@ -1,14 +1,14 @@
 //: Playground - noun: a place where people can play
 
-//import UIKit
 
 import Foundation
-//import libxml2
 import XCPlayground
 import UIKit
 import Alamofire
 import Kanna
-//import Fuzi
+import ObjectMapper
+import AlamofireObjectMapper
+import Unbox
 
 
 XCPlaygroundPage.currentPage.needsIndefiniteExecution = true
@@ -29,8 +29,29 @@ struct MangaPreviewItem {
     var link: String
     var mangaId: String
     var imageLink: String?
+    var chapters: [Chapter]
     
 }
+
+extension Chapter: Unboxable {
+    init(unboxer: Unboxer) {
+        self.title = unboxer.unbox("title")
+        self.link = unboxer.unbox("link")
+        self.language = unboxer.unbox("language")
+        self.group = unboxer.unbox("group")
+        self.updateTime = unboxer.unbox("updateTime")
+    }
+}
+
+extension MangaPreviewItem: Unboxable {
+    init(unboxer: Unboxer) {
+        self.title = unboxer.unbox("title")
+        self.link = unboxer.unbox("link")
+        self.mangaId = unboxer.unbox("mangaId")
+        self.chapters = unboxer.unbox("chapters")
+    }
+}
+
 
 enum MLRouter: URLRequestConvertible {
     
@@ -87,13 +108,20 @@ enum MLRouter: URLRequestConvertible {
 }
 
 // updates
-//var request = Alamofire.request(MLRouter.Get("updates", nil))
-//    .responseJSON { response in
-//
-//        if let json = response.result.value {
-//            print(json)
+var request = Alamofire.request(MLRouter.Get("updates", nil))
+    .responseData({ (response) -> Void in
+        if let data = response.result.value {
+            let mangas: [MangaPreviewItem]? = Unbox(data)
+            print(mangas)
+        }
+    })
+    .responseJSON { response in
+
+//        if let json = response.result. {
+//            let mangas: [MangaPreviewItem]? = Unbox(json)
+//            print(mangas)
 //        }
-//}
+}
 //
 //// manga info
 //var infoRequest = Alamofire.request(MLRouter.Get("info", ["page": "http://bato.to/comic/_/comics/devils-line-r14726"]))
@@ -111,71 +139,71 @@ enum MLRouter: URLRequestConvertible {
 //}
 
 
-let loginParams = [
-    "auth_key": "880ea6a14ea49e853634fbdc5015a024",
-    "referer": "http://bato.to/",
-    "ips_username": "caman8998",
-    "ips_password": "cameron",
-    "rememberMe": true
-]
-
-
-let loginRequest = Alamofire.request(.POST, "https://bato.to/forums/index.php?app=core&module=global&section=login&do=process", parameters: loginParams, encoding: .URL)
-    
-    .responseString { (response) -> Void in
-        
-        if let
-            headerFields = response.response?.allHeaderFields as? [String: String],
-            URL = response.request?.URL
-        {
-            let cookies = NSHTTPCookie.cookiesWithResponseHeaderFields(headerFields, forURL: URL)
-            
-            if cookies.contains({$0.name == "pass_hash"}) {
-                print("User Logged in")
-                
-                // store the cookies in a dictionary
-                var info: [String: AnyObject] = [:]
-                for cookie in cookies {
-                    info[cookie.name] = cookie.value
-                }
-                
-                print(info)
-                
-                Alamofire.request(.GET, "https://bato.to/")
-                    .responseData({ (response) -> Void in
-                        print(response.response)
-                        if let data = response.result.value,
-                            html = NSString(data: data, encoding: NSASCIIStringEncoding),
-                            doc = Kanna.HTML(html: html as String, encoding: NSUTF8StringEncoding) {
-                            
-                                // get the secret key from the htnl
-                                if let statusNode = doc.css("#statusForm").first,
-                                    href = statusNode["action"],
-                                    components = NSURLComponents(string: href),
-                                    queryParams = components.queryItems,
-                                    secret = queryParams.filter({$0.name == "k"}).first?.value {
-                                    
-                                        print(secret)
-                                        
-                                        let userDefaults = NSUserDefaults.standardUserDefaults()
-                                        userDefaults.setObject(info, forKey: "cookies")
-                                        userDefaults.setObject(secret, forKey: "secret")
-                                        userDefaults.synchronize()
-                                }
-                                
-                            
-                        } else {
-                            print(response)
-                        }
-                        
-                    })
-                
-            } else {
-                print("Login failed")
-            }
-            //            print(cookies)
-        }
-}
+//let loginParams = [
+//    "auth_key": "880ea6a14ea49e853634fbdc5015a024",
+//    "referer": "http://bato.to/",
+//    "ips_username": "caman8998",
+//    "ips_password": "cameron",
+//    "rememberMe": true
+//]
+//
+//
+//let loginRequest = Alamofire.request(.POST, "https://bato.to/forums/index.php?app=core&module=global&section=login&do=process", parameters: loginParams, encoding: .URL)
+//    
+//    .responseString { (response) -> Void in
+//        
+//        if let
+//            headerFields = response.response?.allHeaderFields as? [String: String],
+//            URL = response.request?.URL
+//        {
+//            let cookies = NSHTTPCookie.cookiesWithResponseHeaderFields(headerFields, forURL: URL)
+//            
+//            if cookies.contains({$0.name == "pass_hash"}) {
+//                print("User Logged in")
+//                
+//                // store the cookies in a dictionary
+//                var info: [String: AnyObject] = [:]
+//                for cookie in cookies {
+//                    info[cookie.name] = cookie.value
+//                }
+//                
+//                print(info)
+//                
+//                Alamofire.request(.GET, "https://bato.to/")
+//                    .responseData({ (response) -> Void in
+//                        print(response.response)
+//                        if let data = response.result.value,
+//                            html = NSString(data: data, encoding: NSASCIIStringEncoding),
+//                            doc = Kanna.HTML(html: html as String, encoding: NSUTF8StringEncoding) {
+//                            
+//                                // get the secret key from the htnl
+//                                if let statusNode = doc.css("#statusForm").first,
+//                                    href = statusNode["action"],
+//                                    components = NSURLComponents(string: href),
+//                                    queryParams = components.queryItems,
+//                                    secret = queryParams.filter({$0.name == "k"}).first?.value {
+//                                    
+//                                        print(secret)
+//                                        
+//                                        let userDefaults = NSUserDefaults.standardUserDefaults()
+//                                        userDefaults.setObject(info, forKey: "cookies")
+//                                        userDefaults.setObject(secret, forKey: "secret")
+//                                        userDefaults.synchronize()
+//                                }
+//                                
+//                            
+//                        } else {
+//                            print(response)
+//                        }
+//                        
+//                    })
+//                
+//            } else {
+//                print("Login failed")
+//            }
+//            //            print(cookies)
+//        }
+//}
 
 
 

@@ -8,7 +8,7 @@ link_with 'MangaLoop', 'ml-playground'
 
 pod 'Alamofire'
 pod 'Kanna', '1.0.2'
-pod 'Fuzi', '~> 0.3.0'
+pod 'Unbox'
 
 target 'MangaLoop' do
 
