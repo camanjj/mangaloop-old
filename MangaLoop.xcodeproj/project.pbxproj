@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		A64A8C106F041A641FF7DA83 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AD9D28682F9356BD7CD2ABC /* Pods.framework */; };
+		AD345BFC1C54192200E5CF26 /* Chapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD345BFB1C54192200E5CF26 /* Chapter.swift */; };
+		AD345BFE1C541BEA00E5CF26 /* MangaPreviewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD345BFD1C541BEA00E5CF26 /* MangaPreviewItem.swift */; };
+		AD345C001C541BFA00E5CF26 /* MangaDetailItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD345BFF1C541BFA00E5CF26 /* MangaDetailItem.swift */; };
 		AD8E018C1C509E14009241A1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8E018B1C509E14009241A1 /* AppDelegate.swift */; };
 		AD8E018E1C509E14009241A1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8E018D1C509E14009241A1 /* ViewController.swift */; };
 		AD8E01911C509E14009241A1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD8E018F1C509E14009241A1 /* Main.storyboard */; };
@@ -40,6 +43,9 @@
 		505C81DCE912EA676366A5DE /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		7AD9D28682F9356BD7CD2ABC /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E1E4451EC6FEF6E2B58C821 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		AD345BFB1C54192200E5CF26 /* Chapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chapter.swift; sourceTree = "<group>"; };
+		AD345BFD1C541BEA00E5CF26 /* MangaPreviewItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MangaPreviewItem.swift; sourceTree = "<group>"; };
+		AD345BFF1C541BFA00E5CF26 /* MangaDetailItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MangaDetailItem.swift; sourceTree = "<group>"; };
 		AD5F6F031C51E35E002CF84F /* MangaLoop-BridgingHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MangaLoop-BridgingHeader.h"; sourceTree = "<group>"; };
 		AD8E01881C509E14009241A1 /* MangaLoop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MangaLoop.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD8E018B1C509E14009241A1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -97,6 +103,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		AD345BFA1C5418E700E5CF26 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				AD345BFB1C54192200E5CF26 /* Chapter.swift */,
+				AD345BFD1C541BEA00E5CF26 /* MangaPreviewItem.swift */,
+				AD345BFF1C541BFA00E5CF26 /* MangaDetailItem.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		AD8E017F1C509E13009241A1 = {
 			isa = PBXGroup;
 			children = (
@@ -122,6 +138,7 @@
 		AD8E018A1C509E14009241A1 /* MangaLoop */ = {
 			isa = PBXGroup;
 			children = (
+				AD345BFA1C5418E700E5CF26 /* Models */,
 				AD8E018B1C509E14009241A1 /* AppDelegate.swift */,
 				AD8E018D1C509E14009241A1 /* ViewController.swift */,
 				AD8E018F1C509E14009241A1 /* Main.storyboard */,
@@ -345,8 +362,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD345BFC1C54192200E5CF26 /* Chapter.swift in Sources */,
 				AD8E018E1C509E14009241A1 /* ViewController.swift in Sources */,
+				AD345BFE1C541BEA00E5CF26 /* MangaPreviewItem.swift in Sources */,
 				AD8E018C1C509E14009241A1 /* AppDelegate.swift in Sources */,
+				AD345C001C541BFA00E5CF26 /* MangaDetailItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

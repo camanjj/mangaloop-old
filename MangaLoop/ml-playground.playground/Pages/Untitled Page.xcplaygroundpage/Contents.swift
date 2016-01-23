@@ -33,6 +33,23 @@ struct MangaPreviewItem {
     
 }
 
+struct MangaDetailItem {
+    var title: String
+    var link: String
+    var mangaId: String
+    var image: String?
+    var chapters: [Chapter]
+    
+    var artist: String
+    var author: String
+    var genre: [String]
+    var isMature: Bool?
+    var altNames: String?
+    var status: String
+    var summary: String
+    
+}
+
 extension Chapter: Unboxable {
     init(unboxer: Unboxer) {
         self.title = unboxer.unbox("title")
@@ -49,6 +66,24 @@ extension MangaPreviewItem: Unboxable {
         self.link = unboxer.unbox("link")
         self.mangaId = unboxer.unbox("mangaId")
         self.chapters = unboxer.unbox("chapters")
+    }
+}
+
+extension MangaDetailItem: Unboxable {
+    init(unboxer: Unboxer) {
+        self.title = unboxer.unbox("title")
+        self.link = unboxer.unbox("link")
+        self.mangaId = unboxer.unbox("mangaId")
+        self.chapters = unboxer.unbox("chapters")
+        self.image = unboxer.unbox("image")
+        
+        self.isMature = unboxer.unbox("mature")
+        self.status = unboxer.unbox("status")
+        self.genre = unboxer.unbox("genre")
+        self.summary = unboxer.unbox("summary")
+        self.altNames = unboxer.unbox("altNames")
+        self.artist = unboxer.unbox("artist")
+        self.author = unboxer.unbox("author")
     }
 }
 
@@ -108,29 +143,25 @@ enum MLRouter: URLRequestConvertible {
 }
 
 // updates
-var request = Alamofire.request(MLRouter.Get("updates", nil))
-    .responseData({ (response) -> Void in
-        if let data = response.result.value {
-            let mangas: [MangaPreviewItem]? = Unbox(data)
-            print(mangas)
-        }
-    })
-    .responseJSON { response in
-
-//        if let json = response.result. {
-//            let mangas: [MangaPreviewItem]? = Unbox(json)
+//var request = Alamofire.request(MLRouter.Get("updates", nil))
+//    .responseData({ (response) -> Void in
+//        if let data = response.result.value {
+//            let mangas: [MangaPreviewItem]? = Unbox(data)
 //            print(mangas)
 //        }
-}
+//    })
+//
+
 //
 //// manga info
-//var infoRequest = Alamofire.request(MLRouter.Get("info", ["page": "http://bato.to/comic/_/comics/devils-line-r14726"]))
-//    .responseJSON { (response) -> Void in
-//        if let json = response.result.value {
-//            print(json)
-//        }
-//}
-//
+var infoRequest = Alamofire.request(MLRouter.Get("info", ["page": "http://bato.to/comic/_/comics/devils-line-r14726"]))
+    .responseData { (response) -> Void in
+        if let data = response.result.value {
+            let manga: MangaDetailItem? = Unbox(data)
+            print(manga)
+        }
+}
+
 //var searchRequest = Alamofire.request(MLRouter.Get("search", ["term": "bleach"]))
 //    .responseJSON { (response) -> Void in
 //        if let json = response.result.value {
