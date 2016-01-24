@@ -7,3 +7,23 @@
 //
 
 import Foundation
+import Unbox
+
+struct MangaPreviewItem {
+    var title: String
+    var link: String
+    var mangaId: String
+    var imageLink: String?
+    var chapters: [Chapter]?
+    
+}
+
+
+extension MangaPreviewItem: Unboxable {
+    init(unboxer: Unboxer) {
+        self.title = unboxer.unbox("title")
+        self.link = unboxer.unbox("link")
+        self.mangaId = unboxer.unbox("mangaId")
+        self.chapters = unboxer.unbox("chapters")
+    }
+}

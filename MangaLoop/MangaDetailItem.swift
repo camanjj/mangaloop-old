@@ -7,3 +7,40 @@
 //
 
 import Foundation
+import Unbox
+
+struct MangaDetailItem {
+    var title: String
+    var link: String
+    var mangaId: String
+    var image: String?
+    var chapters: [Chapter]
+    
+    var artist: String
+    var author: String
+    var genre: [String]
+    var isMature: Bool?
+    var altNames: String?
+    var status: String
+    var summary: String
+    
+}
+
+
+extension MangaDetailItem: Unboxable {
+    init(unboxer: Unboxer) {
+        self.title = unboxer.unbox("title")
+        self.link = unboxer.unbox("link")
+        self.mangaId = unboxer.unbox("mangaId")
+        self.chapters = unboxer.unbox("chapters")
+        self.image = unboxer.unbox("image")
+        
+        self.isMature = unboxer.unbox("mature")
+        self.status = unboxer.unbox("status")
+        self.genre = unboxer.unbox("genre")
+        self.summary = unboxer.unbox("summary")
+        self.altNames = unboxer.unbox("altNames")
+        self.artist = unboxer.unbox("artist")
+        self.author = unboxer.unbox("author")
+    }
+}

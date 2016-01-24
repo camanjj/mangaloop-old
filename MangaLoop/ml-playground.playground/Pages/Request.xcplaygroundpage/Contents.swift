@@ -125,6 +125,16 @@ enum MLRouter: URLRequestConvertible {
         let mutableURLRequest = NSMutableURLRequest(URL: URL.URLByAppendingPathComponent(path))
         mutableURLRequest.HTTPMethod = method.rawValue
         
+        
+        if let cookies = NSUserDefaults.standardUserDefaults().dictionaryForKey("cookies") {
+            var cookiesString = ""
+            for (key, value) in cookies {
+                cookiesString += "\(key)=\(value); "
+            }
+            mutableURLRequest.setValue(cookiesString, forHTTPHeaderField: "Cookie")
+        }
+
+        
         switch self {
         case .Post(_, let parameters):
             return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest,
@@ -154,20 +164,20 @@ enum MLRouter: URLRequestConvertible {
 
 //
 //// manga info
-var infoRequest = Alamofire.request(MLRouter.Get("info", ["page": "http://bato.to/comic/_/comics/devils-line-r14726"]))
-    .responseData { (response) -> Void in
-        if let data = response.result.value {
-            let manga: MangaDetailItem? = Unbox(data)
-            print(manga)
-        }
-}
-
-//var searchRequest = Alamofire.request(MLRouter.Get("search", ["term": "bleach"]))
-//    .responseJSON { (response) -> Void in
-//        if let json = response.result.value {
-//            print(json)
+//var infoRequest = Alamofire.request(MLRouter.Get("info", ["page": "http://bato.to/comic/_/comics/devils-line-r14726"]))
+//    .responseData { (response) -> Void in
+//        if let data = response.result.value {
+//            let manga: MangaDetailItem? = Unbox(data)
+//            print(manga)
 //        }
 //}
+
+var searchRequest = Alamofire.request(MLRouter.Get("search", ["term": "bleach"]))
+    .responseJSON { (response) -> Void in
+        if let json = response.result.value {
+            print(json)
+        }
+}
 
 
 //let loginParams = [

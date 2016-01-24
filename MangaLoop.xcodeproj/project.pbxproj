@@ -18,6 +18,8 @@
 		AD8E01961C509E14009241A1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD8E01941C509E14009241A1 /* LaunchScreen.storyboard */; };
 		AD8E01A11C509E14009241A1 /* MangaLoopTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8E01A01C509E14009241A1 /* MangaLoopTests.swift */; };
 		AD8E01AC1C509E14009241A1 /* MangaLoopUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8E01AB1C509E14009241A1 /* MangaLoopUITests.swift */; };
+		AD9243FA1C554A0F00C19BFC /* MLRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9243F91C554A0F00C19BFC /* MLRouter.swift */; };
+		AD9243FC1C554A5500C19BFC /* MangaManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9243FB1C554A5500C19BFC /* MangaManager.swift */; };
 		C98577ABAB3F84B7341F9278 /* Pods_MangaLoop.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06120B7C03EBB2CFF1A60E5D /* Pods_MangaLoop.framework */; };
 /* End PBXBuildFile section */
 
@@ -60,6 +62,8 @@
 		AD8E01A71C509E14009241A1 /* MangaLoopUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MangaLoopUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD8E01AB1C509E14009241A1 /* MangaLoopUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaLoopUITests.swift; sourceTree = "<group>"; };
 		AD8E01AD1C509E14009241A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AD9243F91C554A0F00C19BFC /* MLRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MLRouter.swift; sourceTree = "<group>"; };
+		AD9243FB1C554A5500C19BFC /* MangaManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MangaManager.swift; sourceTree = "<group>"; };
 		ADAE10151C52C74700739B02 /* ml-playground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "ml-playground.playground"; sourceTree = "<group>"; };
 		ADC7C0451C51EA93008858E8 /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = ../../../../usr/lib/libz.1.dylib; sourceTree = "<group>"; };
 		B2E517D0BFFFFB45BBCFF020 /* Pods-MangaLoop.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MangaLoop.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MangaLoop/Pods-MangaLoop.debug.xcconfig"; sourceTree = "<group>"; };
@@ -138,6 +142,7 @@
 		AD8E018A1C509E14009241A1 /* MangaLoop */ = {
 			isa = PBXGroup;
 			children = (
+				AD9243F81C554A0000C19BFC /* Helpers */,
 				AD345BFA1C5418E700E5CF26 /* Models */,
 				AD8E018B1C509E14009241A1 /* AppDelegate.swift */,
 				AD8E018D1C509E14009241A1 /* ViewController.swift */,
@@ -167,6 +172,15 @@
 				AD8E01AD1C509E14009241A1 /* Info.plist */,
 			);
 			path = MangaLoopUITests;
+			sourceTree = "<group>";
+		};
+		AD9243F81C554A0000C19BFC /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				AD9243F91C554A0F00C19BFC /* MLRouter.swift */,
+				AD9243FB1C554A5500C19BFC /* MangaManager.swift */,
+			);
+			name = Helpers;
 			sourceTree = "<group>";
 		};
 		DCCAEF1EC1E3A9AE9E2A8169 /* Pods */ = {
@@ -362,9 +376,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD9243FC1C554A5500C19BFC /* MangaManager.swift in Sources */,
 				AD345BFC1C54192200E5CF26 /* Chapter.swift in Sources */,
 				AD8E018E1C509E14009241A1 /* ViewController.swift in Sources */,
 				AD345BFE1C541BEA00E5CF26 /* MangaPreviewItem.swift in Sources */,
+				AD9243FA1C554A0F00C19BFC /* MLRouter.swift in Sources */,
 				AD8E018C1C509E14009241A1 /* AppDelegate.swift in Sources */,
 				AD345C001C541BFA00E5CF26 /* MangaDetailItem.swift in Sources */,
 			);
