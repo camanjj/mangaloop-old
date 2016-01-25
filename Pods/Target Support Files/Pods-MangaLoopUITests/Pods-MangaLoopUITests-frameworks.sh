@@ -86,10 +86,12 @@ strip_invalid_archs() {
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-MangaLoopUITests/Alamofire.framework"
   install_framework "Pods-MangaLoopUITests/Kanna.framework"
+  install_framework "Pods-MangaLoopUITests/SnapKit.framework"
   install_framework "Pods-MangaLoopUITests/Unbox.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-MangaLoopUITests/Alamofire.framework"
   install_framework "Pods-MangaLoopUITests/Kanna.framework"
+  install_framework "Pods-MangaLoopUITests/SnapKit.framework"
   install_framework "Pods-MangaLoopUITests/Unbox.framework"
 fi

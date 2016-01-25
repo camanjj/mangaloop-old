@@ -9,6 +9,7 @@ link_with 'MangaLoop', 'ml-playground'
 pod 'Alamofire'
 pod 'Kanna', '1.0.2'
 pod 'Unbox'
+pod 'SnapKit', '~> 0.19'
 
 target 'MangaLoop' do
 

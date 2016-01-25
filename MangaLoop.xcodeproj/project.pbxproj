@@ -20,6 +20,9 @@
 		AD8E01AC1C509E14009241A1 /* MangaLoopUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8E01AB1C509E14009241A1 /* MangaLoopUITests.swift */; };
 		AD9243FA1C554A0F00C19BFC /* MLRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9243F91C554A0F00C19BFC /* MLRouter.swift */; };
 		AD9243FC1C554A5500C19BFC /* MangaManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9243FB1C554A5500C19BFC /* MangaManager.swift */; };
+		AD9243FF1C5576BE00C19BFC /* ReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9243FE1C5576BE00C19BFC /* ReusableView.swift */; };
+		AD9244021C55A1A600C19BFC /* MangaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9244011C55A1A600C19BFC /* MangaCell.swift */; };
+		AD9244051C55ABD200C19BFC /* UpdatesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9244041C55ABD200C19BFC /* UpdatesViewController.swift */; };
 		C98577ABAB3F84B7341F9278 /* Pods_MangaLoop.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06120B7C03EBB2CFF1A60E5D /* Pods_MangaLoop.framework */; };
 /* End PBXBuildFile section */
 
@@ -64,6 +67,9 @@
 		AD8E01AD1C509E14009241A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AD9243F91C554A0F00C19BFC /* MLRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MLRouter.swift; sourceTree = "<group>"; };
 		AD9243FB1C554A5500C19BFC /* MangaManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MangaManager.swift; sourceTree = "<group>"; };
+		AD9243FE1C5576BE00C19BFC /* ReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReusableView.swift; sourceTree = "<group>"; };
+		AD9244011C55A1A600C19BFC /* MangaCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MangaCell.swift; sourceTree = "<group>"; };
+		AD9244041C55ABD200C19BFC /* UpdatesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdatesViewController.swift; sourceTree = "<group>"; };
 		ADAE10151C52C74700739B02 /* ml-playground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "ml-playground.playground"; sourceTree = "<group>"; };
 		ADC7C0451C51EA93008858E8 /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = ../../../../usr/lib/libz.1.dylib; sourceTree = "<group>"; };
 		B2E517D0BFFFFB45BBCFF020 /* Pods-MangaLoop.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MangaLoop.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MangaLoop/Pods-MangaLoop.debug.xcconfig"; sourceTree = "<group>"; };
@@ -142,6 +148,8 @@
 		AD8E018A1C509E14009241A1 /* MangaLoop */ = {
 			isa = PBXGroup;
 			children = (
+				AD9244031C55ABBB00C19BFC /* Controllers */,
+				AD9243FD1C5576AA00C19BFC /* Views */,
 				AD9243F81C554A0000C19BFC /* Helpers */,
 				AD345BFA1C5418E700E5CF26 /* Models */,
 				AD8E018B1C509E14009241A1 /* AppDelegate.swift */,
@@ -181,6 +189,31 @@
 				AD9243FB1C554A5500C19BFC /* MangaManager.swift */,
 			);
 			name = Helpers;
+			sourceTree = "<group>";
+		};
+		AD9243FD1C5576AA00C19BFC /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				AD9244001C55A18600C19BFC /* Cells */,
+				AD9243FE1C5576BE00C19BFC /* ReusableView.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		AD9244001C55A18600C19BFC /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				AD9244011C55A1A600C19BFC /* MangaCell.swift */,
+			);
+			name = Cells;
+			sourceTree = "<group>";
+		};
+		AD9244031C55ABBB00C19BFC /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				AD9244041C55ABD200C19BFC /* UpdatesViewController.swift */,
+			);
+			name = Controllers;
 			sourceTree = "<group>";
 		};
 		DCCAEF1EC1E3A9AE9E2A8169 /* Pods */ = {
@@ -377,12 +410,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD9243FC1C554A5500C19BFC /* MangaManager.swift in Sources */,
+				AD9244051C55ABD200C19BFC /* UpdatesViewController.swift in Sources */,
 				AD345BFC1C54192200E5CF26 /* Chapter.swift in Sources */,
 				AD8E018E1C509E14009241A1 /* ViewController.swift in Sources */,
+				AD9243FF1C5576BE00C19BFC /* ReusableView.swift in Sources */,
 				AD345BFE1C541BEA00E5CF26 /* MangaPreviewItem.swift in Sources */,
 				AD9243FA1C554A0F00C19BFC /* MLRouter.swift in Sources */,
 				AD8E018C1C509E14009241A1 /* AppDelegate.swift in Sources */,
 				AD345C001C541BFA00E5CF26 /* MangaDetailItem.swift in Sources */,
+				AD9244021C55A1A600C19BFC /* MangaCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
