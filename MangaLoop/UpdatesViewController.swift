@@ -8,8 +8,9 @@
 
 import Foundation
 import UIKit
+import MZFormSheetPresentationController
 
-class UpdatesViewController: UITableViewController {
+class UpdatesViewController: UITableViewController, ChaptersDelegate {
     
     var page = 1
     var manga: [MangaPreviewItem] = []
@@ -39,6 +40,32 @@ class UpdatesViewController: UITableViewController {
         
         self.footerButton = footerButton
         
+        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: "longPress:")
+        self.tableView.addGestureRecognizer(longPressRecognizer)
+        
+    }
+    
+    func longPress(longPressGestureRecognizer: UILongPressGestureRecognizer) {
+        
+        if longPressGestureRecognizer.state == UIGestureRecognizerState.Began {
+            
+            let touchPoint = longPressGestureRecognizer.locationInView(self.tableView)
+            if let indexPath = self.tableView.indexPathForRowAtPoint(touchPoint) {
+                
+                // your code here, get the row for the indexPath or do whatever you want
+                print(indexPath)
+                
+                let chaptersController = ChaptersController(chapters: manga[indexPath.row].chapters, delegate: self)
+                let navController = UINavigationController()
+                navController.viewControllers = [chaptersController]
+                let formSheet = MZFormSheetPresentationViewController(contentViewController: navController)
+                
+                formSheet.interactivePanGestureDissmisalDirection = .All;
+
+                
+                self.presentViewController(formSheet, animated: true, completion: nil)
+            }
+        }
     }
     
     func refresh(object: AnyObject) {
@@ -82,6 +109,13 @@ class UpdatesViewController: UITableViewController {
         
     }
     
+    
+    //MARK: Chapter Delegate
+    func chaptersControllerDidSelectChapter(chapter: Chapter) {
+        
+    }
+    
+    // MARK: UITableView DataSource Methods
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return manga.count
