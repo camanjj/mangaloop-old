@@ -11,6 +11,7 @@ pod 'Kanna', '1.0.2'
 pod 'Unbox'
 pod 'SnapKit', '~> 0.19'
 pod 'MZFormSheetPresentationController', '~> 2.2'
+pod 'MXSegmentedPager'
 
 target 'MangaLoop' do
 

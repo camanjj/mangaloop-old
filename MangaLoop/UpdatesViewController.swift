@@ -115,7 +115,7 @@ class UpdatesViewController: UITableViewController, ChaptersDelegate {
         
     }
     
-    // MARK: UITableView DataSource Methods
+    // MARK: UITableView DataSource/Delegate Methods
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return manga.count
@@ -128,6 +128,12 @@ class UpdatesViewController: UITableViewController, ChaptersDelegate {
         
         
         return cell
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let selectedManga = manga[indexPath.row]
+        let detailsController = MangaDetailsController(manga: selectedManga)
+        navigationController?.pushViewController(detailsController, animated: true)
     }
     
     

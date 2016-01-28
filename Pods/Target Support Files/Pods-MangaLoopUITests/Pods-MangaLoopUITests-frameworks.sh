@@ -85,7 +85,11 @@ strip_invalid_archs() {
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-MangaLoopUITests/Alamofire.framework"
+  install_framework "Pods-MangaLoopUITests/HMSegmentedControl.framework"
   install_framework "Pods-MangaLoopUITests/Kanna.framework"
+  install_framework "Pods-MangaLoopUITests/MXPagerView.framework"
+  install_framework "Pods-MangaLoopUITests/MXParallaxHeader.framework"
+  install_framework "Pods-MangaLoopUITests/MXSegmentedPager.framework"
   install_framework "Pods-MangaLoopUITests/MZAppearance.framework"
   install_framework "Pods-MangaLoopUITests/MZFormSheetPresentationController.framework"
   install_framework "Pods-MangaLoopUITests/SnapKit.framework"
@@ -93,7 +97,11 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-MangaLoopUITests/Alamofire.framework"
+  install_framework "Pods-MangaLoopUITests/HMSegmentedControl.framework"
   install_framework "Pods-MangaLoopUITests/Kanna.framework"
+  install_framework "Pods-MangaLoopUITests/MXPagerView.framework"
+  install_framework "Pods-MangaLoopUITests/MXParallaxHeader.framework"
+  install_framework "Pods-MangaLoopUITests/MXSegmentedPager.framework"
   install_framework "Pods-MangaLoopUITests/MZAppearance.framework"
   install_framework "Pods-MangaLoopUITests/MZFormSheetPresentationController.framework"
   install_framework "Pods-MangaLoopUITests/SnapKit.framework"

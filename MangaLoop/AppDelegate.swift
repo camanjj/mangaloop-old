@@ -20,7 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Loads UIWindow and temporary RootViewController
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         
-        self.window!.rootViewController = UpdatesViewController()
+        let navigationController = UINavigationController(rootViewController: UpdatesViewController())
+        self.window!.rootViewController = navigationController
         
         self.window!.backgroundColor = UIColor.whiteColor()
         self.window!.makeKeyAndVisible()

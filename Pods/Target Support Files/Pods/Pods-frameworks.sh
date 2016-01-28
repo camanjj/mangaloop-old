@@ -85,7 +85,11 @@ strip_invalid_archs() {
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods/Alamofire.framework"
+  install_framework "Pods/HMSegmentedControl.framework"
   install_framework "Pods/Kanna.framework"
+  install_framework "Pods/MXPagerView.framework"
+  install_framework "Pods/MXParallaxHeader.framework"
+  install_framework "Pods/MXSegmentedPager.framework"
   install_framework "Pods/MZAppearance.framework"
   install_framework "Pods/MZFormSheetPresentationController.framework"
   install_framework "Pods/SnapKit.framework"
@@ -93,7 +97,11 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods/Alamofire.framework"
+  install_framework "Pods/HMSegmentedControl.framework"
   install_framework "Pods/Kanna.framework"
+  install_framework "Pods/MXPagerView.framework"
+  install_framework "Pods/MXParallaxHeader.framework"
+  install_framework "Pods/MXSegmentedPager.framework"
   install_framework "Pods/MZAppearance.framework"
   install_framework "Pods/MZFormSheetPresentationController.framework"
   install_framework "Pods/SnapKit.framework"
