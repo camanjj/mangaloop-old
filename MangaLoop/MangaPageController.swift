@@ -22,6 +22,8 @@ class MangaPageController: UIViewController, UIScrollViewDelegate {
     
     let link: String!
     
+    let zoomStep: CGFloat = 2.5
+    
     init (imageLink: String) {
         
         link = imageLink
@@ -30,6 +32,9 @@ class MangaPageController: UIViewController, UIScrollViewDelegate {
         
         mangaImageView.kf_showIndicatorWhenLoading = true
         mangaImageView.kf_setImageWithURL(NSURL(string: imageLink)!, placeholderImage: nil, optionsInfo: [.DownloadPriority(0.4)], progressBlock: { (receivedSize, totalSize) -> () in
+            
+//            self.progressView.setProgress(Double(receivedSize)/Double(totalSize), animated: true)
+            self.progressView.progress = Double(receivedSize)/Double(totalSize)
             
             }) { [unowned self](image, error, cacheType, imageURL) -> () in
                 
@@ -58,6 +63,7 @@ class MangaPageController: UIViewController, UIScrollViewDelegate {
         // set the progress view to the center
         progressView.snp_makeConstraints { (make) -> Void in
             make.center.equalTo(view.snp_center)
+            make.width.height.equalTo(40)
         }
         
         scrollView.snp_makeConstraints { (make) -> Void in
@@ -105,6 +111,22 @@ class MangaPageController: UIViewController, UIScrollViewDelegate {
         scrollView.clipsToBounds = true
         
         
+    }
+    
+    func toggleNavBar() {
+        if let navigationController = navigationController where navigationController.navigationBarHidden {
+            
+            navigationController.setNavigationBarHidden(false, animated: true)
+            navigationController.setToolbarHidden(false, animated: true)
+            
+            setNeedsStatusBarAppearanceUpdate()
+            
+        } else if let navigationController = navigationController where !navigationController.navigationBarHidden {
+            
+            navigationController.setNavigationBarHidden(true, animated: true)
+            navigationController.setToolbarHidden(true, animated: true)
+            
+        }
     }
 
     
@@ -183,27 +205,20 @@ class MangaPageController: UIViewController, UIScrollViewDelegate {
     }
     
     func singleTap(gestureRecongizer: UIGestureRecognizer) {
-        
+        toggleNavBar()
     }
     
     func doubleTap(gestureRecongizer: UIGestureRecognizer) {
+        
         let pointInView = gestureRecongizer.locationInView(mangaImageView)
-        
-        // 2
-        var newZoomScale = scrollView.zoomScale * 1.5
-        newZoomScale = min(newZoomScale, scrollView.maximumZoomScale)
-        
-        // 3
-        let scrollViewSize = scrollView.bounds.size
-        let w = scrollViewSize.width / newZoomScale
-        let h = scrollViewSize.height / newZoomScale
-        let x = pointInView.x - (w / 2.0)
-        let y = pointInView.y - (h / 2.0)
-        
-        let rectToZoomTo = CGRectMake(x, y, w, h);
-        
-        // 4
-        scrollView.zoomToRect(rectToZoomTo, animated: true)
+
+        if scrollView.zoomScale == scrollView.minimumZoomScale {
+            let newScale = scrollView.zoomScale * zoomStep
+            let zoomRect = zoom(rectForScale: newScale, center: pointInView)
+            scrollView.zoomToRect(zoomRect, animated: true)
+        } else {
+            scrollView.setZoomScale(scrollView.minimumZoomScale, animated: true)
+        }
     }
     
     func twoFingerTap(gestureRecongizer: UIGestureRecognizer) {

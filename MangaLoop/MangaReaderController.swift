@@ -30,7 +30,7 @@ class MangaReaderController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationController?.navigationBar.translucent = false
+        navigationController?.navigationBar.translucent = true
         
         pageController.dataSource = self
         pageController.setViewControllers([UIViewController()], direction: .Forward, animated: true, completion: nil)
