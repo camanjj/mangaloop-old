@@ -53,7 +53,7 @@ class MangaDetailsController: MXSegmentedPagerController, ChaptersDelegate {
             if let manga = manga {
                 
                 self.manga = manga
-                self.chaptersTable = ChaptersController(chapters: manga.chapters, delegate: self)
+                self.chaptersTable = ChaptersController(manga: manga, chapters: manga.chapters, delegate: self)
                 
                 self.segmentedPager.reloadData()
             } else {
@@ -63,7 +63,7 @@ class MangaDetailsController: MXSegmentedPagerController, ChaptersDelegate {
     }
     
     //MARK: Chapters Delegate Method
-    func chaptersControllerDidSelectChapter(chapter: Chapter) {
+    func chaptersControllerDidSelectChapter(chapter: Chapter, manga: MangaItem) {
         
     }
     

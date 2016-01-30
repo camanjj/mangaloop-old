@@ -9,7 +9,7 @@
 import Foundation
 import Unbox
 
-struct MangaPreviewItem {
+struct MangaPreviewItem: MangaItem {
     var title: String
     var link: String
     var mangaId: String

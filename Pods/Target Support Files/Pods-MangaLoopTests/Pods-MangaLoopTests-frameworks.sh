@@ -85,8 +85,10 @@ strip_invalid_archs() {
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-MangaLoopTests/Alamofire.framework"
+  install_framework "Pods-MangaLoopTests/CircleProgressView.framework"
   install_framework "Pods-MangaLoopTests/HMSegmentedControl.framework"
   install_framework "Pods-MangaLoopTests/Kanna.framework"
+  install_framework "Pods-MangaLoopTests/Kingfisher.framework"
   install_framework "Pods-MangaLoopTests/MXPagerView.framework"
   install_framework "Pods-MangaLoopTests/MXParallaxHeader.framework"
   install_framework "Pods-MangaLoopTests/MXSegmentedPager.framework"
@@ -97,8 +99,10 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-MangaLoopTests/Alamofire.framework"
+  install_framework "Pods-MangaLoopTests/CircleProgressView.framework"
   install_framework "Pods-MangaLoopTests/HMSegmentedControl.framework"
   install_framework "Pods-MangaLoopTests/Kanna.framework"
+  install_framework "Pods-MangaLoopTests/Kingfisher.framework"
   install_framework "Pods-MangaLoopTests/MXPagerView.framework"
   install_framework "Pods-MangaLoopTests/MXParallaxHeader.framework"
   install_framework "Pods-MangaLoopTests/MXSegmentedPager.framework"

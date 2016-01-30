@@ -51,6 +51,17 @@ class MangaManager {
                     let mangas: [MangaPreviewItem]? = Unbox(data)
                     callback(mangas)
                 }
+                callback(nil)
+        }
+    }
+    
+    func getPages(link: String, callback: [String]? -> Void) {
+        Alamofire.request(MLRouter.Get("pages", ["page": link]))
+            .responseJSON { (response) -> Void in
+                if let json = response.result.value, pages = json as? [String] {
+                    callback(pages)
+                }
+                callback(nil)
         }
     }
     

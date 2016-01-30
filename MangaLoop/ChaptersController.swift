@@ -11,17 +11,19 @@ import UIKit
 
 
 protocol ChaptersDelegate {
-    func chaptersControllerDidSelectChapter(chapter: Chapter)
+    func chaptersControllerDidSelectChapter(chapter: Chapter, manga: MangaItem)
 }
 
 class ChaptersController: UITableViewController {
     
     var delegate: ChaptersDelegate!
     var chapters: [Chapter]?
+    var manga: MangaItem!
     
-    convenience init(chapters: [Chapter]?, delegate: ChaptersDelegate) {
+    convenience init(manga: MangaItem, chapters: [Chapter]?, delegate: ChaptersDelegate) {
         self.init(style: UITableViewStyle.Grouped)
         
+        self.manga = manga
         self.delegate = delegate
         self.chapters = chapters
     }
@@ -53,6 +55,12 @@ class ChaptersController: UITableViewController {
         
         return cell
         
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let chapter = self.chapters![indexPath.row]
+        
+        delegate.chaptersControllerDidSelectChapter(chapter, manga: manga)
     }
     
 }

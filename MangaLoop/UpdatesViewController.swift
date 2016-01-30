@@ -55,7 +55,8 @@ class UpdatesViewController: UITableViewController, ChaptersDelegate {
                 // your code here, get the row for the indexPath or do whatever you want
                 print(indexPath)
                 
-                let chaptersController = ChaptersController(chapters: manga[indexPath.row].chapters, delegate: self)
+                let selectedManga = manga[indexPath.row]
+                let chaptersController = ChaptersController(manga: selectedManga, chapters: selectedManga.chapters, delegate: self)
                 let navController = UINavigationController()
                 navController.viewControllers = [chaptersController]
                 let formSheet = MZFormSheetPresentationViewController(contentViewController: navController)
@@ -111,7 +112,15 @@ class UpdatesViewController: UITableViewController, ChaptersDelegate {
     
     
     //MARK: Chapter Delegate
-    func chaptersControllerDidSelectChapter(chapter: Chapter) {
+    func chaptersControllerDidSelectChapter(chapter: Chapter, manga: MangaItem) {
+        
+        self.dismissViewControllerAnimated(true) { () -> Void in
+            
+        }
+        
+        let reader = MangaReaderController(manga: manga, chapter: chapter)
+        navigationController?.pushViewController(reader, animated: true)
+
         
     }
     

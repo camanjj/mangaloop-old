@@ -9,12 +9,12 @@
 import Foundation
 import Unbox
 
-struct MangaDetailItem {
+struct MangaDetailItem: MangaItem {
     var title: String
     var link: String
     var mangaId: String
     var image: String?
-    var chapters: [Chapter]
+    var chapters: [Chapter]?
     
     var artist: String
     var author: String
