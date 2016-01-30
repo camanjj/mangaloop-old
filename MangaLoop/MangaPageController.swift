@@ -13,6 +13,8 @@ import Kingfisher
 
 class MangaPageController: UIViewController, UIScrollViewDelegate {
     
+    let zoomStep: CGFloat = 2.5
+
     
     let progressView = CircleProgressView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
     let mangaImageView = UIImageView()
@@ -22,7 +24,7 @@ class MangaPageController: UIViewController, UIScrollViewDelegate {
     
     let link: String!
     
-    let zoomStep: CGFloat = 2.5
+    var didChangeSuffix = false
     
     init (imageLink: String) {
         
@@ -38,9 +40,29 @@ class MangaPageController: UIViewController, UIScrollViewDelegate {
             
             }) { [unowned self](image, error, cacheType, imageURL) -> () in
                 
-                guard let _ = image else {
+                
+                // change the suffix for the image
+                if let _ = error {
+                    let link = self.link as NSString
+                    let suffix = link.pathExtension
+                    let newSuffix = suffix == "jpg" ? "png" : "jpg"
+                    let newLink = "\(link.stringByDeletingPathExtension).\(newSuffix)"
+                    self.mangaImageView.kf_setImageWithURL(NSURL(string: newLink)!, placeholderImage: nil, optionsInfo: [.DownloadPriority(0.4)], progressBlock: { (receivedSize, totalSize) -> () in
+                        self.progressView.progress = Double(receivedSize)/Double(totalSize)
+                        }, completionHandler: { (image, error, cacheType, imageURL) -> () in
+                            if let _ = error {
+                                
+                                return
+                            }
+                            
+                            self.updateZoom()
+                            self.centerImage()
+                            self.updateZoom()
+                            
+                    })
                     return
                 }
+                
                 
                 // don't know why but this is the only way to get the current image to load in the full frame
                 self.updateZoom()

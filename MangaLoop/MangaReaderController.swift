@@ -49,6 +49,11 @@ class MangaReaderController: UIViewController {
         MangaManager.sharedManager.getPages(link) { [unowned self] (pages) -> Void in
             if let pages = pages {
                 
+                if pages.isEmpty {
+                    print("The pages are empty. Batoto probably is not loading this chapter for some reason")
+                    return
+                }
+                
                 print("Got pages")
                 
                 // Stop any manga page downloads
