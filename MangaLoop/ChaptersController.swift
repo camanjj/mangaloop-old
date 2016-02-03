@@ -64,3 +64,7 @@ class ChaptersController: UITableViewController {
     }
     
 }
+
+//extension ChaptersDelegate where Self : UpdatesViewController {
+//    
+//}

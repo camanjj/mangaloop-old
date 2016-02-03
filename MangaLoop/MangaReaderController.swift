@@ -22,6 +22,13 @@ class MangaReaderController: UIViewController {
         self.selectedChapter = chapter
         super.init(nibName: nil, bundle: nil)
     }
+    
+    // creates the reader and embeds it in a navigation controller
+    class func createReader(manga: MangaItem, chapter: Chapter) -> UINavigationController {
+        let reader = MangaReaderController(manga: manga, chapter: chapter)
+        let navController = UINavigationController(rootViewController: reader)
+        return navController
+    }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -30,9 +37,11 @@ class MangaReaderController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Stop, target: self, action: Selector("closeClick"))
+        
         automaticallyAdjustsScrollViewInsets = false
-        navigationController?.navigationBar.translucent = false
-        navigationController?.toolbar.translucent = false
+        navigationController?.navigationBar.translucent = true
+        navigationController?.toolbar.translucent = true
         
         pageController.dataSource = self
         pageController.setViewControllers([UIViewController()], direction: .Forward, animated: true, completion: nil)
@@ -80,11 +89,19 @@ class MangaReaderController: UIViewController {
         }
     }
     
+    func closeClick() {
+        presentingViewController!.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
     
 }
 
 extension MangaReaderController: UIPageViewControllerDataSource {
     func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
+        
+        if mangaPages.isEmpty {
+            return nil
+        }
 
         guard let index = mangaPages.indexOf(viewController as! MangaPageController) else {
             return nil
@@ -99,6 +116,11 @@ extension MangaReaderController: UIPageViewControllerDataSource {
     }
     
     func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
+        
+        if mangaPages.isEmpty {
+            return nil
+        }
+        
         
         guard let index = mangaPages.indexOf(viewController as! MangaPageController) else {
             return nil

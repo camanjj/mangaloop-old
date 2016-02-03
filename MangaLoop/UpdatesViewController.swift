@@ -132,12 +132,10 @@ class UpdatesViewController: UITableViewController, ChaptersDelegate {
         
         self.dismissViewControllerAnimated(true) { () -> Void in
             
+            let reader = MangaReaderController.createReader(manga, chapter: chapter)
+            self.presentViewController(reader, animated: true, completion: nil)
+            
         }
-        
-        let reader = MangaReaderController(manga: manga, chapter: chapter)
-        navigationController?.pushViewController(reader, animated: true)
-
-        
     }
     
     // MARK: UITableView DataSource/Delegate Methods
