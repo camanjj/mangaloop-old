@@ -50,6 +50,19 @@ class MangaDetailsController: MXSegmentedPagerController, ChaptersDelegate {
         fetchInfo()
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.translucent = true
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.navigationBar.translucent = false
+        navigationController?.navigationBar.barTintColor = UIColor.redColor()
+    }
+    
     func fetchInfo() {
         MangaManager.sharedManager.getMangaDetails(previewItem.link) { [unowned self](manga) -> Void in
             if let manga = manga {

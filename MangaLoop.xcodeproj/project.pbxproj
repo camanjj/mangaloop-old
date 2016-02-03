@@ -625,6 +625,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.culdesaq.MangaLoop;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 			};
 			name = Debug;
 		};
@@ -644,6 +645,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.culdesaq.MangaLoop;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 			};
 			name = Release;
 		};
