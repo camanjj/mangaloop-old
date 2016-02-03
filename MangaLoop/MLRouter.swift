@@ -11,7 +11,7 @@ import Alamofire
 
 enum MLRouter: URLRequestConvertible {
     
-    static let baseUrlString = "http://localhost:3000"//"http://manga-dev.mangaloop.com/"
+    static let baseUrlString = "http://manga-dev.mangaloop.com/"
     
     
     typealias Parameters = [String:String]

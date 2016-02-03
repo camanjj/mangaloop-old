@@ -14,6 +14,7 @@ pod 'MZFormSheetPresentationController', '~> 2.2'
 pod 'MXSegmentedPager'
 pod 'Kingfisher', '~> 2.0'
 pod 'CircleProgressView', :git => 'https://github.com/CardinalNow/iOS-CircleProgressView.git'
+pod 'Pantry', :head
 
 target 'MangaLoop' do
 

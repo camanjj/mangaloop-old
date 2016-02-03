@@ -94,6 +94,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods/MXSegmentedPager.framework"
   install_framework "Pods/MZAppearance.framework"
   install_framework "Pods/MZFormSheetPresentationController.framework"
+  install_framework "Pods/Pantry.framework"
   install_framework "Pods/SnapKit.framework"
   install_framework "Pods/Unbox.framework"
 fi
@@ -108,6 +109,7 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods/MXSegmentedPager.framework"
   install_framework "Pods/MZAppearance.framework"
   install_framework "Pods/MZFormSheetPresentationController.framework"
+  install_framework "Pods/Pantry.framework"
   install_framework "Pods/SnapKit.framework"
   install_framework "Pods/Unbox.framework"
 fi

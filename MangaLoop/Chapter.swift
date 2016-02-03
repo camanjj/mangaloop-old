@@ -8,6 +8,7 @@
 
 import Foundation
 import Unbox
+import Pantry
 
 struct Chapter {
     var title: String
@@ -26,4 +27,19 @@ extension Chapter: Unboxable {
         self.group = unboxer.unbox("group")
         self.updateTime = unboxer.unbox("updateTime")
     }
+}
+
+extension Chapter: Storable {
+    
+    init(warehouse: Warehouseable) {
+        self.title = warehouse.get("title") ?? ""
+        self.link = warehouse.get("link") ?? ""
+        self.language = warehouse.get("language") ?? ""
+        self.group = warehouse.get("group") ?? ""
+        self.updateTime = warehouse.get("updateTime") ?? ""
+//        self.mangaId = warehouse.get("mangaId") ?? ""
+        //        self.age = warehouse.get("age") ?? 20.5
+        //        self.number = warehouse.get("number") ?? 10
+    }
+    
 }

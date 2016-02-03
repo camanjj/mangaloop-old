@@ -94,6 +94,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-MangaLoop/MXSegmentedPager.framework"
   install_framework "Pods-MangaLoop/MZAppearance.framework"
   install_framework "Pods-MangaLoop/MZFormSheetPresentationController.framework"
+  install_framework "Pods-MangaLoop/Pantry.framework"
   install_framework "Pods-MangaLoop/SnapKit.framework"
   install_framework "Pods-MangaLoop/Unbox.framework"
 fi
@@ -108,6 +109,7 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-MangaLoop/MXSegmentedPager.framework"
   install_framework "Pods-MangaLoop/MZAppearance.framework"
   install_framework "Pods-MangaLoop/MZFormSheetPresentationController.framework"
+  install_framework "Pods-MangaLoop/Pantry.framework"
   install_framework "Pods-MangaLoop/SnapKit.framework"
   install_framework "Pods-MangaLoop/Unbox.framework"
 fi

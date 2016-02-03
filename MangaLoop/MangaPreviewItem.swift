@@ -8,6 +8,7 @@
 
 import Foundation
 import Unbox
+import Pantry
 
 struct MangaPreviewItem: MangaItem {
     var title: String
@@ -26,4 +27,18 @@ extension MangaPreviewItem: Unboxable {
         self.mangaId = unboxer.unbox("mangaId")
         self.chapters = unboxer.unbox("chapters")
     }
+}
+
+extension MangaPreviewItem: Storable {
+    
+    init(warehouse: Warehouseable) {
+        self.title = warehouse.get("title") ?? ""
+        self.link = warehouse.get("link") ?? ""
+        self.mangaId = warehouse.get("mangaId") ?? ""
+        self.imageLink = warehouse.get("imageLink") ?? ""
+        self.chapters = warehouse.get("chapters") ?? [Chapter]()
+//        self.age = warehouse.get("age") ?? 20.5
+//        self.number = warehouse.get("number") ?? 10
+    }
+    
 }

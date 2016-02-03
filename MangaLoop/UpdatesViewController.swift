@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import MZFormSheetPresentationController
+import Pantry
 
 class UpdatesViewController: UITableViewController, ChaptersDelegate {
     
@@ -19,6 +20,11 @@ class UpdatesViewController: UITableViewController, ChaptersDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        navigationController?.navigationBar.translucent = false
+        
+        navigationItem.title = "Updates"
+        
         tableView.registerClass(MangaCell.self, forCellReuseIdentifier: MangaCell.defaultReusableId)
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 44
@@ -29,7 +35,14 @@ class UpdatesViewController: UITableViewController, ChaptersDelegate {
         refreshControl!.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
         
         
-        fetchUpdates()
+        if let manga: [MangaPreviewItem] = Pantry.unpack("update-list") {
+            
+            self.manga = manga
+            tableView.reloadData()
+            
+        } else {
+            fetchUpdates()
+        }
         
         let footerButton = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: 45))
         footerButton.setTitle("More", forState: .Normal)
@@ -95,6 +108,9 @@ class UpdatesViewController: UITableViewController, ChaptersDelegate {
                 if self.page == 1 {
                     //remove all mangas
                     self.manga = manga
+                    
+                    Pantry.pack(manga, key: "update-list")
+                    
                 } else {
                     self.manga += manga
                 }

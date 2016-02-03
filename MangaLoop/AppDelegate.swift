@@ -26,6 +26,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window!.backgroundColor = UIColor.whiteColor()
         self.window!.makeKeyAndVisible()
         
+        let navAppearence = UINavigationBar.appearance()
+        navAppearence.barTintColor = UIColor.redColor()
+        
         return true
     }
 

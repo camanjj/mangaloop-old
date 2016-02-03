@@ -3,7 +3,7 @@ PODS:
   - CircleProgressView (1.0.9)
   - HMSegmentedControl (1.5.2)
   - Kanna (1.0.2)
-  - Kingfisher (2.0.0)
+  - Kingfisher (2.0.1)
   - MXPagerView (0.1.2)
   - MXParallaxHeader (0.4.3)
   - MXSegmentedPager (3.0.4):
@@ -13,7 +13,8 @@ PODS:
   - MZAppearance (1.1.6)
   - MZFormSheetPresentationController (2.2.1):
     - MZAppearance
-  - SnapKit (0.19.0)
+  - Pantry (HEAD based on 0.2.1)
+  - SnapKit (0.19.1)
   - Unbox (1.3)
 
 DEPENDENCIES:
@@ -23,6 +24,7 @@ DEPENDENCIES:
   - Kingfisher (~> 2.0)
   - MXSegmentedPager
   - MZFormSheetPresentationController (~> 2.2)
+  - Pantry (HEAD)
   - SnapKit (~> 0.19)
   - Unbox
 
@@ -40,13 +42,14 @@ SPEC CHECKSUMS:
   CircleProgressView: fb5cd84be2abd908459d8dd087d94c4bdb7e60cf
   HMSegmentedControl: 83b9686022d2176fb6457d2bdb61e5d6393fed7d
   Kanna: 059afb193a9f8ea34f46cb55a8b11bf4257efad8
-  Kingfisher: 67d280b39e878afbd467c80953924a61950c45e4
+  Kingfisher: 3af2020040453f710507819e6aa5f5721da03d9b
   MXPagerView: b0cc1695ff8470a1bb1628e25e8878eb94606a60
   MXParallaxHeader: 96d9e7c392a26b29b97ddc34bff904a9c0baef27
   MXSegmentedPager: 48a6129c823a3a5c6f5809c43463dbdf8351f528
   MZAppearance: 0c06d3fa9cc55142f1da14bc8631fbe8fd6e19d5
   MZFormSheetPresentationController: 97b4ea7a52a8bd451ac93c1a1c6b5095e2326d1c
-  SnapKit: 57c00a21bac67a863f2192e816330f6665585938
+  Pantry: 433931c8f545dd3426ca7d09a4edd5afa89c6e01
+  SnapKit: eff58d6e3451bf2f482db2eccf86aecf371dc62d
   Unbox: af6e75fddb73ee790c80114bf7b6edef56a0dcd8
 
 COCOAPODS: 0.39.0

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1605" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MangaPageController" customModule="MangaLoop" customModuleProvider="target">
+            <connections>
+                <outlet property="scrollView" destination="46a-0b-8wB" id="mgn-bc-rlL"/>
+                <outlet property="view" destination="iN0-l3-epB" id="6of-ng-1ru"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="46a-0b-8wB">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </scrollView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="46a-0b-8wB" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="G2U-3n-1il"/>
+                <constraint firstAttribute="bottom" secondItem="46a-0b-8wB" secondAttribute="bottom" id="Juo-gj-msq"/>
+                <constraint firstAttribute="trailing" secondItem="46a-0b-8wB" secondAttribute="trailing" id="LE2-YN-p20"/>
+                <constraint firstItem="46a-0b-8wB" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="hiv-kE-nVD"/>
+            </constraints>
+        </view>
+    </objects>
+</document>

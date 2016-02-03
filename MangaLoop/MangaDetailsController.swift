@@ -8,11 +8,13 @@
 
 import Foundation
 import MXSegmentedPager
+import Kingfisher
 
 class MangaDetailsController: MXSegmentedPagerController, ChaptersDelegate {
     
     var chaptersTable: ChaptersController!
-    var detailsTable: UITableView! = UITableView()
+    var detailsView: DetailController = DetailController()
+    var headerView = DetailHeaderView.loadFromNib()
     
     var previewItem: MangaPreviewItem!
     var manga: MangaDetailItem?
@@ -32,10 +34,10 @@ class MangaDetailsController: MXSegmentedPagerController, ChaptersDelegate {
         self.segmentedPager.backgroundColor = UIColor.whiteColor()
         
         // Parallax Header
-//        self.segmentedPager.parallaxHeader.view = MXHeaderView.instanceFromNib();
-//        self.segmentedPager.parallaxHeader.mode = MXParallaxHeaderMode.Fill;
-//        self.segmentedPager.parallaxHeader.height = 150;
-//        self.segmentedPager.parallaxHeader.minimumHeight = 20;
+        self.segmentedPager.parallaxHeader.view = headerView
+        self.segmentedPager.parallaxHeader.mode = MXParallaxHeaderMode.Fill;
+        self.segmentedPager.parallaxHeader.height = 250;
+        self.segmentedPager.parallaxHeader.minimumHeight = 20;
         
         // Segmented Control customization
         self.segmentedPager.segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
@@ -54,6 +56,13 @@ class MangaDetailsController: MXSegmentedPagerController, ChaptersDelegate {
                 
                 self.manga = manga
                 self.chaptersTable = ChaptersController(manga: manga, chapters: manga.chapters, delegate: self)
+                self.detailsView.textView.text = manga.summary
+                
+                self.headerView.titleLabel.text = manga.title
+                if let imageUrl = manga.image {
+                    self.headerView.mangaImageView.kf_setImageWithURL(NSURL(string: imageUrl)!)
+                }
+                
                 
                 self.segmentedPager.reloadData()
             } else {
@@ -76,8 +85,13 @@ class MangaDetailsController: MXSegmentedPagerController, ChaptersDelegate {
         return ["Chapters", "Details"][index]
     }
     
-    override func segmentedPager(segmentedPager: MXSegmentedPager, viewForPageAtIndex index: Int) -> UIView {
-        return [(manga == nil ? UIView() : chaptersTable.view), detailsTable][index]
+//    override func segmentedPager(segmentedPager: MXSegmentedPager, viewForPageAtIndex index: Int) -> UIView {
+//        return [(manga == nil ? UIView() : chaptersTable.view), detailsTable][index]
+//    }
+    
+//    override func 
+    override func segmentedPager(segmentedPager: MXSegmentedPager, viewControllerForPageAtIndex index: Int) -> UIViewController {
+        return [(manga == nil ? UIViewController() : chaptersTable), detailsView][index]
     }
     
 }

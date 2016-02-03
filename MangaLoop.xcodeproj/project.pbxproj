@@ -11,10 +11,16 @@
 		AD345BFC1C54192200E5CF26 /* Chapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD345BFB1C54192200E5CF26 /* Chapter.swift */; };
 		AD345BFE1C541BEA00E5CF26 /* MangaPreviewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD345BFD1C541BEA00E5CF26 /* MangaPreviewItem.swift */; };
 		AD345C001C541BFA00E5CF26 /* MangaDetailItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD345BFF1C541BFA00E5CF26 /* MangaDetailItem.swift */; };
+		AD463E481C5EC62B0046D613 /* MangaPageController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD463E471C5EC62B0046D613 /* MangaPageController.xib */; };
 		AD4AD9141C5AF04700DC27C6 /* MangaReaderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4AD9131C5AF04700DC27C6 /* MangaReaderController.swift */; };
 		AD4AD9161C5B07EE00DC27C6 /* MangaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4AD9151C5B07EE00DC27C6 /* MangaItem.swift */; };
 		AD4B90F01C55D6610010C6C8 /* ChaptersController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4B90EF1C55D6610010C6C8 /* ChaptersController.swift */; };
 		AD4B90F21C55DC540010C6C8 /* ChapterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4B90F11C55DC540010C6C8 /* ChapterCell.swift */; };
+		AD55F0871C5D9C3800FB2E4E /* DetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD55F0851C5D9C3800FB2E4E /* DetailController.swift */; };
+		AD55F0881C5D9C3800FB2E4E /* DetailController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD55F0861C5D9C3800FB2E4E /* DetailController.xib */; };
+		AD55F08A1C5DE56500FB2E4E /* DetailHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD55F0891C5DE56500FB2E4E /* DetailHeaderView.xib */; };
+		AD55F08C1C5DE67900FB2E4E /* DetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD55F08B1C5DE67900FB2E4E /* DetailHeaderView.swift */; };
+		AD55F08E1C5DE6BA00FB2E4E /* UIViewLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD55F08D1C5DE6BA00FB2E4E /* UIViewLoading.swift */; };
 		AD8E018C1C509E14009241A1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8E018B1C509E14009241A1 /* AppDelegate.swift */; };
 		AD8E018E1C509E14009241A1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8E018D1C509E14009241A1 /* ViewController.swift */; };
 		AD8E01911C509E14009241A1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD8E018F1C509E14009241A1 /* Main.storyboard */; };
@@ -57,10 +63,16 @@
 		AD345BFB1C54192200E5CF26 /* Chapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chapter.swift; sourceTree = "<group>"; };
 		AD345BFD1C541BEA00E5CF26 /* MangaPreviewItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MangaPreviewItem.swift; sourceTree = "<group>"; };
 		AD345BFF1C541BFA00E5CF26 /* MangaDetailItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MangaDetailItem.swift; sourceTree = "<group>"; };
+		AD463E471C5EC62B0046D613 /* MangaPageController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MangaPageController.xib; sourceTree = "<group>"; };
 		AD4AD9131C5AF04700DC27C6 /* MangaReaderController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MangaReaderController.swift; sourceTree = "<group>"; };
 		AD4AD9151C5B07EE00DC27C6 /* MangaItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MangaItem.swift; sourceTree = "<group>"; };
 		AD4B90EF1C55D6610010C6C8 /* ChaptersController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChaptersController.swift; sourceTree = "<group>"; };
 		AD4B90F11C55DC540010C6C8 /* ChapterCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChapterCell.swift; sourceTree = "<group>"; };
+		AD55F0851C5D9C3800FB2E4E /* DetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailController.swift; sourceTree = "<group>"; };
+		AD55F0861C5D9C3800FB2E4E /* DetailController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailController.xib; sourceTree = "<group>"; };
+		AD55F0891C5DE56500FB2E4E /* DetailHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailHeaderView.xib; sourceTree = "<group>"; };
+		AD55F08B1C5DE67900FB2E4E /* DetailHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailHeaderView.swift; sourceTree = "<group>"; };
+		AD55F08D1C5DE6BA00FB2E4E /* UIViewLoading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewLoading.swift; sourceTree = "<group>"; };
 		AD5F6F031C51E35E002CF84F /* MangaLoop-BridgingHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MangaLoop-BridgingHeader.h"; sourceTree = "<group>"; };
 		AD8E01881C509E14009241A1 /* MangaLoop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MangaLoop.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD8E018B1C509E14009241A1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -209,6 +221,9 @@
 			children = (
 				AD9244001C55A18600C19BFC /* Cells */,
 				AD9243FE1C5576BE00C19BFC /* ReusableView.swift */,
+				AD55F0891C5DE56500FB2E4E /* DetailHeaderView.xib */,
+				AD55F08B1C5DE67900FB2E4E /* DetailHeaderView.swift */,
+				AD55F08D1C5DE6BA00FB2E4E /* UIViewLoading.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -229,7 +244,10 @@
 				AD4B90EF1C55D6610010C6C8 /* ChaptersController.swift */,
 				ADFF06111C571ADF00BC6ABE /* MangaDetailsController.swift */,
 				ADFF06131C59979A00BC6ABE /* MangaPageController.swift */,
+				AD463E471C5EC62B0046D613 /* MangaPageController.xib */,
 				AD4AD9131C5AF04700DC27C6 /* MangaReaderController.swift */,
+				AD55F0851C5D9C3800FB2E4E /* DetailController.swift */,
+				AD55F0861C5D9C3800FB2E4E /* DetailController.xib */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -352,6 +370,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD55F0881C5D9C3800FB2E4E /* DetailController.xib in Resources */,
+				AD463E481C5EC62B0046D613 /* MangaPageController.xib in Resources */,
+				AD55F08A1C5DE56500FB2E4E /* DetailHeaderView.xib in Resources */,
 				AD8E01961C509E14009241A1 /* LaunchScreen.storyboard in Resources */,
 				AD8E01931C509E14009241A1 /* Assets.xcassets in Resources */,
 				AD8E01911C509E14009241A1 /* Main.storyboard in Resources */,
@@ -430,10 +451,13 @@
 				AD9243FC1C554A5500C19BFC /* MangaManager.swift in Sources */,
 				AD9244051C55ABD200C19BFC /* UpdatesViewController.swift in Sources */,
 				AD345BFC1C54192200E5CF26 /* Chapter.swift in Sources */,
+				AD55F08E1C5DE6BA00FB2E4E /* UIViewLoading.swift in Sources */,
 				AD4B90F21C55DC540010C6C8 /* ChapterCell.swift in Sources */,
 				AD8E018E1C509E14009241A1 /* ViewController.swift in Sources */,
 				ADFF06141C59979A00BC6ABE /* MangaPageController.swift in Sources */,
+				AD55F0871C5D9C3800FB2E4E /* DetailController.swift in Sources */,
 				AD9243FF1C5576BE00C19BFC /* ReusableView.swift in Sources */,
+				AD55F08C1C5DE67900FB2E4E /* DetailHeaderView.swift in Sources */,
 				AD4AD9141C5AF04700DC27C6 /* MangaReaderController.swift in Sources */,
 				AD345BFE1C541BEA00E5CF26 /* MangaPreviewItem.swift in Sources */,
 				AD9243FA1C554A0F00C19BFC /* MLRouter.swift in Sources */,
@@ -596,8 +620,6 @@
 					"-framework",
 					"\"Alamofire\"",
 					"-framework",
-					"\"Fuzi\"",
-					"-framework",
 					"\"Kanna\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.culdesaq.MangaLoop;
@@ -617,8 +639,6 @@
 					"$(inherited)",
 					"-framework",
 					"\"Alamofire\"",
-					"-framework",
-					"\"Fuzi\"",
 					"-framework",
 					"\"Kanna\"",
 				);

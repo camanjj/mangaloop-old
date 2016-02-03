@@ -30,7 +30,9 @@ class MangaReaderController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationController?.navigationBar.translucent = true
+        automaticallyAdjustsScrollViewInsets = false
+        navigationController?.navigationBar.translucent = false
+        navigationController?.toolbar.translucent = false
         
         pageController.dataSource = self
         pageController.setViewControllers([UIViewController()], direction: .Forward, animated: true, completion: nil)
@@ -68,6 +70,7 @@ class MangaReaderController: UIViewController {
                 for page in pages {
                     self.mangaPages.append(MangaPageController(imageLink: page))
                 }
+                
                 
                 self.pageController.setViewControllers([self.mangaPages.first!], direction: .Forward, animated: true, completion: nil)
                 self.pageController.dataSource = nil
