@@ -86,6 +86,7 @@ strip_invalid_archs() {
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods/Alamofire.framework"
   install_framework "Pods/CircleProgressView.framework"
+  install_framework "Pods/DZNEmptyDataSet.framework"
   install_framework "Pods/HMSegmentedControl.framework"
   install_framework "Pods/Kanna.framework"
   install_framework "Pods/Kingfisher.framework"
@@ -97,12 +98,14 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods/Pantry.framework"
   install_framework "Pods/Realm.framework"
   install_framework "Pods/RealmSwift.framework"
+  install_framework "Pods/SCLAlertView.framework"
   install_framework "Pods/SnapKit.framework"
   install_framework "Pods/Unbox.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods/Alamofire.framework"
   install_framework "Pods/CircleProgressView.framework"
+  install_framework "Pods/DZNEmptyDataSet.framework"
   install_framework "Pods/HMSegmentedControl.framework"
   install_framework "Pods/Kanna.framework"
   install_framework "Pods/Kingfisher.framework"
@@ -114,6 +117,7 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods/Pantry.framework"
   install_framework "Pods/Realm.framework"
   install_framework "Pods/RealmSwift.framework"
+  install_framework "Pods/SCLAlertView.framework"
   install_framework "Pods/SnapKit.framework"
   install_framework "Pods/Unbox.framework"
 fi

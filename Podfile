@@ -16,6 +16,8 @@ pod 'Kingfisher', '~> 2.0'
 pod 'CircleProgressView', :git => 'https://github.com/CardinalNow/iOS-CircleProgressView.git'
 pod 'Pantry', :head
 pod 'RealmSwift', '~> 0.97'
+pod 'DZNEmptyDataSet'
+pod 'SCLAlertView'
 
 target 'MangaLoop' do
 

@@ -20,8 +20,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Loads UIWindow and temporary RootViewController
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         
-        let navigationController = UINavigationController(rootViewController: UpdatesViewController())
-        self.window!.rootViewController = navigationController
+        let updatesNavigationController = UINavigationController(rootViewController: UpdatesViewController())
+        let followsNavigationController = UINavigationController(rootViewController: FollowsController())
+        
+        let tabController = UITabBarController()
+        tabController.viewControllers = [updatesNavigationController, followsNavigationController]
+        
+        self.window!.rootViewController = tabController
         
         self.window!.backgroundColor = UIColor.whiteColor()
         self.window!.makeKeyAndVisible()

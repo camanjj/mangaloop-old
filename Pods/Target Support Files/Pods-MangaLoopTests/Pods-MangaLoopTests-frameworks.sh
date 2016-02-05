@@ -86,6 +86,7 @@ strip_invalid_archs() {
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-MangaLoopTests/Alamofire.framework"
   install_framework "Pods-MangaLoopTests/CircleProgressView.framework"
+  install_framework "Pods-MangaLoopTests/DZNEmptyDataSet.framework"
   install_framework "Pods-MangaLoopTests/HMSegmentedControl.framework"
   install_framework "Pods-MangaLoopTests/Kanna.framework"
   install_framework "Pods-MangaLoopTests/Kingfisher.framework"
@@ -97,12 +98,14 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-MangaLoopTests/Pantry.framework"
   install_framework "Pods-MangaLoopTests/Realm.framework"
   install_framework "Pods-MangaLoopTests/RealmSwift.framework"
+  install_framework "Pods-MangaLoopTests/SCLAlertView.framework"
   install_framework "Pods-MangaLoopTests/SnapKit.framework"
   install_framework "Pods-MangaLoopTests/Unbox.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-MangaLoopTests/Alamofire.framework"
   install_framework "Pods-MangaLoopTests/CircleProgressView.framework"
+  install_framework "Pods-MangaLoopTests/DZNEmptyDataSet.framework"
   install_framework "Pods-MangaLoopTests/HMSegmentedControl.framework"
   install_framework "Pods-MangaLoopTests/Kanna.framework"
   install_framework "Pods-MangaLoopTests/Kingfisher.framework"
@@ -114,6 +117,7 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-MangaLoopTests/Pantry.framework"
   install_framework "Pods-MangaLoopTests/Realm.framework"
   install_framework "Pods-MangaLoopTests/RealmSwift.framework"
+  install_framework "Pods-MangaLoopTests/SCLAlertView.framework"
   install_framework "Pods-MangaLoopTests/SnapKit.framework"
   install_framework "Pods-MangaLoopTests/Unbox.framework"
 fi
