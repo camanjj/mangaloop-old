@@ -12,7 +12,7 @@ import SnapKit
 
 class MangaCell: UITableViewCell {
     let titleLabel = UILabel()
-    var chaptersButton: UIButton?
+    var chaptersButton: UIButton!
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -42,15 +42,23 @@ class MangaCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(manga: MangaPreviewItem) {
+    func configure(manga: MangaPreviewItem, isFollowing: Bool = false) {
         
         titleLabel.text = manga.title
         
         if let chapters = manga.chapters {
             accessoryView = chaptersButton
-            chaptersButton!.setTitle("\(chapters.count)", forState: .Normal)
+            chaptersButton.setTitle("\(chapters.count)", forState: .Normal)
         } else {
             accessoryView = nil
+        }
+        
+        if isFollowing == true {
+            chaptersButton.backgroundColor = UIColor.redColor()
+            chaptersButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        } else {
+            chaptersButton.backgroundColor = UIColor.clearColor()
+            chaptersButton.setTitleColor(UIColor.redColor(), forState: .Normal)
         }
         
     }

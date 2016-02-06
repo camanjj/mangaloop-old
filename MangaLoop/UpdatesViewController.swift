@@ -147,7 +147,8 @@ class UpdatesViewController: UITableViewController, ChaptersDelegate {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(MangaCell.defaultReusableId, forIndexPath: indexPath) as! MangaCell
         
-        cell.configure(manga[indexPath.row])
+        let manga = self.manga[indexPath.row]
+        cell.configure(manga, isFollowing: manga.isFollowing())
         
         
         return cell

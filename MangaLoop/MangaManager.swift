@@ -115,9 +115,9 @@ class MangaManager {
                                             secret = queryParams.filter({$0.name == "k"}).first?.value {
                                                 
                                                 let userDefaults = NSUserDefaults.standardUserDefaults()
-                                                userDefaults.setObject(info, forKey: "cookies")
-                                                userDefaults.setObject(secret, forKey: "secret")
-                                                userDefaults.setBool(true, forKey: "signedIn")
+                                                userDefaults.setObject(info, forKey: Constants.Defaults.Cookies)
+                                                userDefaults.setObject(secret, forKey: Constants.Defaults.Secret)
+                                                userDefaults.setBool(true, forKey: Constants.Defaults.IsSignedIn)
                                                 userDefaults.synchronize()
                                                 callback(true)
                                         }
@@ -138,7 +138,7 @@ class MangaManager {
     }
     
     static func isSignedIn() -> Bool {
-        return NSUserDefaults.standardUserDefaults().boolForKey("signedIn")
+        return NSUserDefaults.standardUserDefaults().boolForKey(Constants.Defaults.IsSignedIn)
     }
     
     //MARK: Follows
