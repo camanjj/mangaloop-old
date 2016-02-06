@@ -137,8 +137,17 @@ class MangaManager {
 
     }
     
+    //MARK: Helper class functions
     static func isSignedIn() -> Bool {
         return NSUserDefaults.standardUserDefaults().boolForKey(Constants.Defaults.IsSignedIn)
+    }
+    
+    static func languages() -> [String] {
+        if let languages = NSUserDefaults.standardUserDefaults().stringArrayForKey(Constants.Defaults.Languages) {
+            return languages
+        } else {
+            return ["English"]
+        }
     }
     
     //MARK: Follows

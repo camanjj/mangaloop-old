@@ -16,11 +16,13 @@ struct Constants {
         static let Follows = "follow-list"
         static let FetchFollows = "fetch-follows"
     }
-    
+
     struct Defaults {
         static let IsSignedIn = "signedIn"
         static let Cookies = "cookies"
         static let Secret = "secret"
+        
+        static let Languages = "languages"
     }
     
 }

@@ -47,10 +47,19 @@ enum MLRouter: URLRequestConvertible {
         mutableURLRequest.HTTPMethod = method.rawValue
         
         
-        if let cookies = NSUserDefaults.standardUserDefaults().dictionaryForKey("cookies") {
-            let cookiesString = cookies.map {"\($0)=\($1)"}.joinWithSeparator("; ")
-            mutableURLRequest.setValue(cookiesString, forHTTPHeaderField: "Cookie")
+        var cookies = [String:AnyObject]()
+        
+        cookies["lang_option"] = MangaManager.languages().joinWithSeparator("%3B")
+        
+        // handle a signed in user
+        if let signInCookies = NSUserDefaults.standardUserDefaults().dictionaryForKey("cookies") {
+            for (key, value) in signInCookies {
+                cookies[key] = value
+            }
         }
+        
+        let cookiesString = cookies.map {"\($0)=\($1)"}.joinWithSeparator("; ")
+        mutableURLRequest.setValue(cookiesString, forHTTPHeaderField: "Cookie")
         
         
         switch self {
