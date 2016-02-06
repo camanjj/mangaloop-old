@@ -10,6 +10,8 @@ import Foundation
 import Alamofire
 import Unbox
 import Kanna
+import Pantry
+import RealmSwift
 
 
 typealias MangaList = [MangaPreviewItem]? -> Void
@@ -152,15 +154,50 @@ class MangaManager {
         }
     }
     
-    func getAllFollows(callback: [FollowManga]? -> Void) {
+    func getAllFollowsIfNeeded(callback: ((fetched: Bool, error: Bool) -> Void)?) {
+        
+        // no reason to query from the server again
+        if let shouldFetch: Bool = Pantry.unpack(Constants.Pantry.FetchFollows) where shouldFetch == false {
+            print("No need to fetch manga")
+            callback?(fetched: false, error: false)
+            return
+        }
+        
         Alamofire.request(MLRouter.Get("all/follows", nil))
+            .responseJSON(completionHandler: { (response) -> Void in
+                print(response)
+            })
             .responseData { (response) -> Void in
                 if let data = response.result.value {
-                    let mangas: [FollowManga]? = Unbox(data)
-                    callback(mangas)
+                    guard let manga: [FollowManga] = Unbox(data) else {
+                        callback?(fetched: true, error: true)
+                        return
+                    }
+                    
+                    print("Saving followed manga")
+                    
+                    //save the database
+                    let realm = try! Realm()
+                    
+                    let ids = manga.map({$0.id})
+                    //find manga that are not followed anymore
+                    let predicate = NSPredicate(format: "NOT(id IN %@)", ids)
+                    let unFollowedManga = realm.objects(FollowManga).filter(predicate)
+                    
+                    //save and delete unfollowed manga
+                    try! realm.write {
+                        realm.delete(unFollowedManga)
+                        realm.add(manga, update: true)
+                    }
+                    
+                    // pack for 24 hours
+                    Pantry.pack(false, key: Constants.Pantry.FetchFollows, expires: .Seconds(60 * 60 * 24))
+                    
+                    
+                    callback?(fetched: true, error: false)
                 }
                 
-                callback(nil)
+                callback?(fetched: false, error: true)
         }
     }
 }

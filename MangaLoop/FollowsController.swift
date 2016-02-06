@@ -20,6 +20,8 @@ class FollowsController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyD
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationItem.title = "Follows"
+        
         self.tableView.emptyDataSetSource = self;
         self.tableView.emptyDataSetDelegate = self;
         
@@ -29,6 +31,12 @@ class FollowsController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyD
         tableView.registerClass(MangaCell.self, forCellReuseIdentifier: MangaCell.defaultReusableId)
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 44
+        
+        
+        // add pull to refresh control
+        refreshControl = UIRefreshControl()
+        refreshControl!.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl!.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
         
         
         if MangaManager.isSignedIn() {
@@ -47,6 +55,11 @@ class FollowsController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyD
         
     }
     
+    func refresh(object: AnyObject) {
+        page = 1 // reset the page counter
+        fetchFollows()
+    }
+    
     func fetchFollows() {
         
         
@@ -55,6 +68,10 @@ class FollowsController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyD
     }
     
     func handleFollows( manga: [MangaPreviewItem]?) {
+        
+        if let refreshControl = self.refreshControl {
+            refreshControl.endRefreshing()
+        }
         
         if let manga = manga {
             
@@ -120,7 +137,7 @@ class FollowsController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyD
         let cell = tableView.dequeueReusableCellWithIdentifier(MangaCell.defaultReusableId, forIndexPath: indexPath) as! MangaCell
         
         cell.configure(manga![indexPath.row])
-        
+        cell.accessoryType = .None
         
         return cell
     }

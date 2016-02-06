@@ -13,18 +13,18 @@ import Unbox
 
 class FollowManga : Object, Unboxable {
     dynamic var title = ""
-    dynamic var mangaId = ""
+    dynamic var id = ""
     dynamic var link = ""
     
     override static func primaryKey() -> String? {
-        return "mangaId"
+        return "id"
     }
     
     convenience required init(unboxer: Unboxer) {
         self.init()
         self.title = unboxer.unbox("title")
         self.link = unboxer.unbox("link")
-        self.mangaId = unboxer.unbox("mangaId")
+        self.id = unboxer.unbox("id")
     }
     
 }
