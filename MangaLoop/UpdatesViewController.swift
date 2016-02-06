@@ -88,6 +88,9 @@ class UpdatesViewController: UITableViewController, ChaptersDelegate {
                 let formSheet = MZFormSheetPresentationViewController(contentViewController: navController)
                 
                 formSheet.interactivePanGestureDissmisalDirection = .All;
+//                formSheet.allowDismissByPanningPresentedView = true
+                formSheet.presentationController?.shouldDismissOnBackgroundViewTap = true
+
 
                 
                 self.presentViewController(formSheet, animated: true, completion: nil)
