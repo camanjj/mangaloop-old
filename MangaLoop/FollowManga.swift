@@ -27,4 +27,23 @@ class FollowManga : Object, Unboxable {
         self.id = unboxer.unbox("id")
     }
     
+    class func getAllFollows() -> [FollowManga]? {
+        
+        if !MangaManager.isSignedIn() {
+            return nil
+        }
+        
+        
+        let realm = try! Realm()
+        
+        let results = realm.objects(FollowManga)
+        var manga = [FollowManga]()
+        for m in results {
+            manga.append(m)
+        }
+        
+        return manga
+        
+    }
+    
 }

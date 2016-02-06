@@ -343,6 +343,7 @@
 				TargetAttributes = {
 					AD8E01871C509E14009241A1 = {
 						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = 9Z75PJJYDP;
 					};
 					AD8E019B1C509E14009241A1 = {
 						CreatedOnToolsVersion = 7.2;
@@ -625,6 +626,8 @@
 			baseConfigurationReference = 8E1E4451EC6FEF6E2B58C821 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = MangaLoop/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -636,6 +639,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.culdesaq.MangaLoop;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 			};
@@ -646,6 +650,8 @@
 			baseConfigurationReference = 505C81DCE912EA676366A5DE /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = MangaLoop/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -657,6 +663,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.culdesaq.MangaLoop;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 			};
 			name = Release;

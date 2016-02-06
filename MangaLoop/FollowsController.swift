@@ -79,7 +79,7 @@ class FollowsController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyD
                 //remove all mangas
                 self.manga = manga
                 
-                Pantry.pack(manga, key: "follow-list")
+                Pantry.pack(manga, key: Constants.Pantry.Follows)
                 
             } else {
                 self.manga! += manga
@@ -118,6 +118,7 @@ class FollowsController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyD
                 if success {
                     print("Login Success")
                     MangaManager.sharedManager.getFollowsList(self.page, callback: self.handleFollows)
+                    MangaManager.sharedManager.getAllFollowsIfNeeded(nil)
 
                 }
             })

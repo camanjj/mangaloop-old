@@ -156,6 +156,13 @@ class MangaManager {
     
     func getAllFollowsIfNeeded(callback: ((fetched: Bool, error: Bool) -> Void)?) {
         
+        
+        if !MangaManager.isSignedIn() {
+            print("User not signed in")
+            callback?(fetched: false, error: false)
+            return
+        }
+        
         // no reason to query from the server again
         if let shouldFetch: Bool = Pantry.unpack(Constants.Pantry.FetchFollows) where shouldFetch == false {
             print("No need to fetch manga")

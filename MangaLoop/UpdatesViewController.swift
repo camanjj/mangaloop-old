@@ -10,16 +10,29 @@ import Foundation
 import UIKit
 import MZFormSheetPresentationController
 import Pantry
+import RealmSwift
 
 class UpdatesViewController: UITableViewController, ChaptersDelegate {
     
     var page = 1
     var manga: [MangaPreviewItem] = []
+    
+    var followManga: [FollowManga]?
+    var followToken: NotificationToken!
+    
     var activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
     var footerButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        followManga = FollowManga.getAllFollows()
+        let realm = try! Realm()
+        followToken = realm.objects(FollowManga).addNotificationBlock { (results, error) -> () in
+            self.followManga = FollowManga.getAllFollows()
+            self.tableView.reloadData()
+        }
+        
         
         navigationController?.navigationBar.translucent = false
         
@@ -148,7 +161,8 @@ class UpdatesViewController: UITableViewController, ChaptersDelegate {
         let cell = tableView.dequeueReusableCellWithIdentifier(MangaCell.defaultReusableId, forIndexPath: indexPath) as! MangaCell
         
         let manga = self.manga[indexPath.row]
-        cell.configure(manga, isFollowing: manga.isFollowing())
+        let isFollowing: Bool! = followManga != nil ? !followManga!.filter({$0.id == manga.mangaId}).isEmpty : false
+        cell.configure(manga, isFollowing: isFollowing)
         
         
         return cell
@@ -160,5 +174,9 @@ class UpdatesViewController: UITableViewController, ChaptersDelegate {
         navigationController?.pushViewController(detailsController, animated: true)
     }
     
+    
+    deinit {
+        followToken.stop()
+    }
     
 }
