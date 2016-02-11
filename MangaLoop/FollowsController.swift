@@ -20,7 +20,7 @@ class FollowsController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyD
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = "Follows"
+        title = "Follows"
         
         self.tableView.emptyDataSetSource = self;
         self.tableView.emptyDataSetDelegate = self;

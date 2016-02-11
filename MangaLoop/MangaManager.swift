@@ -150,6 +150,12 @@ class MangaManager {
         }
     }
     
+    static func setLanguages(languages: [String]) {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setObject(languages, forKey: Constants.Defaults.Languages)
+        defaults.synchronize()
+    }
+    
     //MARK: Follows
     func getFollowsList(page: Int = 1, callback: MangaList) {
         Alamofire.request(MLRouter.Get("follows", nil))

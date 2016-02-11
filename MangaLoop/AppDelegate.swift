@@ -17,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
+        // sets the status bar to white
         UIApplication.sharedApplication().statusBarStyle = .LightContent
         UINavigationBar.appearance().barStyle = .Black
 
@@ -24,11 +25,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Loads UIWindow and temporary RootViewController
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         
-        let updatesNavigationController = UINavigationController(rootViewController: UpdatesViewController())
-        let followsNavigationController = UINavigationController(rootViewController: FollowsController())
+        let updatesController = UpdatesViewController()
+        updatesController.title = "Updates"
+        let updatesNavigationController = UINavigationController(rootViewController: updatesController)
+        let followsController = FollowsController()
+        followsController.title = "Follows"
+        let followsNavigationController = UINavigationController(rootViewController: followsController)
+        let settingsController = SettingsViewController()
+        settingsController.title = "Settigns"
+        let settingsNavigaitonController = UINavigationController(rootViewController: settingsController)
         
         let tabController = UITabBarController()
-        tabController.viewControllers = [updatesNavigationController, followsNavigationController]
+        tabController.viewControllers = [updatesNavigationController, followsNavigationController, settingsNavigaitonController]
         
         self.window!.rootViewController = tabController
         

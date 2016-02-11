@@ -36,7 +36,7 @@ class UpdatesViewController: UITableViewController, ChaptersDelegate {
         
         navigationController?.navigationBar.translucent = false
         
-        navigationItem.title = "Updates"
+        title = "Updates"
         
         tableView.registerClass(MangaCell.self, forCellReuseIdentifier: MangaCell.defaultReusableId)
         tableView.rowHeight = UITableViewAutomaticDimension
