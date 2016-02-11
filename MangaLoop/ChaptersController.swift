@@ -30,7 +30,7 @@ class ChaptersController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.registerClass(ChapterCell.self, forCellReuseIdentifier: ChapterCell.defaultReusableId)
+        tableView.registerClass(ItemCell.self, forCellReuseIdentifier: ItemCell.defaultReusableId)
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 44
         
@@ -49,7 +49,7 @@ class ChaptersController: UITableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier(ChapterCell.defaultReusableId, forIndexPath: indexPath) as! ChapterCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(ItemCell.defaultReusableId, forIndexPath: indexPath) as! ItemCell
         
         cell.configure(chapters![indexPath.row])
         

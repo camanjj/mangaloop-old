@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import SnapKit
 
-class ChapterCell: UITableViewCell {
+class ItemCell: UITableViewCell {
     let headerLabel = UILabel()
     let subHeaderLabel = UILabel()
     
@@ -47,6 +47,14 @@ class ChapterCell: UITableViewCell {
         headerLabel.text = chapter.title.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
         subHeaderLabel.text = chapter.updateTime
         
+    }
+    
+    func configure(header: String, subHeader: String? = nil) {
+        headerLabel.text = header
+        
+        if let subHeader = subHeader {
+            subHeaderLabel.text = subHeader
+        }
     }
 }
 

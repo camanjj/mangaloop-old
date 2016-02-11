@@ -28,7 +28,8 @@ class FollowsController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyD
         // A little trick for removing the cell separators
         self.tableView.tableFooterView = UIView()
         
-        tableView.registerClass(MangaCell.self, forCellReuseIdentifier: MangaCell.defaultReusableId)
+        tableView.registerClass(ItemCell.self, forCellReuseIdentifier: ItemCell.defaultReusableId)
+//        tableView.registerCellClass(MangaCell)
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 44
         
@@ -42,7 +43,7 @@ class FollowsController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyD
         if MangaManager.isSignedIn() {
             
             // attempt to load from Pantry
-            if let manga: [MangaPreviewItem] = Pantry.unpack("follow-list") {
+            if let manga: [MangaPreviewItem] = Pantry.unpack(Constants.Pantry.Follows) {
                 
                 self.manga = manga
                 tableView.reloadData()
@@ -135,9 +136,11 @@ class FollowsController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyD
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(MangaCell.defaultReusableId, forIndexPath: indexPath) as! MangaCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(ItemCell.defaultReusableId, forIndexPath: indexPath) as! ItemCell
         
-        cell.configure(manga![indexPath.row])
+//        cell.configure(manga![indexPath.row])
+        let m = manga![indexPath.row]
+        cell.configure(m.title, subHeader: m.chapters!.first!.updateTime)
         cell.accessoryType = .None
         
         return cell
