@@ -32,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         followsController.title = "Follows"
         let followsNavigationController = UINavigationController(rootViewController: followsController)
         let settingsController = SettingsViewController()
-        settingsController.title = "Settigns"
+        settingsController.title = "Settings"
         let settingsNavigaitonController = UINavigationController(rootViewController: settingsController)
         
         let tabController = UITabBarController()

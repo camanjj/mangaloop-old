@@ -18,6 +18,7 @@ pod 'Pantry', :head
 pod 'RealmSwift', '~> 0.98'
 pod 'DZNEmptyDataSet'
 pod 'SCLAlertView'
+pod 'Eureka', '~> 1.3'
 
 target 'MangaLoop' do
 
