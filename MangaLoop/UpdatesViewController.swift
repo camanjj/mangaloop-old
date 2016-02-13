@@ -26,6 +26,8 @@ class UpdatesViewController: UITableViewController, ChaptersDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+        
         followManga = FollowManga.getAllFollows()
         let realm = try! Realm()
         followToken = realm.objects(FollowManga).addNotificationBlock { (results, error) -> () in

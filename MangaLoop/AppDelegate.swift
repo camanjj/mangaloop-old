@@ -45,8 +45,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let navAppearence = UINavigationBar.appearance()
         navAppearence.barTintColor = UIColor.redColor()
+        navAppearence.tintColor = UIColor.whiteColor()
         navAppearence.translucent = false
         navAppearence.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+        
+//        let navItemAppearence = UINavigationItem.ap
         
         MangaManager.sharedManager.getAllFollowsIfNeeded(nil)
         

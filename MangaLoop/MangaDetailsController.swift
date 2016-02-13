@@ -37,7 +37,7 @@ class MangaDetailsController: MXSegmentedPagerController, ChaptersDelegate {
         self.segmentedPager.parallaxHeader.view = headerView
         self.segmentedPager.parallaxHeader.mode = MXParallaxHeaderMode.Fill;
         self.segmentedPager.parallaxHeader.height = 250;
-        self.segmentedPager.parallaxHeader.minimumHeight = 20;
+        self.segmentedPager.parallaxHeader.minimumHeight = 65;
         
         // Segmented Control customization
         self.segmentedPager.segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;

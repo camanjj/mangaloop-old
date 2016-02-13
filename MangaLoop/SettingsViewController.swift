@@ -15,6 +15,7 @@ class SettingsViewController: FormViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
 
         form +++ Section("Global Settings")
             <<< MultipleSelectorRow<String>() {
