@@ -14,7 +14,7 @@ enum MLRouter: URLRequestConvertible {
     static let baseUrlString = "http://manga-dev.mangaloop.com/"
     
     
-    typealias Parameters = [String:String]
+    typealias Parameters = [String:AnyObject]
     typealias Endpoint = String
     
     case Get(Endpoint, Parameters?)

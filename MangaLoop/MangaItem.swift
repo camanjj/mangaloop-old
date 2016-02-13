@@ -12,4 +12,5 @@ protocol MangaItem {
     var title: String { get }
     var link: String  { get }
     var chapters: [Chapter]? { get }
+    var mangaId: String { get }
 }

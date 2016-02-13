@@ -12,7 +12,7 @@ import Kingfisher
 import SCLAlertView
 
 
-class MangaDetailsController: MXSegmentedPagerController, ChaptersDelegate {
+class MangaDetailsController: MXSegmentedPagerController, ChaptersDelegate, DetailHeaderDelegate {
     
     var chaptersTable: ChaptersController!
     var detailsView: DetailController = DetailController()
@@ -20,6 +20,21 @@ class MangaDetailsController: MXSegmentedPagerController, ChaptersDelegate {
     
     var previewItem: MangaPreviewItem!
     var manga: MangaDetailItem?
+    var isFollowing: Bool? {
+        didSet {
+            
+            if isFollowing == true {
+                
+                self.headerView.followButton.endAnimation(0, title: "Following")
+//                self.headerView
+                
+            } else {
+                self.headerView.followButton.endAnimation(0, title: "+Follow")
+
+            }
+            
+        }
+    }
     
     convenience init(manga: MangaPreviewItem) {
         self.init()
@@ -39,7 +54,7 @@ class MangaDetailsController: MXSegmentedPagerController, ChaptersDelegate {
         self.segmentedPager.parallaxHeader.view = headerView
         self.segmentedPager.parallaxHeader.mode = MXParallaxHeaderMode.Fill;
         self.segmentedPager.parallaxHeader.height = 250;
-        self.segmentedPager.parallaxHeader.minimumHeight = 65;
+        self.segmentedPager.parallaxHeader.minimumHeight = 80;
         
         // Segmented Control customization
         self.segmentedPager.segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
@@ -66,28 +81,52 @@ class MangaDetailsController: MXSegmentedPagerController, ChaptersDelegate {
     }
     
     func fetchInfo() {
-        MangaManager.sharedManager.getMangaDetails(previewItem.link) { [unowned self](manga) -> Void in
+        MangaManager.sharedManager.getMangaDetails(previewItem.link) { [weak self](manga) -> Void in
             if let manga = manga {
                 
-                self.manga = manga
-                self.chaptersTable = ChaptersController(manga: manga, chapters: manga.chapters, delegate: self)
-                self.detailsView.textView.text = manga.summary
+                guard let wself = self else { return }
                 
-                self.headerView.titleLabel.text = manga.title
+                wself.manga = manga
+                wself.isFollowing = manga.following
+                wself.chaptersTable = ChaptersController(manga: manga, chapters: manga.chapters, delegate: wself)
+                wself.detailsView.textView.text = manga.summary
+                
+                wself.headerView.titleLabel.text = manga.title
                 if let imageUrl = manga.image {
-                    self.headerView.mangaImageView.kf_setImageWithURL(NSURL(string: imageUrl)!)
+                    wself.headerView.mangaImageView.kf_showIndicatorWhenLoading = true
+                    wself.headerView.mangaImageView.kf_setImageWithURL(NSURL(string: imageUrl)!)
+                }
+                
+                if let followers = manga.followers, isFollowing = manga.following {
+                    wself.headerView.followersLabel.text = "\(followers) Followers"
+                    
+                    if isFollowing {
+                        wself.headerView.followButton.setTitle("Following", forState: .Normal)
+                    } else {
+                        wself.headerView.followButton.setTitle("+ Follow", forState: .Normal)
+                    }
+                    
+                    wself.headerView.delegate = wself
+                    
+                    
+                    wself.headerView.followersLabel.hidden = false
+                    wself.headerView.followButton.hidden = false
+                    
+                } else {
+                    wself.headerView.followersLabel.hidden = true
+                    wself.headerView.followButton.hidden = true
                 }
                 
                 
                 // show warning for mature warning
-                if let mature = manga.mature where MangaManager.getToggleSettings(.MatureWarning) == true {
+                if let mature = manga.mature where !mature.isEmpty && MangaManager.getToggleSettings(.MatureWarning) == true {
                     
                     let alert = SCLAlertView()
                     alert.addButton("Go back", action: { () -> Void in
-                        self.navigationController?.popViewControllerAnimated(true)
+                        wself.navigationController?.popViewControllerAnimated(true)
                     })
                     alert.addButton("Continue", action: { () -> Void in
-                        self.segmentedPager.reloadData()
+                        wself.segmentedPager.reloadData()
                     })
                     alert.showCloseButton = false
                     alert.showWarning("Mature Manga", subTitle: mature)
@@ -98,11 +137,32 @@ class MangaDetailsController: MXSegmentedPagerController, ChaptersDelegate {
                 
                 
                 
-                self.segmentedPager.reloadData()
+                wself.segmentedPager.reloadData()
             } else {
                 // failed
             }
         }
+    }
+    
+    func followClick() {
+        
+        guard let manga = self.manga else { return }
+        
+        let action: FollowAction = manga.following == true ? .UnFollow : .Follow
+        
+        MangaManager.sharedManager.followManga(self.manga!, action: action, callback: { (success) -> Void in
+            
+            if success {
+                
+                // reverse if the user was following
+                self.isFollowing = !self.isFollowing!
+                
+            } else {
+                
+            }
+            
+        })
+        
     }
     
     //MARK: Chapters Delegate Method

@@ -15,6 +15,11 @@ import RealmSwift
 
 
 typealias MangaList = [MangaPreviewItem]? -> Void
+typealias SuccessCallback = Bool -> Void
+enum FollowAction: String {
+    case Follow = "follow"
+    case UnFollow = "unfollow"
+}
 
 class MangaManager {
     
@@ -37,6 +42,9 @@ class MangaManager {
     
     func getMangaDetails(page: String, callback: MangaDetailItem? -> Void) {
         Alamofire.request(MLRouter.Get("info", ["page": page]))
+            .responseJSON(completionHandler: { (response) -> Void in
+                print(response.result.value)
+            })
             .responseData { (response) -> Void in
                 if let data = response.result.value {
                     let manga: MangaDetailItem? = Unbox(data)
@@ -236,4 +244,43 @@ class MangaManager {
                 callback?(fetched: false, error: true)
         }
     }
+
+    func followManga(manga: MangaItem, action: FollowAction, callback: SuccessCallback) {
+        
+        
+        let userDefaults = NSUserDefaults.standardUserDefaults()
+        
+        let secret = userDefaults.stringForKey(Constants.Defaults.Secret)!
+        let allCookies = userDefaults.dictionaryForKey(Constants.Defaults.Cookies)!
+        let session = allCookies["session_id"]
+        
+        let params: [String: AnyObject] = ["sKey": secret, "session": session!, "action": action.rawValue, "rid": manga.mangaId]
+        
+        Alamofire.request(MLRouter.Post("follow", params))
+            .validate()
+            .responseJSON { (response) -> Void in
+                switch response.result {
+                case .Success(_):
+                    
+                    if action == .Follow {
+                        // add the manga to the follow list
+                        FollowManga.createAndAddFromManga(manga)
+                        
+                    } else {
+                        // remove the follow from the db
+                        FollowManga.deleteManga(manga)
+                        
+                    }
+                    
+                    callback(true)
+                case .Failure(let error):
+                    print(error.localizedDescription)
+                    callback(false)
+                }
+        }
+        
+        
+        
+    }
+
 }

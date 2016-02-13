@@ -24,6 +24,9 @@ struct MangaDetailItem: MangaItem {
     var status: String
     var summary: String
     
+    var following: Bool?
+    var followers: String?
+    
 }
 
 
@@ -42,5 +45,8 @@ extension MangaDetailItem: Unboxable {
         self.altNames = unboxer.unbox("altNames")
         self.artist = unboxer.unbox("artist")
         self.author = unboxer.unbox("author")
+        
+        self.following = unboxer.unbox("following")
+        self.followers = unboxer.unbox("followers")
     }
 }

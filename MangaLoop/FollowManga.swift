@@ -27,6 +27,34 @@ class FollowManga : Object, Unboxable {
         self.id = unboxer.unbox("id")
     }
     
+    class func createAndAddFromManga(manga: MangaItem) {
+    
+        let follow = FollowManga()
+        follow.title = manga.title
+        follow.id = manga.mangaId
+        follow.link = manga.link
+        
+        let realm = try! Realm()
+        
+        try! realm.write {
+            realm.add(follow)
+        }
+    
+    
+    }
+    
+    class func deleteManga(manga: MangaItem) {
+        
+        let realm = try! Realm()
+        
+        let deleteFollow = realm.objects(FollowManga).filter("id = %@", manga.mangaId)
+        
+        try! realm.write {
+            realm.delete(deleteFollow)
+        }
+        
+    }
+    
     class func getAllFollows() -> [FollowManga]? {
         
         if !MangaManager.isSignedIn() {
