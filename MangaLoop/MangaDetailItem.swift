@@ -19,7 +19,7 @@ struct MangaDetailItem: MangaItem {
     var artist: String
     var author: String
     var genre: [String]
-    var isMature: Bool?
+    var mature: String?
     var altNames: String?
     var status: String
     var summary: String
@@ -35,7 +35,7 @@ extension MangaDetailItem: Unboxable {
         self.chapters = unboxer.unbox("chapters")
         self.image = unboxer.unbox("image")
         
-        self.isMature = unboxer.unbox("mature")
+        self.mature = unboxer.unbox("mature")
         self.status = unboxer.unbox("status")
         self.genre = unboxer.unbox("genre")
         self.summary = unboxer.unbox("summary")

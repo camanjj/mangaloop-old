@@ -9,6 +9,8 @@
 import Foundation
 import MXSegmentedPager
 import Kingfisher
+import SCLAlertView
+
 
 class MangaDetailsController: MXSegmentedPagerController, ChaptersDelegate {
     
@@ -75,6 +77,25 @@ class MangaDetailsController: MXSegmentedPagerController, ChaptersDelegate {
                 if let imageUrl = manga.image {
                     self.headerView.mangaImageView.kf_setImageWithURL(NSURL(string: imageUrl)!)
                 }
+                
+                
+                // show warning for mature warning
+                if let mature = manga.mature where MangaManager.getToggleSettings(.MatureWarning) == true {
+                    
+                    let alert = SCLAlertView()
+                    alert.addButton("Go back", action: { () -> Void in
+                        self.navigationController?.popViewControllerAnimated(true)
+                    })
+                    alert.addButton("Continue", action: { () -> Void in
+                        self.segmentedPager.reloadData()
+                    })
+                    alert.showCloseButton = false
+                    alert.showWarning("Mature Manga", subTitle: mature)
+                    return
+                    
+                }
+                
+                
                 
                 
                 self.segmentedPager.reloadData()
