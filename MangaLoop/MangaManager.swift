@@ -156,6 +156,20 @@ class MangaManager {
         defaults.synchronize()
     }
     
+    static func setToggleSettings(setting: Constants.Settings, value: Bool) {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setBool(value, forKey: setting.rawValue)
+        defaults.synchronize()
+    }
+    
+    static func getToggleSettings(setting: Constants.Settings) -> Bool {
+        if let value = NSUserDefaults.standardUserDefaults().objectForKey(setting.rawValue) {
+            return value as! Bool
+        } else {
+            return true
+        }
+    }
+    
     //MARK: Follows
     func getFollowsList(page: Int = 1, callback: MangaList) {
         Alamofire.request(MLRouter.Get("follows", nil))

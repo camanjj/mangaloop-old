@@ -25,4 +25,9 @@ struct Constants {
         static let Languages = "languages"
     }
     
+    enum Settings: String {
+        case AllowData = "allowData"
+        case MatureWarning = "matureWarning"
+    }
+    
 }
