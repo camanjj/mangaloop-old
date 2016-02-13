@@ -92,7 +92,8 @@ class UpdatesViewController: UITableViewController, ChaptersDelegate {
                 formSheet.interactivePanGestureDissmisalDirection = .All;
 //                formSheet.allowDismissByPanningPresentedView = true
                 formSheet.presentationController?.shouldDismissOnBackgroundViewTap = true
-
+                formSheet.contentViewControllerTransitionStyle = .Fade
+//                formSheet.presentationController?.shouldApplyBackgroundBlurEffect = true
 
                 
                 self.presentViewController(formSheet, animated: true, completion: nil)
