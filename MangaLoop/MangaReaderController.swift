@@ -39,6 +39,8 @@ class MangaReaderController: UIViewController {
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Stop, target: self, action: Selector("closeClick"))
         
+        view.backgroundColor = UIColor.whiteColor()
+        
         automaticallyAdjustsScrollViewInsets = false
         navigationController?.navigationBar.translucent = true
         navigationController?.toolbar.translucent = true
