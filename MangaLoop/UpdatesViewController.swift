@@ -84,21 +84,28 @@ class UpdatesViewController: UITableViewController, ChaptersDelegate {
                 print(indexPath)
                 
                 let selectedManga = manga[indexPath.row]
-                let chaptersController = ChaptersController(manga: selectedManga, chapters: selectedManga.chapters, delegate: self)
-                let navController = UINavigationController()
-                navController.viewControllers = [chaptersController]
-                let formSheet = MZFormSheetPresentationViewController(contentViewController: navController)
+                self.showChapters(selectedManga)
                 
-                formSheet.interactivePanGestureDissmisalDirection = .All;
-//                formSheet.allowDismissByPanningPresentedView = true
-                formSheet.presentationController?.shouldDismissOnBackgroundViewTap = true
-                formSheet.contentViewControllerTransitionStyle = .Fade
-//                formSheet.presentationController?.shouldApplyBackgroundBlurEffect = true
-
-                
-                self.presentViewController(formSheet, animated: true, completion: nil)
             }
         }
+    }
+    
+    func showChapters(manga: MangaPreviewItem) {
+        
+        
+        let chaptersController = ChaptersController(manga: manga, chapters: manga.chapters, delegate: self)
+        let navController = UINavigationController()
+        navController.viewControllers = [chaptersController]
+        let formSheet = MZFormSheetPresentationViewController(contentViewController: navController)
+        
+        formSheet.interactivePanGestureDissmisalDirection = .All;
+        //                formSheet.allowDismissByPanningPresentedView = true
+        formSheet.presentationController?.shouldDismissOnBackgroundViewTap = true
+        formSheet.contentViewControllerTransitionStyle = .Fade
+        //                formSheet.presentationController?.shouldApplyBackgroundBlurEffect = true
+        
+        
+        self.presentViewController(formSheet, animated: true, completion: nil)
     }
     
     func refresh(object: AnyObject) {
@@ -169,7 +176,7 @@ class UpdatesViewController: UITableViewController, ChaptersDelegate {
         let manga = self.manga[indexPath.row]
         let isFollowing: Bool! = followManga != nil ? !followManga!.filter({$0.id == manga.mangaId}).isEmpty : false
         cell.configure(manga, isFollowing: isFollowing)
-        
+        cell.chaptersButton.addTarget(self, action: Selector("accessoryClick:"), forControlEvents: .TouchUpInside)
         
         return cell
     }
@@ -178,6 +185,18 @@ class UpdatesViewController: UITableViewController, ChaptersDelegate {
         let selectedManga = manga[indexPath.row]
         let detailsController = MangaDetailsController(manga: selectedManga)
         navigationController?.pushViewController(detailsController, animated: true)
+    }
+    
+    
+    func accessoryClick(sender: UIButton!) {
+        
+        let rect = tableView.convertPoint(sender.center, fromView: sender.superview)
+        let indexPath = tableView.indexPathForRowAtPoint(rect)!
+        print(indexPath)
+        let selectedManga = manga[indexPath.row]
+        
+        showChapters(selectedManga)
+        
     }
     
     
