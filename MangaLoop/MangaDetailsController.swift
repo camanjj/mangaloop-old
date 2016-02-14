@@ -10,7 +10,7 @@ import Foundation
 import MXSegmentedPager
 import Kingfisher
 import SCLAlertView
-
+import SafariServices
 
 class MangaDetailsController: MXSegmentedPagerController, ChaptersDelegate, DetailHeaderDelegate {
     
@@ -46,6 +46,7 @@ class MangaDetailsController: MXSegmentedPagerController, ChaptersDelegate, Deta
         
         
         navigationController?.navigationBar.translucent = false
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: Selector("safariClick"))
         
         
         self.segmentedPager.backgroundColor = UIColor.whiteColor()
@@ -162,6 +163,27 @@ class MangaDetailsController: MXSegmentedPagerController, ChaptersDelegate, Deta
             }
             
         })
+        
+    }
+    
+    func safariClick() {
+        
+        
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        let webAction = UIAlertAction(title: "Open webpage", style: UIAlertActionStyle.Default) { (action) -> Void in
+            if let link = self.manga?.link, url = NSURL(string: link) {
+                let vc = SFSafariViewController(URL: url, entersReaderIfAvailable: false)
+                self.presentViewController(vc, animated: true, completion: nil)
+            }
+        }
+        
+        actionSheet.addAction(cancelAction)
+        actionSheet.addAction(webAction)
+        
+        presentViewController(actionSheet, animated: true, completion: nil)
+        
+
         
     }
     
