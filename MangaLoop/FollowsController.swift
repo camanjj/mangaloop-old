@@ -104,6 +104,10 @@ class FollowsController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyD
         return NSAttributedString(string: "Login")
     }
     
+    func descriptionForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
+        return NSAttributedString(string: "Signing in will allow you to track follows and follow new manga and it will help make this app better because of Bato.to restrictions on guest users.")
+    }
+    
     func emptyDataSet(scrollView: UIScrollView!, didTapButton button: UIButton!) {
         //login
         
