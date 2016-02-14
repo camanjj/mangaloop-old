@@ -200,7 +200,7 @@ class MangaManager {
     
     //MARK: Follows
     func getFollowsList(page: Int = 1, callback: MangaList) {
-        Alamofire.request(MLRouter.Get("follows", nil))
+        Alamofire.request(MLRouter.Get("follows", ["page": page]))
             .responseData { (response) -> Void in
                 if let data = response.result.value {
                     let mangas: [MangaPreviewItem]? = Unbox(data)

@@ -26,6 +26,8 @@ class FollowsController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyD
     }
     
     var page = 1
+    var footerButton: UIButton!
+    var activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,6 +50,17 @@ class FollowsController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyD
         refreshControl = UIRefreshControl()
         refreshControl!.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refreshControl!.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
+        
+        
+        // add the footer button
+        let footerButton = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: 45))
+        footerButton.setTitle("More", forState: .Normal)
+        footerButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
+        footerButton.backgroundColor = UIColor.redColor()
+        footerButton.addTarget(self, action: Selector("moreClick"), forControlEvents: .TouchUpInside)
+        tableView.tableFooterView = footerButton
+        
+        self.footerButton = footerButton
         
         
         if MangaManager.isSignedIn() {
@@ -75,7 +88,7 @@ class FollowsController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyD
         
         MangaManager.sharedManager.logout()
         Pantry.expire(Constants.Pantry.Follows) // remove the cached follows
-        Pantry.expire(Constants.Pantry.FetchFollows) 
+        Pantry.expire(Constants.Pantry.FetchFollows)
         manga = nil // reset the list
         tableView.reloadData()
         tableView.reloadEmptyDataSet() // show the empty data view
@@ -85,6 +98,13 @@ class FollowsController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyD
     
     func fetchFollows() {
         MangaManager.sharedManager.getFollowsList(page, callback: handleFollows)
+    }
+    
+    func moreClick() {
+        page++
+        activityIndicator.startAnimating()
+        tableView.tableFooterView = activityIndicator
+        fetchFollows()
     }
     
     func handleFollows( manga: [MangaPreviewItem]?) {
@@ -105,10 +125,10 @@ class FollowsController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyD
                 self.manga! += manga
             }
             
-//            if self.tableView.tableFooterView == self.activityIndicator {
-//                self.activityIndicator.stopAnimating()
-//                self.tableView.tableFooterView = self.footerButton
-//            }
+            if self.tableView.tableFooterView == self.activityIndicator {
+                self.activityIndicator.stopAnimating()
+                self.tableView.tableFooterView = self.footerButton
+            }
             
             self.tableView.reloadData()
             
