@@ -153,7 +153,7 @@ class MangaDetailsController: MXSegmentedPagerController, ChaptersDelegate, Deta
         
         let action: FollowAction = isFollowing == true ? .UnFollow : .Follow
         
-        MangaManager.sharedManager.followManga(self.manga!, action: action, callback: { (success) -> Void in
+        MangaManager.sharedManager.followManga(manga, action: action, callback: { (success) -> Void in
             
             if success {
                 

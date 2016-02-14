@@ -145,6 +145,26 @@ class MangaManager {
 
     }
     
+    func logout() {
+        
+        // remove the
+        let userDefaults = NSUserDefaults.standardUserDefaults()
+        userDefaults.removeObjectForKey(Constants.Defaults.Cookies)
+        userDefaults.removeObjectForKey(Constants.Defaults.IsSignedIn)
+        userDefaults.removeObjectForKey(Constants.Defaults.Secret)
+        userDefaults.synchronize()
+        
+        
+        // remnove all of the follow manga from the db
+        let realm = try! Realm()
+        let allFollows = realm.objects(FollowManga)
+        
+        try! realm.write {
+            realm.delete(allFollows)
+        }
+        
+    }
+    
     //MARK: Helper class functions
     static func isSignedIn() -> Bool {
         return NSUserDefaults.standardUserDefaults().boolForKey(Constants.Defaults.IsSignedIn)

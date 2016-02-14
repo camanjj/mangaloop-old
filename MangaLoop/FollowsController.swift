@@ -13,7 +13,17 @@ import Pantry
 
 class FollowsController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
 
-    var manga: [MangaPreviewItem]?
+    var manga: [MangaPreviewItem]? {
+        didSet {
+            if let _ = manga {
+                // the user is signed in add the sign out message
+                navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Sign out", style: .Plain, target: self, action: Selector("signOutClick"))
+            } else {
+                //manga is nil so the user is not signed in
+                navigationItem.leftBarButtonItem = nil
+            }
+        }
+    }
     
     var page = 1
     
@@ -61,11 +71,20 @@ class FollowsController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyD
         fetchFollows()
     }
     
+    func signOutClick() {
+        
+        MangaManager.sharedManager.logout()
+        Pantry.expire(Constants.Pantry.Follows) // remove the cached follows
+        Pantry.expire(Constants.Pantry.FetchFollows) 
+        manga = nil // reset the list
+        tableView.reloadData()
+        tableView.reloadEmptyDataSet() // show the empty data view
+        
+    }
+    
+    
     func fetchFollows() {
-        
-        
         MangaManager.sharedManager.getFollowsList(page, callback: handleFollows)
-        
     }
     
     func handleFollows( manga: [MangaPreviewItem]?) {
