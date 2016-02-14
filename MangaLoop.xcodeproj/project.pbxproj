@@ -673,7 +673,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
-				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/MangaLoop/MangaLoop-BridgingHeader.h";
 			};
 			name = Debug;
 		};
@@ -696,7 +696,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.culdesaq.MangaLoop;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/MangaLoop/MangaLoop-BridgingHeader.h";
 			};
 			name = Release;
 		};

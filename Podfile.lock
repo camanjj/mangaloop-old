@@ -23,6 +23,7 @@ PODS:
     - Realm (= 0.98.1)
   - SCLAlertView (0.5)
   - SnapKit (0.19.1)
+  - TLTagsControl (1.0.0)
   - Unbox (1.3)
 
 DEPENDENCIES:
@@ -38,16 +39,22 @@ DEPENDENCIES:
   - RealmSwift (~> 0.98)
   - SCLAlertView
   - SnapKit (~> 0.19)
+  - TLTagsControl (from `https://github.com/ali312/TLTagsControl.git`)
   - Unbox
 
 EXTERNAL SOURCES:
   CircleProgressView:
     :git: https://github.com/CardinalNow/iOS-CircleProgressView.git
+  TLTagsControl:
+    :git: https://github.com/ali312/TLTagsControl.git
 
 CHECKOUT OPTIONS:
   CircleProgressView:
     :commit: 9a86fe8ab330fe3b586171240011fa07ccdd8c0d
     :git: https://github.com/CardinalNow/iOS-CircleProgressView.git
+  TLTagsControl:
+    :commit: 1043bb4eab751f4b9a73eef5b445efd2f57bad35
+    :git: https://github.com/ali312/TLTagsControl.git
 
 SPEC CHECKSUMS:
   Alamofire: 5f730ba29fd113b7ddd71c1e65d0c630acf5d7b0
@@ -67,6 +74,7 @@ SPEC CHECKSUMS:
   RealmSwift: 7d3c7033427816a2c3417ba0d004d694987e503a
   SCLAlertView: 51a328f3985e13e6bfe8dc77123543480fa615f9
   SnapKit: eff58d6e3451bf2f482db2eccf86aecf371dc62d
+  TLTagsControl: 34ab7d25f282aa2b8b42e73cc71b96ffe9fa7a15
   Unbox: af6e75fddb73ee790c80114bf7b6edef56a0dcd8
 
 COCOAPODS: 0.39.0

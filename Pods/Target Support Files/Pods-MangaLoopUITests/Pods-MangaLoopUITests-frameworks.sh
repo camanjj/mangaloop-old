@@ -101,6 +101,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-MangaLoopUITests/RealmSwift.framework"
   install_framework "Pods-MangaLoopUITests/SCLAlertView.framework"
   install_framework "Pods-MangaLoopUITests/SnapKit.framework"
+  install_framework "Pods-MangaLoopUITests/TLTagsControl.framework"
   install_framework "Pods-MangaLoopUITests/Unbox.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
@@ -121,5 +122,6 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-MangaLoopUITests/RealmSwift.framework"
   install_framework "Pods-MangaLoopUITests/SCLAlertView.framework"
   install_framework "Pods-MangaLoopUITests/SnapKit.framework"
+  install_framework "Pods-MangaLoopUITests/TLTagsControl.framework"
   install_framework "Pods-MangaLoopUITests/Unbox.framework"
 fi

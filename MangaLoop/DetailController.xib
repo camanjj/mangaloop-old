@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1605" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DetailController" customModule="MangaLoop" customModuleProvider="target">
             <connections>
+                <outlet property="tagsControl" destination="pu2-lh-X4B" id="PUF-Wv-xYi"/>
                 <outlet property="textView" destination="poy-BZ-V01" id="bXs-RO-qKh"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -21,10 +22,17 @@
                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                 </textView>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pu2-lh-X4B" customClass="TLTagsControl">
+                    <rect key="frame" x="19" y="35" width="562" height="47"/>
+                </scrollView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="poy-BZ-V01" secondAttribute="trailing" constant="19" id="5oB-50-A05"/>
+                <constraint firstItem="pu2-lh-X4B" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="35" id="Egk-I9-Hb8"/>
+                <constraint firstItem="pu2-lh-X4B" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="19" id="Nyu-Oo-FlM"/>
+                <constraint firstAttribute="trailing" secondItem="pu2-lh-X4B" secondAttribute="trailing" constant="19" id="V2d-Wu-7De"/>
+                <constraint firstItem="poy-BZ-V01" firstAttribute="top" secondItem="pu2-lh-X4B" secondAttribute="bottom" constant="29" id="Xhh-Ar-PTv"/>
                 <constraint firstItem="poy-BZ-V01" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="19" id="ZaR-jn-v23"/>
                 <constraint firstItem="poy-BZ-V01" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="111" id="fgZ-LG-nUp"/>
                 <constraint firstAttribute="bottom" secondItem="poy-BZ-V01" secondAttribute="bottom" constant="20" id="nWR-Eu-9cw"/>

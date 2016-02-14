@@ -101,6 +101,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods/RealmSwift.framework"
   install_framework "Pods/SCLAlertView.framework"
   install_framework "Pods/SnapKit.framework"
+  install_framework "Pods/TLTagsControl.framework"
   install_framework "Pods/Unbox.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
@@ -121,5 +122,6 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods/RealmSwift.framework"
   install_framework "Pods/SCLAlertView.framework"
   install_framework "Pods/SnapKit.framework"
+  install_framework "Pods/TLTagsControl.framework"
   install_framework "Pods/Unbox.framework"
 fi

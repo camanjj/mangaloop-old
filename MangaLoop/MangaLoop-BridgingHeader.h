@@ -9,6 +9,6 @@
 #ifndef MangaLoop_BridgingHeader_h
 #define MangaLoop_BridgingHeader_h
 
-
+#import <TLTagsControl/TLTagsControl.h>
 
 #endif /* MangaLoop_BridgingHeader_h */

@@ -19,6 +19,7 @@ pod 'RealmSwift', '~> 0.98'
 pod 'DZNEmptyDataSet'
 pod 'SCLAlertView'
 pod 'Eureka', '~> 1.3'
+pod 'TLTagsControl', :git => 'https://github.com/ali312/TLTagsControl.git'
 
 target 'MangaLoop' do
 

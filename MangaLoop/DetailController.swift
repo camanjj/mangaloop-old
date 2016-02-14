@@ -7,14 +7,18 @@
 //
 
 import UIKit
+import TLTagsControl
 
 class DetailController: UIViewController {
 
     @IBOutlet weak var textView: UITextView!
+    @IBOutlet weak var tagsControl: TLTagsControl!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tagsControl.mode = .List
 
         // Do any additional setup after loading the view.
     }

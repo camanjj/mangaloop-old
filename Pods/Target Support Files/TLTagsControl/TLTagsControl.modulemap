@@ -1,0 +1,6 @@
+framework module TLTagsControl {
+  umbrella header "TLTagsControl-umbrella.h"
+
+  export *
+  module * { export * }
+}

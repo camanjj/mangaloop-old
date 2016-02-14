@@ -91,6 +91,8 @@ class MangaDetailsController: MXSegmentedPagerController, ChaptersDelegate, Deta
                 wself.isFollowing = manga.following
                 wself.chaptersTable = ChaptersController(manga: manga, chapters: manga.chapters, delegate: wself)
                 wself.detailsView.textView.text = manga.summary
+                wself.detailsView.tagsControl.tags = NSMutableArray(array: manga.genre)
+                wself.detailsView.tagsControl.reloadTagSubviews()
                 
                 wself.headerView.titleLabel.text = manga.title
                 if let imageUrl = manga.image {
