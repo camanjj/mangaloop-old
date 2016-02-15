@@ -20,6 +20,7 @@ pod 'DZNEmptyDataSet'
 pod 'SCLAlertView'
 pod 'Eureka', '~> 1.3'
 pod 'TLTagsControl', :git => 'https://github.com/ali312/TLTagsControl.git'
+pod 'JAMSVGImage', '~> 1.6'
 
 target 'MangaLoop' do
 

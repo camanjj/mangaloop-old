@@ -18,15 +18,15 @@ class FollowsController: UITableViewController {
         didSet {
             if let _ = manga {
                 // the user is signed in add the sign out message
-                navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Sign out", style: .Plain, target: self, action: Selector("signOutClick"))
                 searchController.searchBar.userInteractionEnabled = true
                 searchController.searchBar.placeholder = "Search Follows"
+                searchController.searchBar.showsBookmarkButton = true
                 footerButton.hidden = false
             } else {
                 //manga is nil so the user is not signed in
-                navigationItem.leftBarButtonItem = nil
                 searchController.searchBar.userInteractionEnabled = false
                 searchController.searchBar.placeholder = "Login to search follows"
+                searchController.searchBar.showsBookmarkButton = false
                 footerButton.hidden = true
             }
         }
@@ -46,10 +46,13 @@ class FollowsController: UITableViewController {
         automaticallyAdjustsScrollViewInsets = false
         extendedLayoutIncludesOpaqueBars = false
         
+        // setup for searching
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
         searchController.hidesNavigationBarDuringPresentation = false
         definesPresentationContext = true
+        searchController.searchBar.delegate = self
+        searchController.searchBar.setImage(UIImage(fromSVGNamed: Constants.Images.Logout, atSize: CGSize(width: 20, height: 20)), forSearchBarIcon: .Bookmark, state: .Normal)
         navigationItem.titleView = searchController.searchBar
         
         
@@ -61,7 +64,6 @@ class FollowsController: UITableViewController {
         
         tableView.registerClass(MangaCell.self, forCellReuseIdentifier: MangaCell.defaultReusableId)
         tableView.registerClass(ItemCell.self, forCellReuseIdentifier: ItemCell.defaultReusableId)
-//        tableView.registerCellClass(MangaCell)
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 44
         
@@ -86,6 +88,7 @@ class FollowsController: UITableViewController {
         if MangaManager.isSignedIn() {
             
             searchController.searchBar.placeholder = "Search Follows"
+            searchController.searchBar.showsBookmarkButton = true
 
             
             // attempt to load from Pantry
@@ -102,6 +105,8 @@ class FollowsController: UITableViewController {
             footerButton.hidden = true
             searchController.searchBar.userInteractionEnabled = false
             searchController.searchBar.placeholder = "Login to search follows"
+            searchController.searchBar.showsBookmarkButton = false
+
         }
         
     }
@@ -119,12 +124,18 @@ class FollowsController: UITableViewController {
     
     func signOutClick() {
         
-        MangaManager.sharedManager.logout()
-        Pantry.expire(Constants.Pantry.Follows) // remove the cached follows
-        Pantry.expire(Constants.Pantry.FetchFollows)
-        manga = nil // reset the list
-        tableView.reloadData()
-        tableView.reloadEmptyDataSet() // show the empty data view
+        let alert = SCLAlertView()
+        
+        alert.addButton("Sign Out") { () -> Void in
+            MangaManager.sharedManager.logout()
+            Pantry.expire(Constants.Pantry.Follows) // remove the cached follows
+            Pantry.expire(Constants.Pantry.FetchFollows)
+            self.manga = nil // reset the list
+            self.tableView.reloadData()
+            self.tableView.reloadEmptyDataSet() // show the empty data view
+        }
+        
+        alert.showWarning("Sign out", subTitle: "", closeButtonTitle: "Cancel")
         
     }
     
@@ -264,5 +275,11 @@ extension FollowsController: UISearchResultsUpdating {
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         filteredManga = FollowManga.searchFromText(searchController.searchBar.text!)
         tableView.reloadData()
+    }
+}
+
+extension FollowsController: UISearchBarDelegate {
+    func searchBarBookmarkButtonClicked(searchBar: UISearchBar) {
+        signOutClick()
     }
 }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import JAMSVGImage
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -27,12 +28,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let updatesController = UpdatesViewController()
         updatesController.title = "Updates"
+        updatesController.tabBarItem.image = UIImage(fromSVGNamed: Constants.Images.UpdatesTab)
         let updatesNavigationController = UINavigationController(rootViewController: updatesController)
         let followsController = FollowsController()
         followsController.title = "Follows"
+        followsController.tabBarItem.image = UIImage(fromSVGNamed: Constants.Images.FollowsTab)
         let followsNavigationController = UINavigationController(rootViewController: followsController)
         let settingsController = SettingsViewController()
         settingsController.title = "Settings"
+        settingsController.tabBarItem.image = UIImage(fromSVGNamed: Constants.Images.SettingsTab)
         let settingsNavigaitonController = UINavigationController(rootViewController: settingsController)
         
         let tabController = UITabBarController()

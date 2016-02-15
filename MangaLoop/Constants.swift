@@ -30,4 +30,11 @@ struct Constants {
         case MatureWarning = "matureWarning"
     }
     
+    struct Images {
+        static let UpdatesTab = "updates_icon"
+        static let Logout = "logout_icon"
+        static let FollowsTab = "follows_icon"
+        static let SettingsTab = "settings_icon"
+    }
+    
 }

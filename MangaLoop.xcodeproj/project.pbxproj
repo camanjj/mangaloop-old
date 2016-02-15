@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		7E56EAAE1C62F53E007E3086 /* FollowManga.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E56EAAD1C62F53E007E3086 /* FollowManga.swift */; };
 		7E6BFE1A1C657E93002831B7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6BFE191C657E93002831B7 /* Constants.swift */; };
+		7E8F6F641C7194E0009146FF /* logout_icon.svg in Resources */ = {isa = PBXBuildFile; fileRef = 7E8F6F601C7194E0009146FF /* logout_icon.svg */; };
+		7E8F6F651C7194E0009146FF /* follows_icon.svg in Resources */ = {isa = PBXBuildFile; fileRef = 7E8F6F611C7194E0009146FF /* follows_icon.svg */; };
+		7E8F6F661C7194E0009146FF /* settings_icon.svg in Resources */ = {isa = PBXBuildFile; fileRef = 7E8F6F621C7194E0009146FF /* settings_icon.svg */; };
+		7E8F6F671C7194E0009146FF /* updates_icon.svg in Resources */ = {isa = PBXBuildFile; fileRef = 7E8F6F631C7194E0009146FF /* updates_icon.svg */; };
 		7EDF566E1C643DA100EA3748 /* FollowsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDF566D1C643DA100EA3748 /* FollowsController.swift */; };
 		A64A8C106F041A641FF7DA83 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AD9D28682F9356BD7CD2ABC /* Pods.framework */; };
 		AD1A1A991C6FFD5E0029222A /* NSTimerEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1A1A941C6FFD5E0029222A /* NSTimerEx.swift */; };
@@ -70,6 +74,10 @@
 		7AD9D28682F9356BD7CD2ABC /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E56EAAD1C62F53E007E3086 /* FollowManga.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowManga.swift; sourceTree = "<group>"; };
 		7E6BFE191C657E93002831B7 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		7E8F6F601C7194E0009146FF /* logout_icon.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = logout_icon.svg; sourceTree = "<group>"; };
+		7E8F6F611C7194E0009146FF /* follows_icon.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = follows_icon.svg; sourceTree = "<group>"; };
+		7E8F6F621C7194E0009146FF /* settings_icon.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = settings_icon.svg; sourceTree = "<group>"; };
+		7E8F6F631C7194E0009146FF /* updates_icon.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = updates_icon.svg; sourceTree = "<group>"; };
 		7EDF566D1C643DA100EA3748 /* FollowsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowsController.swift; sourceTree = "<group>"; };
 		8E1E4451EC6FEF6E2B58C821 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		AD1A1A941C6FFD5E0029222A /* NSTimerEx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSTimerEx.swift; sourceTree = "<group>"; };
@@ -155,6 +163,17 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		7E8F6F5F1C7194AE009146FF /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				7E8F6F601C7194E0009146FF /* logout_icon.svg */,
+				7E8F6F611C7194E0009146FF /* follows_icon.svg */,
+				7E8F6F621C7194E0009146FF /* settings_icon.svg */,
+				7E8F6F631C7194E0009146FF /* updates_icon.svg */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		AD1A1A8A1C6FD8BA0029222A /* 3rd Party */ = {
 			isa = PBXGroup;
 			children = (
@@ -203,6 +222,7 @@
 		AD8E018A1C509E14009241A1 /* MangaLoop */ = {
 			isa = PBXGroup;
 			children = (
+				7E8F6F5F1C7194AE009146FF /* Resources */,
 				AD1A1A8A1C6FD8BA0029222A /* 3rd Party */,
 				AD9244031C55ABBB00C19BFC /* Controllers */,
 				AD9243FD1C5576AA00C19BFC /* Views */,
@@ -407,10 +427,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD55F0881C5D9C3800FB2E4E /* DetailController.xib in Resources */,
+				7E8F6F661C7194E0009146FF /* settings_icon.svg in Resources */,
+				7E8F6F641C7194E0009146FF /* logout_icon.svg in Resources */,
 				AD463E481C5EC62B0046D613 /* MangaPageController.xib in Resources */,
 				AD55F08A1C5DE56500FB2E4E /* DetailHeaderView.xib in Resources */,
+				7E8F6F651C7194E0009146FF /* follows_icon.svg in Resources */,
 				AD8E01961C509E14009241A1 /* LaunchScreen.storyboard in Resources */,
 				AD8E01931C509E14009241A1 /* Assets.xcassets in Resources */,
+				7E8F6F671C7194E0009146FF /* updates_icon.svg in Resources */,
 				AD8E01911C509E14009241A1 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

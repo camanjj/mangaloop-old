@@ -10,5 +10,6 @@
 #define MangaLoop_BridgingHeader_h
 
 #import <TLTagsControl/TLTagsControl.h>
+#import <JAMSVGImage/JAMSVGImage.h>
 
 #endif /* MangaLoop_BridgingHeader_h */
