@@ -91,7 +91,17 @@ class MangaReaderController: UIViewController {
         }
     }
     
+    // cancels all of the pending image downloads
+    func stopAllPageDownloads() {
+        
+        for page in mangaPages {
+            page.cancelDownload()
+        }
+        
+    }
+    
     func closeClick() {
+        stopAllPageDownloads()
         presentingViewController!.dismissViewControllerAnimated(true, completion: nil)
     }
     

@@ -37,4 +37,6 @@ struct Constants {
         static let SettingsTab = "settings_icon"
     }
     
+    static let PageCache = "manga-pages"
+    
 }

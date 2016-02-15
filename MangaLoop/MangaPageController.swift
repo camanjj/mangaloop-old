@@ -22,7 +22,7 @@ class MangaPageController: UIViewController, UIScrollViewDelegate {
     let mangaImageView = UIImageView()
     var image: UIImage?
     
-    var imageTask: RetrieveImageTask!
+    var imageTask: RetrieveImageTask?
     
     let link: String!
     
@@ -46,47 +46,56 @@ class MangaPageController: UIViewController, UIScrollViewDelegate {
             
             self.progressView.progress = Double(receivedSize)/Double(totalSize)
             
-            }) { [unowned self](image, error, cacheType, imageURL) -> () in
+            }) { [weak self](image, error, cacheType, imageURL) -> () in
                 
+                
+                // check if self is nil
+                guard let wself = self else {
+                    return
+                }
 
                 // change the suffix for the image
-                if let _ = error {
-                    let link = self.link as NSString
+                if let error = error {
+                                        
+                    // the request was cancelled, don't do anything else
+                    if error.code == NSURLErrorCancelled {
+                        return
+                    }
+                    
+                    let link = wself.link as NSString
                     let suffix = link.pathExtension
                     let newSuffix = suffix == "jpg" ? "png" : "jpg"
                     let newLink = "\(link.stringByDeletingPathExtension).\(newSuffix)"
-                    self.mangaImageView.kf_setImageWithURL(NSURL(string: newLink)!, placeholderImage: nil, optionsInfo: [.DownloadPriority(0.4), .TargetCache(cache)], progressBlock: { (receivedSize, totalSize) -> () in
-                        self.progressView.progress = Double(receivedSize)/Double(totalSize)
+                    wself.mangaImageView.kf_setImageWithURL(NSURL(string: newLink)!, placeholderImage: nil, optionsInfo: [.DownloadPriority(0.4), .TargetCache(cache)], progressBlock: { (receivedSize, totalSize) -> () in
+                        wself.progressView.progress = Double(receivedSize)/Double(totalSize)
                         }, completionHandler: { (image, error, cacheType, imageURL) -> () in
                             if let _ = error {
                                 
                                 return
                             }
                             
-                            self.progressView.hidden = true
+                            wself.progressView.hidden = true
                             
-                            self.updateZoom()
-                            self.centerImage()
-                            self.updateZoom()
+                            wself.updateZoom()
+                            wself.centerImage()
+                            wself.updateZoom()
                             
                     })
                     return
                 }
                 
-                self.progressView.hidden = true
-                print(NSStringFromCGSize(image!.size))
+                self?.progressView.hidden = true
                 
                 // don't know why but this is the only way to get the current image to load in the full frame
                 
-                if let _ = self.view {
+                if let _ = self?.view {
 
-                    print("ScrollView frame: \(NSStringFromCGSize(self.scrollView.frame.size))")
 
 //                    self.mangaImageView.image = nil
 //                    self.mangaImageView.image = image!
-                    self.updateZoom()
-                    self.centerImage()
-                    self.updateZoom()
+                    self?.updateZoom()
+                    self?.centerImage()
+                    self?.updateZoom()
                 }
         }
     }
@@ -192,15 +201,15 @@ class MangaPageController: UIViewController, UIScrollViewDelegate {
 
     
     func makePriority() {
-        imageTask.downloadTask?.priority = 1.0
+        imageTask?.downloadTask?.priority = 1.0
     }
     
     func regularPriority() {
-        imageTask.downloadTask?.priority = 0.5
+        imageTask?.downloadTask?.priority = 0.5
     }
     
     func cancelDownload() {
-        imageTask.cancel()
+        imageTask?.cancel()
     }
     
     
@@ -242,8 +251,6 @@ class MangaPageController: UIViewController, UIScrollViewDelegate {
         if scaledSize.height > UIScreen.mainScreen().bounds.height - 20 {
             mangaImageView.frame = CGRect(x: 0, y: 0, width: scrollView.frame.width, height: scaledSize.height)
             scrollView.contentSize = mangaImageView.frame.size
-            print("ScrollView frame: \(NSStringFromCGSize(scrollView.frame.size))")
-            print("ScrollView content size: \(NSStringFromCGSize(scrollView.contentSize))")
         }
 
         
