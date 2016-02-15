@@ -8,11 +8,19 @@
 
 import UIKit
 import Eureka
+import Kingfisher
 
 class SettingsViewController: FormViewController {
     
     let allLanguages = ["English", "Spanish", "French", "German", "Portuguese", "Turkish", "Indonesian", "Greek", "Filipino", "Italian", "Polish", "Thai", "Malay", "Hungarian", "Romanian", "Arabic", "Hebrew", "Russian", "Vietnamese", "Dutch"];
 
+    var memoryCell: LabelRow?
+    var memory: Int = 0 {
+        didSet {
+            memoryCell?.updateCell()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -49,6 +57,35 @@ class SettingsViewController: FormViewController {
                 MangaManager.setToggleSettings(.AllowData, value: value)
             }
         
+        
+        memoryCell = LabelRow() {
+                $0.title = "Clear Image Cache"
+            }.onCellSelection({ (cell, row) -> () in
+                let pageCache = ImageCache(name: Constants.PageCache)
+                pageCache.clearDiskCacheWithCompletionHandler({ () -> () in
+                    self.memory = 0
+                })
+            }).cellUpdate({ (cell, row) -> () in
+                row.title = "Clear Image Cache (\(self.memory)mb)"
+            })
+        
+        form +++ Section("")
+            <<< memoryCell!
+        
+        // fetch the memory
+        let pageCache = ImageCache(name: Constants.PageCache)
+        pageCache.calculateDiskCacheSizeWithCompletionHandler({ (size) -> () in
+            self.memory = Int(size) / 1000000
+        })
+        
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        let pageCache = ImageCache(name: Constants.PageCache)
+        pageCache.calculateDiskCacheSizeWithCompletionHandler({ (size) -> () in
+            self.memory = Int(size) / 1000000
+        })
     }
 
 
