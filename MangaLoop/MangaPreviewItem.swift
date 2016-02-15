@@ -19,6 +19,7 @@ struct MangaPreviewItem: MangaItem {
     var chapters: [Chapter]?
     
     
+    
     func isFollowing() -> Bool {
         
         if NSUserDefaults.standardUserDefaults().boolForKey(Constants.Defaults.IsSignedIn) {

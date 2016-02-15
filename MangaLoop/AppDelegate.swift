@@ -37,6 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let tabController = UITabBarController()
         tabController.viewControllers = [updatesNavigationController, followsNavigationController, settingsNavigaitonController]
+        tabController.tabBar.translucent = false
         
         self.window!.rootViewController = tabController
         
@@ -48,6 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         navAppearence.tintColor = UIColor.whiteColor()
         navAppearence.translucent = false
         navAppearence.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+        
         
 //        let navItemAppearence = UINavigationItem.ap
         

@@ -47,7 +47,7 @@ class MangaDetailsController: MXSegmentedPagerController, ChaptersDelegate, Deta
         
         navigationController?.navigationBar.translucent = false
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: Selector("safariClick"))
-        
+        extendedLayoutIncludesOpaqueBars = true
         
         self.segmentedPager.backgroundColor = UIColor.whiteColor()
         
@@ -73,6 +73,7 @@ class MangaDetailsController: MXSegmentedPagerController, ChaptersDelegate, Deta
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.translucent = true
+        navigationController?.navigationBar.barTintColor = UIColor.clearColor()
     }
     
     override func viewWillDisappear(animated: Bool) {

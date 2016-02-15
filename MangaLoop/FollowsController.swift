@@ -10,17 +10,24 @@ import UIKit
 import DZNEmptyDataSet
 import SCLAlertView
 import Pantry
+import RealmSwift
 
-class FollowsController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
-
+class FollowsController: UITableViewController {
+    
     var manga: [MangaPreviewItem]? {
         didSet {
             if let _ = manga {
                 // the user is signed in add the sign out message
                 navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Sign out", style: .Plain, target: self, action: Selector("signOutClick"))
+                searchController.searchBar.userInteractionEnabled = true
+                searchController.searchBar.placeholder = "Search Follows"
+                footerButton.hidden = false
             } else {
                 //manga is nil so the user is not signed in
                 navigationItem.leftBarButtonItem = nil
+                searchController.searchBar.userInteractionEnabled = false
+                searchController.searchBar.placeholder = "Login to search follows"
+                footerButton.hidden = true
             }
         }
     }
@@ -29,10 +36,22 @@ class FollowsController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyD
     var footerButton: UIButton!
     var activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
     
+    var searchController = UISearchController(searchResultsController: nil)
+    var filteredManga: Results<FollowManga>?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         title = "Follows"
+        automaticallyAdjustsScrollViewInsets = false
+        extendedLayoutIncludesOpaqueBars = false
+        
+        searchController.searchResultsUpdater = self
+        searchController.dimsBackgroundDuringPresentation = false
+        searchController.hidesNavigationBarDuringPresentation = false
+        definesPresentationContext = true
+        navigationItem.titleView = searchController.searchBar
+        
         
         self.tableView.emptyDataSetSource = self;
         self.tableView.emptyDataSetDelegate = self;
@@ -40,6 +59,7 @@ class FollowsController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyD
         // A little trick for removing the cell separators
         self.tableView.tableFooterView = UIView()
         
+        tableView.registerClass(MangaCell.self, forCellReuseIdentifier: MangaCell.defaultReusableId)
         tableView.registerClass(ItemCell.self, forCellReuseIdentifier: ItemCell.defaultReusableId)
 //        tableView.registerCellClass(MangaCell)
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -65,6 +85,9 @@ class FollowsController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyD
         
         if MangaManager.isSignedIn() {
             
+            searchController.searchBar.placeholder = "Search Follows"
+
+            
             // attempt to load from Pantry
             if let manga: [MangaPreviewItem] = Pantry.unpack(Constants.Pantry.Follows) {
                 
@@ -75,8 +98,18 @@ class FollowsController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyD
                 fetchFollows()
             }
             
+        } else {
+            footerButton.hidden = true
+            searchController.searchBar.userInteractionEnabled = false
+            searchController.searchBar.placeholder = "Login to search follows"
         }
         
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.navigationBar.translucent = false
     }
     
     func refresh(object: AnyObject) {
@@ -136,14 +169,67 @@ class FollowsController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyD
         
         
     }
+    
+    
+    //MARK: UITableView Datasource methods
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        if searchController.active {
+            return filteredManga?.count ?? 0
+        } else {
+            return manga?.count ?? 0
+        }
+    }
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        
+        if searchController.active {
+            
+            let cell = tableView.dequeueReusableCellWithIdentifier(MangaCell.defaultReusableId, forIndexPath: indexPath) as! MangaCell
+            let fm = filteredManga![indexPath.row]
+            cell.configure(fm.toMangaItem())
+            return cell
+            
+        }
+        
+        let cell = tableView.dequeueReusableCellWithIdentifier(ItemCell.defaultReusableId, forIndexPath: indexPath) as! ItemCell
+        
+        let m = manga![indexPath.row]
+        cell.configure(m.title, subHeader: m.chapters!.first!.updateTime)
+        cell.accessoryType = .None
+        
+        return cell
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let selectedManga = searchController.active ? filteredManga![indexPath.row].toMangaItem() : manga![indexPath.row]
+        let detailsController = MangaDetailsController(manga: selectedManga)
+        navigationController?.pushViewController(detailsController, animated: true)
+    }
 
+    
+}
+
+extension FollowsController: DZNEmptyDataSetDelegate, DZNEmptyDataSetSource {
+    
     
     //MARK DZNEmptyDataSet Datasource/Delegate methods
     func buttonTitleForEmptyDataSet(scrollView: UIScrollView!, forState state: UIControlState) -> NSAttributedString! {
+        
+        if searchController.active {
+            return nil
+        }
+        
         return NSAttributedString(string: "Login")
     }
     
     func descriptionForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
+        
+        if searchController.active {
+            return NSAttributedString(string: "Nothing to see here. Time to follow more manga")
+        }
+        
         return NSAttributedString(string: "Signing in will allow you to track follows and follow new manga and it will help make this app better because of Bato.to restrictions on guest users.")
     }
     
@@ -155,7 +241,7 @@ class FollowsController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyD
         let password = alert.addTextField("Password")
         password.secureTextEntry = true
         
-
+        
         alert.showCircularIcon = false
         alert.addButton("Login") { () -> Void in
             MangaManager.sharedManager.login(username.text ?? "", password: password.text ?? "", callback: { (success) -> Void in
@@ -163,7 +249,7 @@ class FollowsController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyD
                     print("Login Success")
                     MangaManager.sharedManager.getFollowsList(self.page, callback: self.handleFollows)
                     MangaManager.sharedManager.getAllFollowsIfNeeded(nil)
-
+                    
                 }
             })
         }
@@ -171,29 +257,12 @@ class FollowsController: UITableViewController, DZNEmptyDataSetSource, DZNEmptyD
         alert.showEdit("Login", subTitle: "Login using your bato.to info.")
         
     }
-    
-    
-    //MARK: UITableView Datasource methods
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return manga?.count ?? 0
-    }
-    
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(ItemCell.defaultReusableId, forIndexPath: indexPath) as! ItemCell
-        
-//        cell.configure(manga![indexPath.row])
-        let m = manga![indexPath.row]
-        cell.configure(m.title, subHeader: m.chapters!.first!.updateTime)
-        cell.accessoryType = .None
-        
-        return cell
-    }
-    
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let selectedManga = manga![indexPath.row]
-        let detailsController = MangaDetailsController(manga: selectedManga)
-        navigationController?.pushViewController(detailsController, animated: true)
-    }
+}
 
+extension FollowsController: UISearchResultsUpdating {
     
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        filteredManga = FollowManga.searchFromText(searchController.searchBar.text!)
+        tableView.reloadData()
+    }
 }

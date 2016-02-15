@@ -6,7 +6,6 @@
 //  Copyright © 2016 Culdesaq. All rights reserved.
 //
 
-import Foundation
 import UIKit
 import RealmSwift
 import Unbox
@@ -27,6 +26,14 @@ class FollowManga : Object, Unboxable {
         self.id = unboxer.unbox("id")
     }
     
+    
+    func toMangaItem() -> MangaPreviewItem {
+        let manga = MangaPreviewItem(title: title, link: link, mangaId: id, imageLink: nil, chapters: nil)
+        return manga
+    }
+    
+    
+    // MARK: Class helper methods
     class func createAndAddFromManga(manga: MangaItem) {
     
         let follow = FollowManga()
@@ -71,6 +78,15 @@ class FollowManga : Object, Unboxable {
         }
         
         return manga
+        
+    }
+    
+    class func searchFromText(text: String) -> Results<FollowManga> {
+    
+        let realm = try! Realm()
+        let searchPredicate = NSPredicate(format: "SELF.title CONTAINS[c] %@", text)
+        let results = realm.objects(FollowManga).filter(searchPredicate)
+        return results
         
     }
     
