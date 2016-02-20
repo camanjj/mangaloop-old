@@ -16,13 +16,13 @@ import RealmSwift
 
 typealias MangaList = [MangaPreviewItem]? -> Void
 typealias SuccessCallback = Bool -> Void
+
 enum FollowAction: String {
     case Follow = "follow"
     case UnFollow = "unfollow"
 }
 
 class MangaManager {
-    
     
     static let sharedManager = MangaManager()
     
@@ -196,6 +196,24 @@ class MangaManager {
         } else {
             return true
         }
+    }
+    
+    static func getReaderSettings(setting: ReaderSetting) -> ReaderOptions {
+        
+        if let value = NSUserDefaults.standardUserDefaults().stringForKey(setting.rawValue) {
+            return Constants.ReaderSettings.Options(rawValue: value)!
+        } else {
+            
+            // Decide on the default value
+            return setting == .Direction ? .LeftToRight : .Curl
+        }
+        
+    }
+    
+    static func setReaderSettings(setting: ReaderSetting, value: ReaderOptions) {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setObject(value.rawValue, forKey: setting.rawValue)
+        defaults.synchronize()
     }
     
     //MARK: Follows

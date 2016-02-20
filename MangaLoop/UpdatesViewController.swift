@@ -156,10 +156,10 @@ class UpdatesViewController: UITableViewController, ChaptersDelegate {
     //MARK: Chapter Delegate
     func chaptersControllerDidSelectChapter(chapter: Chapter, manga: MangaItem) {
         
-        self.dismissViewControllerAnimated(true) { () -> Void in
+        self.dismissViewControllerAnimated(true) { [weak self] () -> Void in
             
             let reader = MangaReaderController.createReader(manga, chapter: chapter)
-            self.presentViewController(reader, animated: true, completion: nil)
+            self?.presentViewController(reader, animated: true, completion: nil)
             
         }
     }

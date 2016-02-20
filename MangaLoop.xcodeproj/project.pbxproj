@@ -46,6 +46,7 @@
 		AD9244051C55ABD200C19BFC /* UpdatesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9244041C55ABD200C19BFC /* UpdatesViewController.swift */; };
 		ADC613C71C6C0FC200BE545F /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC613C61C6C0FC200BE545F /* Extensions.swift */; };
 		ADC613C91C6C245200BE545F /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC613C81C6C245200BE545F /* SettingsViewController.swift */; };
+		ADF95C731C75886B005A791D /* ReaderSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADF95C721C75886B005A791D /* ReaderSettingsViewController.swift */; };
 		ADFF06121C571ADF00BC6ABE /* MangaDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADFF06111C571ADF00BC6ABE /* MangaDetailsController.swift */; };
 		ADFF06141C59979A00BC6ABE /* MangaPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADFF06131C59979A00BC6ABE /* MangaPageController.swift */; };
 		C98577ABAB3F84B7341F9278 /* Pods_MangaLoop.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06120B7C03EBB2CFF1A60E5D /* Pods_MangaLoop.framework */; };
@@ -120,6 +121,7 @@
 		ADC613C61C6C0FC200BE545F /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		ADC613C81C6C245200BE545F /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		ADC7C0451C51EA93008858E8 /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = ../../../../usr/lib/libz.1.dylib; sourceTree = "<group>"; };
+		ADF95C721C75886B005A791D /* ReaderSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReaderSettingsViewController.swift; sourceTree = "<group>"; };
 		ADFF06111C571ADF00BC6ABE /* MangaDetailsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MangaDetailsController.swift; sourceTree = "<group>"; };
 		ADFF06131C59979A00BC6ABE /* MangaPageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MangaPageController.swift; sourceTree = "<group>"; };
 		B2E517D0BFFFFB45BBCFF020 /* Pods-MangaLoop.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MangaLoop.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MangaLoop/Pods-MangaLoop.debug.xcconfig"; sourceTree = "<group>"; };
@@ -303,6 +305,7 @@
 				AD55F0861C5D9C3800FB2E4E /* DetailController.xib */,
 				7EDF566D1C643DA100EA3748 /* FollowsController.swift */,
 				ADC613C81C6C245200BE545F /* SettingsViewController.swift */,
+				ADF95C721C75886B005A791D /* ReaderSettingsViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -513,6 +516,7 @@
 				7E6BFE1A1C657E93002831B7 /* Constants.swift in Sources */,
 				AD9244051C55ABD200C19BFC /* UpdatesViewController.swift in Sources */,
 				AD345BFC1C54192200E5CF26 /* Chapter.swift in Sources */,
+				ADF95C731C75886B005A791D /* ReaderSettingsViewController.swift in Sources */,
 				AD1A1A9B1C6FFD5E0029222A /* CGRectEx.swift in Sources */,
 				AD55F08E1C5DE6BA00FB2E4E /* UIViewLoading.swift in Sources */,
 				AD4B90F21C55DC540010C6C8 /* ItemCell.swift in Sources */,

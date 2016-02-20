@@ -34,6 +34,7 @@ class MangaPageController: UIViewController, UIScrollViewDelegate {
         super.init(nibName:"MangaPageController", bundle: nil)
 
         mangaImageView.contentMode = .ScaleAspectFit
+        mangaImageView.layer.allowsEdgeAntialiasing = true
 //        mangaImageView.clipsToBounds = false
         
 

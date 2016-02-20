@@ -30,6 +30,22 @@ struct Constants {
         case MatureWarning = "matureWarning"
     }
     
+    struct ReaderSettings {
+        enum Options: String {
+            case RightToLeft = "<--"
+            case LeftToRight = "-->"
+            case Webtoon = "↓"
+            case Curl = "Curl"
+            case Scroll = "Scroll"
+        }
+        
+        enum Setting: String {
+            case Direction = "direction"
+            case Transition = "transition"
+        }
+
+    }
+    
     struct Images {
         static let UpdatesTab = "updates_icon"
         static let Logout = "logout_icon"
@@ -40,3 +56,6 @@ struct Constants {
     static let PageCache = "manga-pages"
     
 }
+
+typealias ReaderOptions = Constants.ReaderSettings.Options
+typealias ReaderSetting = Constants.ReaderSettings.Setting
