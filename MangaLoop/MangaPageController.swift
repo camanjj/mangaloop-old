@@ -14,8 +14,8 @@ import Alamofire
 import AVFoundation
 
 
-enum PageMode {
-    case Webtoon, Page
+protocol MangaPageImageViewDelegate {
+    func imageDownloaded(scaledSize: CGSize)
 }
 
 class MangaPageImageView: UIImageView {
@@ -23,6 +23,8 @@ class MangaPageImageView: UIImageView {
     var link: String
     let progressView = CircleProgressView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
     var imageTask: RetrieveImageTask?
+    
+    var delegate: MangaPageImageViewDelegate?
     
     init(link: String) {
         self.link = link
@@ -92,6 +94,10 @@ class MangaPageImageView: UIImageView {
         snp_remakeConstraints { (make) -> Void in
             make.size.equalTo(scaledSize)
         }
+        
+        if let delegate = delegate {
+            delegate.imageDownloaded(scaledSize)
+        }
     }
     
     func aspectFitSize(aspectRatio: CGSize, var boundingSize: CGSize) -> CGSize {
@@ -111,12 +117,18 @@ class MangaPageImageView: UIImageView {
         
         self.frame = CGRect(origin: CGPoint.zero, size: scaledSize)
     }
+    
+    func getSize() -> CGSize {
+        let scaledSize = aspectFitSize(image!.size, boundingSize: CGSize(width: UIScreen.mainScreen().bounds.width, height: image!.size.height))
+        return scaledSize
+    }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
 }
+
 
 class MangaPageController: UIViewController, UIScrollViewDelegate {
     
@@ -141,7 +153,17 @@ class MangaPageController: UIViewController, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-                // add the gestures to the scrollview
+        
+        if let mangaImageView = mangaImageView {
+            scrollView.addSubview(mangaImageView)
+//            scrollView.frame = view.frame
+            scrollView.contentSize = mangaImageView.getSize()
+            self.updateZoom()
+            self.centerImage()
+            self.updateZoom()
+        }
+        
+        // add the gestures to the scrollview
         addGestures()
         
     }
@@ -150,20 +172,25 @@ class MangaPageController: UIViewController, UIScrollViewDelegate {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        scrollView.frame = view.frame
-        self.updateZoom()
-        self.centerImage()
-        self.updateZoom()
+//        scrollView.frame = view.frame
+//        self.updateZoom()
+//        self.centerImage()
+//        self.updateZoom()
         
     }
     
     func addMangaPage(page: MangaPageImageView) {
+        page.transform = CGAffineTransformIdentity
         mangaImageView = page
-        view.addSubview(mangaImageView!)
-        scrollView.frame = view.frame
-        self.updateZoom()
-        self.centerImage()
-        self.updateZoom()
+        mangaImageView!.delegate = self
+        if let scrollView = scrollView {
+            scrollView.addSubview(mangaImageView!)
+            scrollView.contentSize = mangaImageView!.getSize()
+            self.updateZoom()
+            self.centerImage()
+            self.updateZoom()
+        }
+        
     }
     
     func addGestures() {
@@ -251,19 +278,19 @@ class MangaPageController: UIViewController, UIScrollViewDelegate {
             return
         }
         
-        if (scrollView != nil) {
-            mangaImageView.frame = scrollView.frame
-        }
-        
-        
-        let widthImageFrame = CGRect(x: 0, y: 0, width: view.frame.width, height: mangaImageView.image!.size.height)
-        
-        let scaledSize = aspectFitSize(mangaImageView.image!.size, boundingSize: widthImageFrame.size)
-        
-        if scaledSize.height > UIScreen.mainScreen().bounds.height - 20 {
-            mangaImageView.frame = CGRect(x: 0, y: 0, width: scrollView.frame.width, height: scaledSize.height)
-            scrollView.contentSize = mangaImageView.frame.size
-        }
+//        if (scrollView != nil) {
+//            mangaImageView.frame = scrollView.frame
+//        }
+//        
+//        
+//        let widthImageFrame = CGRect(x: 0, y: 0, width: view.frame.width, height: mangaImageView.image!.size.height)
+//        
+//        let scaledSize = aspectFitSize(mangaImageView.image!.size, boundingSize: widthImageFrame.size)
+//        
+//        if scaledSize.height > UIScreen.mainScreen().bounds.height - 20 {
+//            mangaImageView.frame = CGRect(x: 0, y: 0, width: scrollView.frame.width, height: scaledSize.height)
+//            scrollView.contentSize = mangaImageView.frame.size
+//        }
         
         
         
@@ -339,4 +366,15 @@ class MangaPageController: UIViewController, UIScrollViewDelegate {
         
     }
     
+}
+
+
+extension MangaPageController: MangaPageImageViewDelegate {
+    
+    
+    func imageDownloaded(scaledSize: CGSize) {
+        if let scrollView = scrollView {
+            scrollView.contentSize = scaledSize
+        }
+    }
 }

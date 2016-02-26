@@ -21,6 +21,8 @@ class MangaReaderController: UIViewController {
     var pages: [MangaPageImageView]!
     var mangaPages = [MangaPageController]()
     
+    var isWebtoonMode : Bool?
+    
     var isReversed: Bool = false
     
     var transitionStyle: UIPageViewControllerTransitionStyle {
@@ -79,6 +81,19 @@ class MangaReaderController: UIViewController {
     
     func setUpReader() {
         
+        var currentPage = -1
+        
+        if pageController?.view.superview != nil {
+            
+            let page = pageController!.viewControllers?.last as? MangaPageController
+            currentPage = mangaPages.indexOf(page!)!
+            
+            
+        } else if webtoonReader?.superview != nil {
+            let visibleCells = webtoonReader!.visibleCells
+            currentPage = webtoonReader!.indexPathForCell(visibleCells.first!)!.row
+        }
+        
         // clean up the current view
         pageController?.removeFromParentViewController()
         pageController?.view.removeFromSuperview()
@@ -87,17 +102,18 @@ class MangaReaderController: UIViewController {
         
         for page in pages {
             page.removeFromSuperview()
+            page.delegate = nil
 //            page.setFrame()
         }
         
         if orientation == .Vertical {
-            webtoonSetup()
+            webtoonSetup(currentPage)
         } else {
-            pageSetup()
+            pageSetup(currentPage)
         }
     }
     
-    func webtoonSetup() {
+    func webtoonSetup(currentPage: Int) {
         
         if webtoonReader == nil {
             webtoonReader = UITableView(frame: UIScreen.mainScreen().bounds)
@@ -116,13 +132,19 @@ class MangaReaderController: UIViewController {
             page.transform = CGAffineTransformIdentity
         }
         
+        
         webtoonReader!.delegate = self
         webtoonReader!.dataSource = self
         webtoonReader!.reloadData()
         
+        
+        if currentPage > -1 {
+            webtoonReader!.scrollToRowAtIndexPath(NSIndexPath(forRow: currentPage, inSection: 0), atScrollPosition: .None, animated: true)
+        }
+        
     }
     
-    func pageSetup() {
+    func pageSetup(currentPage: Int) {
         
         
 //        if pageController == nil {
@@ -140,25 +162,28 @@ class MangaReaderController: UIViewController {
         }
         
         
-        var currentPage = pageController.viewControllers?.last as? MangaPageController
         
         // remove the pages from the previous super view
         for page in pages {
+            page.transform = CGAffineTransformIdentity
             let mangaPageController = MangaPageController()
             mangaPageController.addMangaPage(page)
             mangaPages.append(mangaPageController)
         }
         
-        if currentPage == nil {
-            currentPage = mangaPages.first
-            
+        var selectedPage: MangaPageController
+        
+        if currentPage > -1 {
+            selectedPage = mangaPages[currentPage]
+        } else {
+            selectedPage = mangaPages.first!
         }
         
         
         if mangaPages.isEmpty {
             pageController.setViewControllers([UIViewController()], direction: .Forward, animated: true, completion: nil)
         } else {
-            pageController.setViewControllers([currentPage!], direction: .Forward, animated: true, completion: nil)
+            pageController.setViewControllers([selectedPage], direction: .Forward, animated: true, completion: nil)
         }
         
         // add the page controller to the this view controller
