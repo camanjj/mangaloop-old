@@ -9,13 +9,16 @@
 import Foundation
 import UIKit
 import MZFormSheetPresentationController
+import SnapKit
 
 class MangaReaderController: UIViewController {
     
     
-    var pageController: UIPageViewController!
+    var pageController: UIPageViewController?
+    var webtoonReader: UITableView?
     var manga: MangaItem
     var selectedChapter: Chapter
+    var pages: [MangaPageImageView]!
     var mangaPages = [MangaPageController]()
     
     var isReversed: Bool = false
@@ -41,7 +44,6 @@ class MangaReaderController: UIViewController {
         self.manga = manga
         self.selectedChapter = chapter
         super.init(nibName: nil, bundle: nil)
-        self.pageController = UIPageViewController(transitionStyle: transitionStyle, navigationOrientation: orientation, options: nil)
 
     }
     
@@ -71,35 +73,99 @@ class MangaReaderController: UIViewController {
         navigationController?.navigationBar.translucent = true
         navigationController?.toolbar.translucent = true
         
-        setUpReader()
-        
         fetchPages(selectedChapter.link)
         
     }
     
     func setUpReader() {
         
-        let currentPage = pageController.viewControllers?.last
+        // clean up the current view
+        pageController?.removeFromParentViewController()
+        pageController?.view.removeFromSuperview()
+        webtoonReader?.removeFromSuperview()
         
-        if let _ = pageController.view.superview {
-            pageController.removeFromParentViewController()
-            pageController.view.removeFromSuperview()
-            pageController = UIPageViewController(transitionStyle: transitionStyle, navigationOrientation: orientation, options: nil)
+        
+        for page in pages {
+            page.removeFromSuperview()
+//            page.setFrame()
         }
         
-        pageController.dataSource = self
-        pageController.delegate = self
+        if orientation == .Vertical {
+            webtoonSetup()
+        } else {
+            pageSetup()
+        }
+    }
+    
+    func webtoonSetup() {
+        
+        if webtoonReader == nil {
+            webtoonReader = UITableView(frame: UIScreen.mainScreen().bounds)
+
+            let nib = UINib(nibName: String(WebtoonCell.self), bundle: nil)
+            webtoonReader!.registerNib(nib, forCellReuseIdentifier: "page")
+            webtoonReader!.separatorInset = UIEdgeInsetsZero
+            webtoonReader!.separatorColor = UIColor.clearColor()
+            webtoonReader!.rowHeight = UITableViewAutomaticDimension
+            webtoonReader!.estimatedRowHeight = 600
+        }
+
+        view.addSubview(webtoonReader!)
+        
+        for page in pages {
+            page.transform = CGAffineTransformIdentity
+        }
+        
+        webtoonReader!.delegate = self
+        webtoonReader!.dataSource = self
+        webtoonReader!.reloadData()
+        
+    }
+    
+    func pageSetup() {
+        
+        
+//        if pageController == nil {
+            pageController = UIPageViewController(transitionStyle: transitionStyle, navigationOrientation: orientation, options: nil)
+            pageController!.dataSource = self
+            pageController!.delegate = self
+//        }
+        
+        
+        mangaPages = [MangaPageController]()
+        
+        
+        guard let pageController = pageController else {
+            return
+        }
+        
+        
+        var currentPage = pageController.viewControllers?.last as? MangaPageController
+        
+        // remove the pages from the previous super view
+        for page in pages {
+            let mangaPageController = MangaPageController()
+            mangaPageController.addMangaPage(page)
+            mangaPages.append(mangaPageController)
+        }
+        
+        if currentPage == nil {
+            currentPage = mangaPages.first
+            
+        }
+        
+        
         if mangaPages.isEmpty {
             pageController.setViewControllers([UIViewController()], direction: .Forward, animated: true, completion: nil)
         } else {
             pageController.setViewControllers([currentPage!], direction: .Forward, animated: true, completion: nil)
-
         }
         
         // add the page controller to the this view controller
         addChildViewController(pageController)
         view.addSubview(pageController.view)
         pageController.didMoveToParentViewController(self)
+        
     }
     
     
@@ -120,17 +186,17 @@ class MangaReaderController: UIViewController {
                 }
                 
                 // remove all the previous pages
-                self.mangaPages = [MangaPageController]()
+                self.pages = [MangaPageImageView]()
                 
                 // add the new pages
                 for page in pages {
-                    self.mangaPages.append(MangaPageController(imageLink: page))
+                    let mangaPage = MangaPageImageView(link: page)
+                    self.pages.append(mangaPage)
+                    mangaPage.downloadMangaPage()
                 }
                 
                 
-                self.pageController.setViewControllers([self.mangaPages.first!], direction: .Forward, animated: true, completion: nil)
-                self.pageController.dataSource = nil
-                self.pageController.dataSource = self
+                self.setUpReader()
                 
             }
         }
@@ -204,7 +270,7 @@ extension MangaReaderController: UIPageViewControllerDataSource, UIPageViewContr
 
         }
         
-                return mangaPages[nextIndex]
+        return mangaPages[nextIndex]
     }
     
     func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
@@ -238,7 +304,6 @@ extension MangaReaderController: UIPageViewControllerDataSource, UIPageViewContr
             
         }
         
-        
         return mangaPages[prevIndex]
     }
     
@@ -253,6 +318,56 @@ extension MangaReaderController: UIPageViewControllerDataSource, UIPageViewContr
         return direction == .RightToLeft ? UIPageViewControllerSpineLocation.Max : UIPageViewControllerSpineLocation.Min
     }
     
+    
+}
+
+extension MangaReaderController: UITableViewDataSource, UITableViewDelegate {
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCellWithIdentifier("page", forIndexPath: indexPath) as! WebtoonCell
+        
+
+        let page = pages[indexPath.row]
+        
+        for view in cell.contentView.subviews {
+            view.removeFromSuperview()
+        }
+        
+        cell.contentView.addSubview(page)
+        
+        cell.contentView.snp_remakeConstraints { (make) -> Void in
+            make.edges.equalTo(page)
+        }
+        
+//        page.frame.origin = CGPoint.zero
+        page.updateConstraintsIfNeeded()
+//        print(page.frame.size)
+        
+        
+        cell.layoutMargins = UIEdgeInsetsZero;
+        cell.preservesSuperviewLayoutMargins = false;
+        
+        return cell
+        
+        
+    }
+    
+//    func tableViewWillEnd
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return pages.count
+    }
+    
+//    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+//        let page = pages[indexPath.row]
+//        
+//        if page.image != nil {
+//            return page.bounds.height
+//        } else {
+//            return UITableViewAutomaticDimension
+//        }
+//    }
     
 }
 

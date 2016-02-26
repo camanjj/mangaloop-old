@@ -46,6 +46,8 @@
 		AD9244051C55ABD200C19BFC /* UpdatesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9244041C55ABD200C19BFC /* UpdatesViewController.swift */; };
 		ADC613C71C6C0FC200BE545F /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC613C61C6C0FC200BE545F /* Extensions.swift */; };
 		ADC613C91C6C245200BE545F /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC613C81C6C245200BE545F /* SettingsViewController.swift */; };
+		ADD21AC01C7BC32400E9FAA6 /* WebtoonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD21ABE1C7BC32400E9FAA6 /* WebtoonCell.swift */; };
+		ADD21AC11C7BC32400E9FAA6 /* WebtoonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ADD21ABF1C7BC32400E9FAA6 /* WebtoonCell.xib */; };
 		ADF95C731C75886B005A791D /* ReaderSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADF95C721C75886B005A791D /* ReaderSettingsViewController.swift */; };
 		ADFF06121C571ADF00BC6ABE /* MangaDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADFF06111C571ADF00BC6ABE /* MangaDetailsController.swift */; };
 		ADFF06141C59979A00BC6ABE /* MangaPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADFF06131C59979A00BC6ABE /* MangaPageController.swift */; };
@@ -121,6 +123,8 @@
 		ADC613C61C6C0FC200BE545F /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		ADC613C81C6C245200BE545F /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		ADC7C0451C51EA93008858E8 /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = ../../../../usr/lib/libz.1.dylib; sourceTree = "<group>"; };
+		ADD21ABE1C7BC32400E9FAA6 /* WebtoonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebtoonCell.swift; sourceTree = "<group>"; };
+		ADD21ABF1C7BC32400E9FAA6 /* WebtoonCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WebtoonCell.xib; sourceTree = "<group>"; };
 		ADF95C721C75886B005A791D /* ReaderSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReaderSettingsViewController.swift; sourceTree = "<group>"; };
 		ADFF06111C571ADF00BC6ABE /* MangaDetailsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MangaDetailsController.swift; sourceTree = "<group>"; };
 		ADFF06131C59979A00BC6ABE /* MangaPageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MangaPageController.swift; sourceTree = "<group>"; };
@@ -288,6 +292,8 @@
 			children = (
 				AD9244011C55A1A600C19BFC /* MangaCell.swift */,
 				AD4B90F11C55DC540010C6C8 /* ItemCell.swift */,
+				ADD21ABE1C7BC32400E9FAA6 /* WebtoonCell.swift */,
+				ADD21ABF1C7BC32400E9FAA6 /* WebtoonCell.xib */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -430,6 +436,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD55F0881C5D9C3800FB2E4E /* DetailController.xib in Resources */,
+				ADD21AC11C7BC32400E9FAA6 /* WebtoonCell.xib in Resources */,
 				7E8F6F661C7194E0009146FF /* settings_icon.svg in Resources */,
 				7E8F6F641C7194E0009146FF /* logout_icon.svg in Resources */,
 				AD463E481C5EC62B0046D613 /* MangaPageController.xib in Resources */,
@@ -529,6 +536,7 @@
 				AD1A1A9C1C6FFD5E0029222A /* SpinerLayer.swift in Sources */,
 				AD1A1A9A1C6FFD5E0029222A /* TransitionSubmitButton.swift in Sources */,
 				AD4AD9141C5AF04700DC27C6 /* MangaReaderController.swift in Sources */,
+				ADD21AC01C7BC32400E9FAA6 /* WebtoonCell.swift in Sources */,
 				AD1A1A991C6FFD5E0029222A /* NSTimerEx.swift in Sources */,
 				AD345BFE1C541BEA00E5CF26 /* MangaPreviewItem.swift in Sources */,
 				AD9243FA1C554A0F00C19BFC /* MLRouter.swift in Sources */,
