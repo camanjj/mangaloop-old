@@ -28,13 +28,17 @@ class MangaManager {
     
     func getUpdates(callback: MangaList) {
         Alamofire.request(MLRouter.Get("updates", nil))
+            .validate()
             .responseData({ (response) -> Void in
-                if let data = response.result.value {
+                
+                switch response.result {
+                case .Success(let data):
                     let mangas: [MangaPreviewItem]? = Unbox(data)
                     callback(mangas)
+                case .Failure(_):
+                    callback(nil)
                 }
                 
-                callback(nil)
             })
 
     }
@@ -42,31 +46,35 @@ class MangaManager {
     
     func getMangaDetails(page: String, callback: MangaDetailItem? -> Void) {
         Alamofire.request(MLRouter.Get("info", ["page": page]))
-            .responseJSON(completionHandler: { (response) -> Void in
-                print(response.result.value)
-            })
+            .validate()
             .responseData { (response) -> Void in
-                if let data = response.result.value {
+                switch response.result {
+                case .Success(let data):
                     let manga: MangaDetailItem? = Unbox(data)
                     callback(manga)
+                case .Failure(_):
+                    callback(nil)
                 }
-                callback(nil)
         }
     }
     
     func searchMangas(term: String, callback: MangaList) {
-        Alamofire.request(MLRouter.Get("search", ["term": "bleach"]))
+        Alamofire.request(MLRouter.Get("search", ["term": term]))
+            .validate()
             .responseData { (response) -> Void in
-                if let data = response.result.value {
+                switch response.result {
+                case .Success(let data):
                     let mangas: [MangaPreviewItem]? = Unbox(data)
                     callback(mangas)
+                case .Failure(_):
+                    callback(nil)
                 }
-                callback(nil)
         }
     }
     
     func getPages(link: String, callback: [String]? -> Void) {
         Alamofire.request(MLRouter.Get("pages", ["page": link]))
+            .validate()
             .responseJSON { (response) -> Void in
                 if let json = response.result.value, pages = json as? [String] {
                     callback(pages)
@@ -219,13 +227,15 @@ class MangaManager {
     //MARK: Follows
     func getFollowsList(page: Int = 1, callback: MangaList) {
         Alamofire.request(MLRouter.Get("follows", ["page": page]))
+            .validate()
             .responseData { (response) -> Void in
-                if let data = response.result.value {
+                switch response.result {
+                case .Success(let data):
                     let mangas: [MangaPreviewItem]? = Unbox(data)
                     callback(mangas)
+                case .Failure(_):
+                    callback(nil)
                 }
-                
-                callback(nil)
         }
     }
     
@@ -246,11 +256,11 @@ class MangaManager {
         }
         
         Alamofire.request(MLRouter.Get("all/follows", nil))
-            .responseJSON(completionHandler: { (response) -> Void in
-                print(response)
-            })
+            .validate()
             .responseData { (response) -> Void in
-                if let data = response.result.value {
+                
+                switch response.result {
+                case .Success(let data):
                     guard let manga: [FollowManga] = Unbox(data) else {
                         callback?(fetched: true, error: true)
                         return
@@ -277,9 +287,9 @@ class MangaManager {
                     
                     
                     callback?(fetched: true, error: false)
-                }
-                
-                callback?(fetched: false, error: true)
+                case .Failure(_):
+                    callback?(fetched: false, error: true)
+                }                
         }
     }
 
