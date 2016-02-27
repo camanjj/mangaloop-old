@@ -265,9 +265,13 @@ class MangaPageController: UIViewController, UIScrollViewDelegate {
             return
         }
         
+
+        // center the image if it is not longer than the page
+        if mangaImageView.getSize().height <= UIScreen.mainScreen().bounds.height {
         
-        mangaImageView.snp_updateConstraints { (make) -> Void in
-            make.center.equalTo(scrollView)
+            mangaImageView.snp_updateConstraints { (make) -> Void in
+                make.center.equalTo(scrollView)
+            }
         }
         
         
