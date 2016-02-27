@@ -76,10 +76,15 @@ class MangaManager {
         Alamofire.request(MLRouter.Get("pages", ["page": link]))
             .validate()
             .responseJSON { (response) -> Void in
-                if let json = response.result.value, pages = json as? [String] {
+                
+                switch response.result {
+                case .Success(let json):
+                    let pages = json as? [String]
                     callback(pages)
+                case .Failure(_):
+                    callback(nil)
+                    
                 }
-                callback(nil)
         }
     }
     

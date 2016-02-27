@@ -11,6 +11,8 @@ import MXSegmentedPager
 import Kingfisher
 import SCLAlertView
 import SafariServices
+import PKHUD
+
 
 class MangaDetailsController: MXSegmentedPagerController, ChaptersDelegate, DetailHeaderDelegate {
     
@@ -83,6 +85,9 @@ class MangaDetailsController: MXSegmentedPagerController, ChaptersDelegate, Deta
     }
     
     func fetchInfo() {
+        
+        HUD.show(.Progress)
+        
         MangaManager.sharedManager.getMangaDetails(previewItem.link) { [weak self](manga) -> Void in
             if let manga = manga {
                 
@@ -121,6 +126,7 @@ class MangaDetailsController: MXSegmentedPagerController, ChaptersDelegate, Deta
                     wself.headerView.followButton.hidden = true
                 }
                 
+                HUD.hide(animated: true, completion: nil)
                 
                 // show warning for mature warning
                 if let mature = manga.mature where !mature.isEmpty && MangaManager.getToggleSettings(.MatureWarning) == true {
@@ -144,6 +150,7 @@ class MangaDetailsController: MXSegmentedPagerController, ChaptersDelegate, Deta
                 wself.segmentedPager.reloadData()
             } else {
                 // failed
+                HUD.flash(.Error, withDelay: 2.0)
             }
         }
     }

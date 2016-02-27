@@ -22,6 +22,7 @@ pod 'Eureka', '~> 1.3'
 pod 'TLTagsControl', :git => 'https://github.com/ali312/TLTagsControl.git'
 pod 'JAMSVGImage', '~> 1.6'
 pod 'Reveal-iOS-SDK', :configurations => ['Debug']
+pod 'PKHUD', '~> 3.0'
 
 target 'MangaLoop' do
 

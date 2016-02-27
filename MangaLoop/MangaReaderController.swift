@@ -12,6 +12,8 @@ import MZFormSheetPresentationController
 import SnapKit
 import JAMSVGImage
 import SCLAlertView
+import PKHUD
+
 
 class MangaReaderController: UIViewController {
     
@@ -204,6 +206,9 @@ class MangaReaderController: UIViewController {
     
     
     func fetchPages(link: String) {
+        
+        HUD.show(.Progress)
+        
         MangaManager.sharedManager.getPages(link) { [weak self] (pages) -> Void in
             
             guard let wself = self else {
@@ -214,8 +219,11 @@ class MangaReaderController: UIViewController {
                 
                 if pages.isEmpty {
                     print("The pages are empty. Batoto probably is not loading this chapter for some reason")
+                    HUD.flash(.Error, withDelay: 2.0)
                     return
                 }
+                
+                HUD.hide(animated: true, completion: nil)
                 
                 print("Got pages")
                 
@@ -237,6 +245,8 @@ class MangaReaderController: UIViewController {
                 
                 wself.setUpReader()
                 
+            } else {
+                HUD.flash(.Error, withDelay: 2.0)
             }
         }
     }
