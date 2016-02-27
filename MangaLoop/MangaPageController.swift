@@ -29,6 +29,20 @@ class MangaPageImageView: UIImageView {
     init(link: String) {
         self.link = link
         super.init(frame: UIScreen.mainScreen().bounds)
+        
+        progressView.centerFillColor = UIColor.whiteColor()
+        progressView.trackBackgroundColor = UIColor.clearColor()
+        progressView.trackFillColor = UIColor.redColor()
+        progressView.trackWidth = 5
+        progressView.backgroundColor = UIColor.clearColor()
+        
+        
+        addSubview(progressView)
+        
+        progressView.snp_makeConstraints { (make) -> Void in
+            make.center.equalTo(self)
+            make.width.height.equalTo(50)
+        }
     }
     
     func downloadMangaPage() {
