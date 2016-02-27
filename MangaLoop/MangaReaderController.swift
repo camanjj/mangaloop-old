@@ -204,7 +204,12 @@ class MangaReaderController: UIViewController {
     
     
     func fetchPages(link: String) {
-        MangaManager.sharedManager.getPages(link) { [unowned self] (pages) -> Void in
+        MangaManager.sharedManager.getPages(link) { [weak self] (pages) -> Void in
+            
+            guard let wself = self else {
+                return
+            }
+            
             if let pages = pages {
                 
                 if pages.isEmpty {
@@ -215,22 +220,22 @@ class MangaReaderController: UIViewController {
                 print("Got pages")
                 
                 // Stop any manga page downloads
-                for mangaPage in self.mangaPages {
+                for mangaPage in wself.mangaPages {
                     mangaPage.cancelDownload()
                 }
                 
                 // remove all the previous pages
-                self.pages = [MangaPageImageView]()
+                wself.pages = [MangaPageImageView]()
                 
                 // add the new pages
                 for page in pages {
                     let mangaPage = MangaPageImageView(link: page)
-                    self.pages.append(mangaPage)
+                    wself.pages.append(mangaPage)
                     mangaPage.downloadMangaPage()
                 }
                 
                 
-                self.setUpReader()
+                wself.setUpReader()
                 
             }
         }
