@@ -165,7 +165,7 @@ class MangaReaderController: UIViewController {
         
         // remove the pages from the previous super view
         for page in pages {
-            page.transform = CGAffineTransformIdentity
+//            page.transform = CGAffineTransformIdentity
             let mangaPageController = MangaPageController()
             mangaPageController.addMangaPage(page)
             mangaPages.append(mangaPageController)

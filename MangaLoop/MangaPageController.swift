@@ -112,11 +112,11 @@ class MangaPageImageView: UIImageView {
         return boundingSize;
     }
     
-    func setFrame() {
-        let scaledSize = aspectFitSize(image!.size, boundingSize: CGSize(width: UIScreen.mainScreen().bounds.width, height: image!.size.height))
-        
-        self.frame = CGRect(origin: CGPoint.zero, size: scaledSize)
-    }
+//    func setFrame() {
+//        let scaledSize = aspectFitSize(image!.size, boundingSize: CGSize(width: UIScreen.mainScreen().bounds.width, height: image!.size.height))
+//        
+//        self.frame = CGRect(origin: CGPoint.zero, size: scaledSize)
+//    }
     
     func getSize() -> CGSize {
         let scaledSize = aspectFitSize(image!.size, boundingSize: CGSize(width: UIScreen.mainScreen().bounds.width, height: image!.size.height))
@@ -156,39 +156,26 @@ class MangaPageController: UIViewController, UIScrollViewDelegate {
         
         if let mangaImageView = mangaImageView {
             scrollView.addSubview(mangaImageView)
-//            scrollView.frame = view.frame
             scrollView.contentSize = mangaImageView.getSize()
             self.updateZoom()
-            self.centerImage()
-            self.updateZoom()
+//            self.centerImage()
+//            self.updateZoom()
         }
-        
         // add the gestures to the scrollview
         addGestures()
         
     }
     
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-//        scrollView.frame = view.frame
-//        self.updateZoom()
-//        self.centerImage()
-//        self.updateZoom()
-        
-    }
-    
     func addMangaPage(page: MangaPageImageView) {
-        page.transform = CGAffineTransformIdentity
+//        page.transform = CGAffineTransformIdentity
         mangaImageView = page
         mangaImageView!.delegate = self
         if let scrollView = scrollView {
             scrollView.addSubview(mangaImageView!)
             scrollView.contentSize = mangaImageView!.getSize()
             self.updateZoom()
-            self.centerImage()
-            self.updateZoom()
+
         }
         
     }
@@ -278,20 +265,10 @@ class MangaPageController: UIViewController, UIScrollViewDelegate {
             return
         }
         
-//        if (scrollView != nil) {
-//            mangaImageView.frame = scrollView.frame
-//        }
-//        
-//        
-//        let widthImageFrame = CGRect(x: 0, y: 0, width: view.frame.width, height: mangaImageView.image!.size.height)
-//        
-//        let scaledSize = aspectFitSize(mangaImageView.image!.size, boundingSize: widthImageFrame.size)
-//        
-//        if scaledSize.height > UIScreen.mainScreen().bounds.height - 20 {
-//            mangaImageView.frame = CGRect(x: 0, y: 0, width: scrollView.frame.width, height: scaledSize.height)
-//            scrollView.contentSize = mangaImageView.frame.size
-//        }
         
+        mangaImageView.snp_updateConstraints { (make) -> Void in
+            make.center.equalTo(scrollView)
+        }
         
         
         
@@ -301,8 +278,9 @@ class MangaPageController: UIViewController, UIScrollViewDelegate {
             self.scrollView.minimumZoomScale = 1;
         }
         
-        scrollView.minimumZoomScale = zoomScale;
-        scrollView.zoomScale = zoomScale;
+        scrollView.minimumZoomScale = 1;
+        scrollView.maximumZoomScale = 3
+        scrollView.zoomScale = 1;
     }
     
     func aspectFitSize(aspectRatio: CGSize, var boundingSize: CGSize) -> CGSize {
@@ -338,6 +316,7 @@ class MangaPageController: UIViewController, UIScrollViewDelegate {
             contentsFrame.origin.y = 0.0
         }
         
+//        mangaImageView.frame.origin = CGPoint(x: 100, y: 100)
 //        mangaImageView.frame = contentsFrame
     }
     
@@ -375,6 +354,8 @@ extension MangaPageController: MangaPageImageViewDelegate {
     func imageDownloaded(scaledSize: CGSize) {
         if let scrollView = scrollView {
             scrollView.contentSize = scaledSize
+            updateZoom()
+
         }
     }
 }
