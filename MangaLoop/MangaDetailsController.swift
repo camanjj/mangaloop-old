@@ -193,7 +193,7 @@ class MangaDetailsController: MXSegmentedPagerController, ChaptersDelegate, Deta
     //MARK: Chapters Delegate Method
     func chaptersControllerDidSelectChapter(chapter: Chapter, manga: MangaItem) {
         
-        let reader = MangaReaderController.createReader(manga, chapter: chapter)
+        let reader = MangaReaderController.createReader(manga, chapter: chapter, allChapters: self.manga!.chapters)
         self.presentViewController(reader, animated: true, completion: nil)
     }
     

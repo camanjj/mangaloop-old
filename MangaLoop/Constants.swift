@@ -51,6 +51,11 @@ struct Constants {
         static let Logout = "logout_icon"
         static let FollowsTab = "follows_icon"
         static let SettingsTab = "settings_icon"
+        
+        static let ReaderSettings = "ios-toggle"
+        static let Search = "search"
+        static let Info = "info"
+        static let List = "ios-list"
     }
     
     static let PageCache = "manga-pages"

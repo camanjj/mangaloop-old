@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 import MZFormSheetPresentationController
 import SnapKit
+import JAMSVGImage
+import SCLAlertView
 
 class MangaReaderController: UIViewController {
     
@@ -21,7 +23,8 @@ class MangaReaderController: UIViewController {
     var pages: [MangaPageImageView]!
     var mangaPages = [MangaPageController]()
     
-    var isWebtoonMode : Bool?
+
+    var allChapters: [Chapter]?
     
     var isReversed: Bool = false
     
@@ -50,8 +53,9 @@ class MangaReaderController: UIViewController {
     }
     
     // creates the reader and embeds it in a navigation controller
-    class func createReader(manga: MangaItem, chapter: Chapter) -> UINavigationController {
+    class func createReader(manga: MangaItem, chapter: Chapter, allChapters: [Chapter]? = nil) -> UINavigationController {
         let reader = MangaReaderController(manga: manga, chapter: chapter)
+        reader.allChapters = allChapters
         let navController = UINavigationController(rootViewController: reader)
         return navController
     }
@@ -66,8 +70,13 @@ class MangaReaderController: UIViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Stop, target: self, action: Selector("closeClick"))
         navigationController?.setToolbarHidden(false, animated: false)
         
-        let settingsItem = UIBarButtonItem(title: "Settings", style: .Plain, target: self, action: Selector("settingsClick"))
-        toolbarItems = [settingsItem]
+        let itemSize = CGSize(width: 25, height: 25)
+        
+        let settingsItem = UIBarButtonItem(image: UIImage(fromSVGNamed: Constants.Images.ReaderSettings, atSize: itemSize), style: .Plain, target: self, action: Selector("settingsClick"))
+        let chaptersItem = UIBarButtonItem(image: UIImage(fromSVGNamed: Constants.Images.List, atSize: itemSize), style: .Plain, target: self, action: Selector("chaptersClick"))
+        let infoItem = UIBarButtonItem(image: UIImage(fromSVGNamed: Constants.Images.Info, atSize: itemSize), style: .Plain, target: self, action: Selector("infoClick"))
+        
+        toolbarItems = [settingsItem, chaptersItem, infoItem]
         
         view.backgroundColor = UIColor.whiteColor()
         
@@ -245,6 +254,7 @@ class MangaReaderController: UIViewController {
         
         let settingsController = ReaderSettingsViewController()
         settingsController.delegate = self
+        settingsController.title = "Reader Settings"
         let navController = UINavigationController()
         navController.viewControllers = [settingsController]
         let formSheet = MZFormSheetPresentationViewController(contentViewController: navController)
@@ -258,7 +268,48 @@ class MangaReaderController: UIViewController {
         
         self.presentViewController(formSheet, animated: true, completion: nil)
 
+    }
+    
+    func chaptersClick() {
         
+        if let allChapters = allChapters {
+            
+            let chaptersController = ChaptersController(manga: manga, chapters: allChapters, delegate: self)
+            let navController = UINavigationController()
+            navController.viewControllers = [chaptersController]
+            let formSheet = MZFormSheetPresentationViewController(contentViewController: navController)
+            
+            formSheet.interactivePanGestureDissmisalDirection = .All;
+            //                formSheet.allowDismissByPanningPresentedView = true
+            formSheet.presentationController?.shouldDismissOnBackgroundViewTap = true
+            formSheet.contentViewControllerTransitionStyle = .Fade
+            //                formSheet.presentationController?.shouldApplyBackgroundBlurEffect = true
+            
+            
+            self.presentViewController(formSheet, animated: true, completion: nil)
+            
+        } else {
+            //fetch the chapters
+            
+            MangaManager.sharedManager.getMangaDetails(manga.link, callback: { [weak self] (manga) -> Void in
+                guard let wself = self else {
+                    return
+                }
+                
+                guard let manga = manga else {
+                    return
+                }
+                
+                wself.allChapters = manga.chapters
+                wself.chaptersClick()
+            })
+        }
+        
+    }
+    
+    func infoClick() {
+        
+        SCLAlertView().showInfo(manga.title, subTitle: selectedChapter.title)
         
     }
     
@@ -365,10 +416,7 @@ extension MangaReaderController: UITableViewDataSource, UITableViewDelegate {
             make.edges.equalTo(page)
         }
         
-//        page.frame.origin = CGPoint.zero
         page.updateConstraintsIfNeeded()
-//        print(page.frame.size)
-        
         
         cell.layoutMargins = UIEdgeInsetsZero;
         cell.preservesSuperviewLayoutMargins = false;
@@ -378,7 +426,6 @@ extension MangaReaderController: UITableViewDataSource, UITableViewDelegate {
         
     }
     
-//    func tableViewWillEnd
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return pages.count
@@ -400,5 +447,15 @@ extension MangaReaderController: ReaderSettingsDelegate {
     func updatedSettings() {
         // update the settings for the reader
         setUpReader()
+    }
+}
+
+extension MangaReaderController: ChaptersDelegate {
+    func chaptersControllerDidSelectChapter(chapter: Chapter, manga: MangaItem) {
+        self.dismissViewControllerAnimated(true) { [weak self] () -> Void in
+
+            self?.selectedChapter = chapter
+            self?.fetchPages(chapter.link)
+        }
     }
 }

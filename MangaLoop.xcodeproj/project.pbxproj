@@ -27,6 +27,10 @@
 		AD4AD9161C5B07EE00DC27C6 /* MangaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4AD9151C5B07EE00DC27C6 /* MangaItem.swift */; };
 		AD4B90F01C55D6610010C6C8 /* ChaptersController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4B90EF1C55D6610010C6C8 /* ChaptersController.swift */; };
 		AD4B90F21C55DC540010C6C8 /* ItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4B90F11C55DC540010C6C8 /* ItemCell.swift */; };
+		AD5333EA1C815A3700F56C2E /* info.svg in Resources */ = {isa = PBXBuildFile; fileRef = AD5333E71C815A3700F56C2E /* info.svg */; };
+		AD5333EB1C815A3700F56C2E /* search.svg in Resources */ = {isa = PBXBuildFile; fileRef = AD5333E81C815A3700F56C2E /* search.svg */; };
+		AD5333EC1C815A3700F56C2E /* ios-toggle.svg in Resources */ = {isa = PBXBuildFile; fileRef = AD5333E91C815A3700F56C2E /* ios-toggle.svg */; };
+		AD5333EE1C815D3A00F56C2E /* ios-list.svg in Resources */ = {isa = PBXBuildFile; fileRef = AD5333ED1C815D3A00F56C2E /* ios-list.svg */; };
 		AD55F0871C5D9C3800FB2E4E /* DetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD55F0851C5D9C3800FB2E4E /* DetailController.swift */; };
 		AD55F0881C5D9C3800FB2E4E /* DetailController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD55F0861C5D9C3800FB2E4E /* DetailController.xib */; };
 		AD55F08A1C5DE56500FB2E4E /* DetailHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD55F0891C5DE56500FB2E4E /* DetailHeaderView.xib */; };
@@ -95,6 +99,10 @@
 		AD4AD9151C5B07EE00DC27C6 /* MangaItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MangaItem.swift; sourceTree = "<group>"; };
 		AD4B90EF1C55D6610010C6C8 /* ChaptersController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChaptersController.swift; sourceTree = "<group>"; };
 		AD4B90F11C55DC540010C6C8 /* ItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemCell.swift; sourceTree = "<group>"; };
+		AD5333E71C815A3700F56C2E /* info.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = info.svg; sourceTree = "<group>"; };
+		AD5333E81C815A3700F56C2E /* search.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = search.svg; sourceTree = "<group>"; };
+		AD5333E91C815A3700F56C2E /* ios-toggle.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "ios-toggle.svg"; sourceTree = "<group>"; };
+		AD5333ED1C815D3A00F56C2E /* ios-list.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "ios-list.svg"; sourceTree = "<group>"; };
 		AD55F0851C5D9C3800FB2E4E /* DetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailController.swift; sourceTree = "<group>"; };
 		AD55F0861C5D9C3800FB2E4E /* DetailController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailController.xib; sourceTree = "<group>"; };
 		AD55F0891C5DE56500FB2E4E /* DetailHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailHeaderView.xib; sourceTree = "<group>"; };
@@ -172,6 +180,10 @@
 		7E8F6F5F1C7194AE009146FF /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				AD5333ED1C815D3A00F56C2E /* ios-list.svg */,
+				AD5333E71C815A3700F56C2E /* info.svg */,
+				AD5333E81C815A3700F56C2E /* search.svg */,
+				AD5333E91C815A3700F56C2E /* ios-toggle.svg */,
 				7E8F6F601C7194E0009146FF /* logout_icon.svg */,
 				7E8F6F611C7194E0009146FF /* follows_icon.svg */,
 				7E8F6F621C7194E0009146FF /* settings_icon.svg */,
@@ -437,12 +449,16 @@
 			files = (
 				AD55F0881C5D9C3800FB2E4E /* DetailController.xib in Resources */,
 				ADD21AC11C7BC32400E9FAA6 /* WebtoonCell.xib in Resources */,
+				AD5333EB1C815A3700F56C2E /* search.svg in Resources */,
+				AD5333EA1C815A3700F56C2E /* info.svg in Resources */,
+				AD5333EC1C815A3700F56C2E /* ios-toggle.svg in Resources */,
 				7E8F6F661C7194E0009146FF /* settings_icon.svg in Resources */,
 				7E8F6F641C7194E0009146FF /* logout_icon.svg in Resources */,
 				AD463E481C5EC62B0046D613 /* MangaPageController.xib in Resources */,
 				AD55F08A1C5DE56500FB2E4E /* DetailHeaderView.xib in Resources */,
 				7E8F6F651C7194E0009146FF /* follows_icon.svg in Resources */,
 				AD8E01961C509E14009241A1 /* LaunchScreen.storyboard in Resources */,
+				AD5333EE1C815D3A00F56C2E /* ios-list.svg in Resources */,
 				AD8E01931C509E14009241A1 /* Assets.xcassets in Resources */,
 				7E8F6F671C7194E0009146FF /* updates_icon.svg in Resources */,
 				AD8E01911C509E14009241A1 /* Main.storyboard in Resources */,
