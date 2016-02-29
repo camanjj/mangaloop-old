@@ -58,6 +58,17 @@ class SettingsViewController: FormViewController {
             }
         
         
+        
+        let readerSettingsCell = LabelRow() {
+            $0.title = "Reader Settings"
+        }.onCellSelection { (cell, row) -> () in
+            let readerSettingsController = ReaderSettingsViewController()
+            self.navigationController?.pushViewController(readerSettingsController, animated: true)
+        }
+        
+        form +++ Section() <<< readerSettingsCell
+        
+        
         memoryCell = LabelRow() {
                 $0.title = "Clear Image Cache"
             }.onCellSelection({ (cell, row) -> () in
@@ -68,6 +79,8 @@ class SettingsViewController: FormViewController {
             }).cellUpdate({ (cell, row) -> () in
                 row.title = "Clear Image Cache (\(self.memory)mb)"
             })
+        
+        
         
         form +++ Section("")
             <<< memoryCell!

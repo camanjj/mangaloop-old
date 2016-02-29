@@ -6,8 +6,6 @@ import XCPlayground
 import UIKit
 import Alamofire
 import Kanna
-import ObjectMapper
-import AlamofireObjectMapper
 import Unbox
 
 
@@ -172,12 +170,12 @@ enum MLRouter: URLRequestConvertible {
 //        }
 //}
 
-var searchRequest = Alamofire.request(MLRouter.Get("search", ["term": "bleach"]))
-    .responseJSON { (response) -> Void in
-        if let json = response.result.value {
-            print(json)
-        }
-}
+//var searchRequest = Alamofire.request(MLRouter.Get("search", ["term": "bleach"]))
+//    .responseJSON { (response) -> Void in
+//        if let json = response.result.value {
+//            print(json)
+//        }
+//}
 
 
 //let loginParams = [
@@ -247,6 +245,29 @@ var searchRequest = Alamofire.request(MLRouter.Get("search", ["term": "bleach"])
 //}
 
 
+
+var searchRequest = Alamofire.request(.GET, "http://bato.to/search")
+    .responseString { (response) -> Void in
+        
+        
+        if let doc = Kanna.HTML(html: response.result.value! as String, encoding: NSUTF8StringEncoding) {
+            
+            var genres = [String:String]()
+            let buttons = doc.css(".genre_buttons")
+            for but in buttons {
+                let value = (but["onclick"]?.componentsSeparatedByCharactersInSet(
+                    NSCharacterSet.decimalDigitCharacterSet().invertedSet).joinWithSeparator(""))
+                let key = (but.text!.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()))
+                
+                genres[key] = value
+            }
+            
+            genres
+            print(genres)
+            
+        }
+        
+}
 
 
 

@@ -8,6 +8,7 @@
 
 import UIKit
 import JAMSVGImage
+import RealmSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -21,6 +22,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // sets the status bar to white
         UIApplication.sharedApplication().statusBarStyle = .LightContent
         UINavigationBar.appearance().barStyle = .Black
+        
+        
+        
+        let config = Realm.Configuration(
+            // Set the new schema version. This must be greater than the previously used
+            // version (if you've never set a schema version before, the version is 0).
+            schemaVersion: 1,
+            
+            // Set the block which will be called automatically when opening a Realm with
+            // a schema version lower than the one set above
+            migrationBlock: { migration, oldSchemaVersion in
+                // We haven’t migrated anything yet, so oldSchemaVersion == 0
+                if (oldSchemaVersion < 1) {
+                    // Nothing to do!
+                    // Realm will automatically detect new properties and removed properties
+                    // And will update the schema on disk automatically
+                }
+        })
+        
+        // Tell Realm to use this new configuration object for the default Realm
+        Realm.Configuration.defaultConfiguration = config
+        
 
         
         // Loads UIWindow and temporary RootViewController
@@ -30,17 +53,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         updatesController.title = "Updates"
         updatesController.tabBarItem.image = UIImage(fromSVGNamed: Constants.Images.UpdatesTab)
         let updatesNavigationController = UINavigationController(rootViewController: updatesController)
+        
         let followsController = FollowsController()
         followsController.title = "Follows"
         followsController.tabBarItem.image = UIImage(fromSVGNamed: Constants.Images.FollowsTab)
         let followsNavigationController = UINavigationController(rootViewController: followsController)
+        
+        let searchController = SearchViewController()
+        searchController.title = "Search"
+        let searchNavigationController = UINavigationController(rootViewController: searchController)
+        
         let settingsController = SettingsViewController()
         settingsController.title = "Settings"
         settingsController.tabBarItem.image = UIImage(fromSVGNamed: Constants.Images.SettingsTab)
         let settingsNavigaitonController = UINavigationController(rootViewController: settingsController)
         
         let tabController = UITabBarController()
-        tabController.viewControllers = [updatesNavigationController, followsNavigationController, settingsNavigaitonController]
+        tabController.viewControllers = [updatesNavigationController, followsNavigationController, searchNavigationController, settingsNavigaitonController]
         tabController.tabBar.translucent = false
         
         self.window!.rootViewController = tabController
