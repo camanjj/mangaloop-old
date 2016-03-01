@@ -11,6 +11,8 @@ import UIKit
 class SearchViewController: UITableViewController {
     
     let searchBar = UISearchBar()
+    
+    var dataSource: ArrayDataSource<MangaCell, MangaPreviewItem>!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,35 +28,33 @@ class SearchViewController: UITableViewController {
         searchBar.sizeToFit()
         navigationItem.titleView = searchBar
         
+        tableView.registerClass(MangaCell.self, forCellReuseIdentifier: MangaCell.defaultReusableId)
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 44
+        
+        fetchPopularManga()
+        
+    }
+    
+    func fetchPopularManga() {
+        MangaManager.sharedManager.getPopularManga { (manga) -> Void in
+            if let manga = manga {
+                self.dataSource = ArrayDataSource<MangaCell, MangaPreviewItem>(items: manga, cellReuseIdentifier: MangaCell.defaultReusableId, configureClosure: { (cell, manga) -> Void in
+                    
+                    cell.configure(manga)
+                    
+                })
+                
+                self.tableView.dataSource = self.dataSource
+                self.tableView.reloadData()
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-    // MARK: - Table view data source
-
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
-
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
-    }
-
-    /*
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
-
-        // Configure the cell...
-
-        return cell
-    }
-    */
-
 
 }
 

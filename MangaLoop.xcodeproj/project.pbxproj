@@ -16,6 +16,7 @@
 		7E8F6F651C7194E0009146FF /* follows_icon.svg in Resources */ = {isa = PBXBuildFile; fileRef = 7E8F6F611C7194E0009146FF /* follows_icon.svg */; };
 		7E8F6F661C7194E0009146FF /* settings_icon.svg in Resources */ = {isa = PBXBuildFile; fileRef = 7E8F6F621C7194E0009146FF /* settings_icon.svg */; };
 		7E8F6F671C7194E0009146FF /* updates_icon.svg in Resources */ = {isa = PBXBuildFile; fileRef = 7E8F6F631C7194E0009146FF /* updates_icon.svg */; };
+		7EA9DE321C8547B800A6A3EB /* ArrayDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA9DE311C8547B800A6A3EB /* ArrayDataSource.swift */; };
 		7EDF566E1C643DA100EA3748 /* FollowsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDF566D1C643DA100EA3748 /* FollowsController.swift */; };
 		A64A8C106F041A641FF7DA83 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AD9D28682F9356BD7CD2ABC /* Pods.framework */; };
 		AD1A1A991C6FFD5E0029222A /* NSTimerEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1A1A941C6FFD5E0029222A /* NSTimerEx.swift */; };
@@ -91,6 +92,7 @@
 		7E8F6F611C7194E0009146FF /* follows_icon.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = follows_icon.svg; sourceTree = "<group>"; };
 		7E8F6F621C7194E0009146FF /* settings_icon.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = settings_icon.svg; sourceTree = "<group>"; };
 		7E8F6F631C7194E0009146FF /* updates_icon.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = updates_icon.svg; sourceTree = "<group>"; };
+		7EA9DE311C8547B800A6A3EB /* ArrayDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayDataSource.swift; sourceTree = "<group>"; };
 		7EDF566D1C643DA100EA3748 /* FollowsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowsController.swift; sourceTree = "<group>"; };
 		8E1E4451EC6FEF6E2B58C821 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		AD1A1A941C6FFD5E0029222A /* NSTimerEx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSTimerEx.swift; sourceTree = "<group>"; };
@@ -290,6 +292,7 @@
 				AD9243FB1C554A5500C19BFC /* MangaManager.swift */,
 				7E6BFE191C657E93002831B7 /* Constants.swift */,
 				ADC613C61C6C0FC200BE545F /* Extensions.swift */,
+				7EA9DE311C8547B800A6A3EB /* ArrayDataSource.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -573,6 +576,7 @@
 				AD345C001C541BFA00E5CF26 /* MangaDetailItem.swift in Sources */,
 				AD4AD9161C5B07EE00DC27C6 /* MangaItem.swift in Sources */,
 				AD9244021C55A1A600C19BFC /* MangaCell.swift in Sources */,
+				7EA9DE321C8547B800A6A3EB /* ArrayDataSource.swift in Sources */,
 				7EDF566E1C643DA100EA3748 /* FollowsController.swift in Sources */,
 				ADFF06121C571ADF00BC6ABE /* MangaDetailsController.swift in Sources */,
 				ADC613C91C6C245200BE545F /* SettingsViewController.swift in Sources */,

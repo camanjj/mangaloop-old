@@ -58,8 +58,22 @@ class MangaManager {
         }
     }
     
-    func searchMangas(term: String, callback: MangaList) {
-        Alamofire.request(MLRouter.Get("search", ["term": term]))
+    func searchMangas(conditions: String, callback: MangaList) {
+        Alamofire.request(MLRouter.Get("search\(conditions)", nil))
+            .validate()
+            .responseData { (response) -> Void in
+                switch response.result {
+                case .Success(let data):
+                    let mangas: [MangaPreviewItem]? = Unbox(data)
+                    callback(mangas)
+                case .Failure(_):
+                    callback(nil)
+                }
+        }
+    }
+    
+    func getPopularManga(callback: MangaList) {
+        Alamofire.request(MLRouter.Get("popular", nil))
             .validate()
             .responseData { (response) -> Void in
                 switch response.result {
