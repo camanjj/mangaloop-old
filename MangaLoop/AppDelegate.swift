@@ -59,8 +59,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         followsController.tabBarItem.image = UIImage(fromSVGNamed: Constants.Images.FollowsTab)
         let followsNavigationController = UINavigationController(rootViewController: followsController)
         
-        let searchController = SearchViewController()
-        searchController.title = "Search"
+        let searchController = DiscoverViewController(nibName:"DiscoverViewController", bundle: nil)
+        searchController.title = "Discover"
         let searchNavigationController = UINavigationController(rootViewController: searchController)
         
         let settingsController = SettingsViewController()

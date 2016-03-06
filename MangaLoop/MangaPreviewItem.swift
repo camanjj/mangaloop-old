@@ -47,6 +47,7 @@ extension MangaPreviewItem: Unboxable {
         self.link = unboxer.unbox("link")
         self.mangaId = unboxer.unbox("mangaId")
         self.chapters = unboxer.unbox("chapters")
+        self.imageLink = unboxer.unbox("imageLink")
     }
 }
 

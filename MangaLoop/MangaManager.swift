@@ -75,6 +75,9 @@ class MangaManager {
     func getPopularManga(callback: MangaList) {
         Alamofire.request(MLRouter.Get("popular", nil))
             .validate()
+            .responseJSON(completionHandler: { (response) -> Void in
+                print(response.result.value)
+            })
             .responseData { (response) -> Void in
                 switch response.result {
                 case .Success(let data):

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="DiscoverCell" customModule="MangaLoop" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="121" height="121"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="121" height="121"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mg9-kj-fCY">
+                        <rect key="frame" x="0.0" y="0.0" width="121" height="121"/>
+                    </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B4B-yS-mw7">
+                        <rect key="frame" x="0.0" y="0.0" width="121" height="121"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.46000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="m82-ua-uvy">
+                        <rect key="frame" x="0.0" y="0.0" width="121" height="121"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            </view>
+            <constraints>
+                <constraint firstItem="mg9-kj-fCY" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="4hg-Ip-dZ4"/>
+                <constraint firstItem="mg9-kj-fCY" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="5lz-Hx-poB"/>
+                <constraint firstItem="B4B-yS-mw7" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="8h5-pA-dSS"/>
+                <constraint firstAttribute="trailing" secondItem="m82-ua-uvy" secondAttribute="trailing" id="NDR-Tg-PhG"/>
+                <constraint firstItem="m82-ua-uvy" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="T5e-od-hwW"/>
+                <constraint firstAttribute="trailing" secondItem="mg9-kj-fCY" secondAttribute="trailing" id="VyH-tp-hrw"/>
+                <constraint firstAttribute="bottom" secondItem="m82-ua-uvy" secondAttribute="bottom" id="W6U-sC-gac"/>
+                <constraint firstItem="B4B-yS-mw7" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="WLx-A2-36Z"/>
+                <constraint firstAttribute="bottom" secondItem="B4B-yS-mw7" secondAttribute="bottom" id="Zat-zq-gyi"/>
+                <constraint firstAttribute="bottom" secondItem="mg9-kj-fCY" secondAttribute="bottom" id="aC6-CF-Fim"/>
+                <constraint firstAttribute="trailing" secondItem="B4B-yS-mw7" secondAttribute="trailing" id="grH-tF-WoD"/>
+                <constraint firstItem="m82-ua-uvy" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="tDl-c1-U4U"/>
+            </constraints>
+            <size key="customSize" width="121" height="121"/>
+            <connections>
+                <outlet property="mangaImageView" destination="mg9-kj-fCY" id="YSS-OY-mDE"/>
+                <outlet property="titleLabel" destination="m82-ua-uvy" id="KS0-l1-kyC"/>
+            </connections>
+            <point key="canvasLocation" x="419.5" y="292.5"/>
+        </collectionViewCell>
+    </objects>
+</document>
