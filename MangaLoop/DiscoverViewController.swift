@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Pantry
+
 
 class DiscoverViewController: UICollectionViewController {
     
@@ -34,25 +36,37 @@ class DiscoverViewController: UICollectionViewController {
         let itemWidth = (UIScreen.mainScreen().bounds.width - 3) / 3
         flowLayout.itemSize = CGSize(width: itemWidth, height: itemWidth)
         
-        fetchPopularManga()
+        if let _: String = Pantry.unpack(Constants.Pantry.PopularFlag),
+            manga: [MangaPreviewItem] = Pantry.unpack(Constants.Pantry.Popular) {
+           setDataSource(manga)
+        } else {
+            fetchPopularManga()
+        }
+        
+        
         
     }
     
     func fetchPopularManga() {
         MangaManager.sharedManager.getPopularManga { (manga) -> Void in
             if let manga = manga {
-                self.dataSource = ArrayDataSource<DiscoverCell, MangaPreviewItem>(items: manga, cellReuseIdentifier: DiscoverCell.defaultReusableId, configureClosure: { (cell, manga) -> Void in
-                    
-                    cell.configure(manga.title, imageLink: manga.imageLink)
-                    
-                })
-                print("Got mangas")
-                self.collectionView?.dataSource = self.dataSource
-                self.collectionView?.reloadData()
-//                self.tableView.dataSource = self.dataSource
-//                self.tableView.reloadData()
+                
+                Pantry.pack(manga, key: Constants.Pantry.Popular) // store for six hours
+                Pantry.pack("flag", key: Constants.Pantry.PopularFlag, expires: StorageExpiry.Seconds(60 * 60 * 6))
+                
+                self.setDataSource(manga)
             }
         }
+    }
+    
+    func setDataSource(manga: [MangaPreviewItem]) {
+        self.dataSource = ArrayDataSource<DiscoverCell, MangaPreviewItem>(items: manga, cellReuseIdentifier: DiscoverCell.defaultReusableId, configureClosure: { (cell, manga) -> Void in
+            
+            cell.configure(manga.title, imageLink: manga.imageLink)
+            
+        })
+        self.collectionView?.dataSource = self.dataSource
+        self.collectionView?.reloadData()
     }
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {

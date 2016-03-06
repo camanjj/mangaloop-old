@@ -15,6 +15,8 @@ struct Constants {
         static let Updates = "update-list"
         static let Follows = "follow-list"
         static let FetchFollows = "fetch-follows"
+        static let Popular = "popular-list"
+        static let PopularFlag = "popular-flag"
     }
 
     struct Defaults {
