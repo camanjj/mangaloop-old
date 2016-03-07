@@ -17,7 +17,7 @@ class SettingsViewController: FormViewController {
     var memoryCell: LabelRow?
     var memory: Int = 0 {
         didSet {
-            memoryCell?.updateCell()
+            tableView?.reloadData()
         }
     }
     
