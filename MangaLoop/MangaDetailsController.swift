@@ -89,6 +89,10 @@ class MangaDetailsController: MXSegmentedPagerController, ChaptersDelegate, Deta
         HUD.show(.Progress)
         
         MangaManager.sharedManager.getMangaDetails(previewItem.link) { [weak self](manga) -> Void in
+            
+            HUD.hide(animated: false, completion: nil)
+
+            
             if let manga = manga {
                 
                 guard let wself = self else { return }
@@ -126,7 +130,6 @@ class MangaDetailsController: MXSegmentedPagerController, ChaptersDelegate, Deta
                     wself.headerView.followButton.hidden = true
                 }
                 
-                HUD.hide(animated: true, completion: nil)
                 
                 // show warning for mature warning
                 if let mature = manga.mature where !mature.isEmpty && MangaManager.getToggleSettings(.MatureWarning) == true {
