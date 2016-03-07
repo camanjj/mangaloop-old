@@ -20,7 +20,7 @@ class FollowsController: UITableViewController {
                 // the user is signed in add the sign out message
                 searchController.searchBar.userInteractionEnabled = true
                 searchController.searchBar.placeholder = "Search Follows"
-                searchController.searchBar.showsBookmarkButton = true
+                searchController.searchBar.showsBookmarkButton = false
                 footerButton.hidden = false
             } else {
                 //manga is nil so the user is not signed in
@@ -52,9 +52,12 @@ class FollowsController: UITableViewController {
         searchController.hidesNavigationBarDuringPresentation = false
         definesPresentationContext = true
         searchController.searchBar.delegate = self
-        searchController.searchBar.setImage(UIImage(fromSVGNamed: Constants.Images.Logout, atSize: CGSize(width: 20, height: 20)), forSearchBarIcon: .Bookmark, state: .Normal)
         navigationItem.titleView = searchController.searchBar
         
+        
+        let logoutImage = UIImage(fromSVGNamed: Constants.Images.Logout, atSize: CGSize(width: 28, height: 28))
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: logoutImage, style: .Plain, target: self, action: Selector("signOutClick"))
         
         self.tableView.emptyDataSetSource = self;
         self.tableView.emptyDataSetDelegate = self;
