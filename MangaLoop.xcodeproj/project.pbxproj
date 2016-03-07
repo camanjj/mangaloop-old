@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7E01C6611C8CC75200EB9B73 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E01C6601C8CC75200EB9B73 /* SearchViewController.swift */; };
 		7E3223BB1C82475300A0B46A /* SearchFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3223BA1C82475300A0B46A /* SearchFilterViewController.swift */; };
 		7E3223BD1C8257BE00A0B46A /* DiscoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3223BC1C8257BE00A0B46A /* DiscoverViewController.swift */; };
 		7E3223BF1C8271A500A0B46A /* SearchFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3223BE1C8271A500A0B46A /* SearchFilter.swift */; };
@@ -86,6 +87,7 @@
 		06120B7C03EBB2CFF1A60E5D /* Pods_MangaLoop.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MangaLoop.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		505C81DCE912EA676366A5DE /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		7AD9D28682F9356BD7CD2ABC /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7E01C6601C8CC75200EB9B73 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		7E3223BA1C82475300A0B46A /* SearchFilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchFilterViewController.swift; sourceTree = "<group>"; };
 		7E3223BC1C8257BE00A0B46A /* DiscoverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverViewController.swift; sourceTree = "<group>"; };
 		7E3223BE1C8271A500A0B46A /* SearchFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchFilter.swift; sourceTree = "<group>"; };
@@ -345,6 +347,7 @@
 				7E3223BA1C82475300A0B46A /* SearchFilterViewController.swift */,
 				7E3223BC1C8257BE00A0B46A /* DiscoverViewController.swift */,
 				7E7218AE1C8BF2B90021C693 /* DiscoverViewController.xib */,
+				7E01C6601C8CC75200EB9B73 /* SearchViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -587,6 +590,7 @@
 				AD4B90F01C55D6610010C6C8 /* ChaptersController.swift in Sources */,
 				AD345C001C541BFA00E5CF26 /* MangaDetailItem.swift in Sources */,
 				AD4AD9161C5B07EE00DC27C6 /* MangaItem.swift in Sources */,
+				7E01C6611C8CC75200EB9B73 /* SearchViewController.swift in Sources */,
 				AD9244021C55A1A600C19BFC /* MangaCell.swift in Sources */,
 				7EA9DE321C8547B800A6A3EB /* ArrayDataSource.swift in Sources */,
 				7EDF566E1C643DA100EA3748 /* FollowsController.swift in Sources */,

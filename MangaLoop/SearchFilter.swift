@@ -17,8 +17,9 @@ class SearchFilter: Object {
     dynamic var completion = ""
     dynamic var types = ""
     dynamic var showMature = true
+    dynamic var term = ""
     
-    func getParamaters() -> String {
+    func getParamaters() -> [String:AnyObject] {
         
         var params = [String:String]()
         
@@ -51,6 +52,16 @@ class SearchFilter: Object {
             params["mature"] = "n"
         }
         
+        params["name"] = term
+        
+        return params
+        
+    }
+    
+    func getParamatersString() -> String {
+        
+        let params = getParamaters()
+        
         
         var paramsString = "?"
         
@@ -63,5 +74,6 @@ class SearchFilter: Object {
         
         
     }
+
     
 }

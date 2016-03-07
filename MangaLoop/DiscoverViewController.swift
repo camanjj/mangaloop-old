@@ -12,7 +12,12 @@ import Pantry
 
 class DiscoverViewController: UICollectionViewController {
     
-    let searchBar = UISearchBar()
+//    let searchBar = UISearchBar()
+    
+    let mangaSearchController = SearchViewController()
+//    let searchController = UISearchController(searchResultsController: mangaSearchController)
+    
+    var searchController: UISearchController!
     
     var dataSource: ArrayDataSource<DiscoverCell, MangaPreviewItem>!
 
@@ -25,10 +30,16 @@ class DiscoverViewController: UICollectionViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
-        searchBar.delegate = self
-        searchBar.showsBookmarkButton = true
-        searchBar.sizeToFit()
-        navigationItem.titleView = searchBar
+        
+        searchController = UISearchController(searchResultsController: mangaSearchController)
+        searchController.searchResultsUpdater = mangaSearchController
+        searchController.searchBar.delegate = mangaSearchController
+        searchController.dimsBackgroundDuringPresentation = false
+        searchController.delegate = self
+        searchController.hidesNavigationBarDuringPresentation = false
+        definesPresentationContext = true
+    
+        navigationItem.titleView = searchController.searchBar
         
         let cellNib = UINib(nibName: String(DiscoverCell.self), bundle: nil)
         collectionView?.registerNib(cellNib, forCellWithReuseIdentifier: DiscoverCell.defaultReusableId)
@@ -42,7 +53,6 @@ class DiscoverViewController: UICollectionViewController {
         } else {
             fetchPopularManga()
         }
-        
         
         
     }
@@ -77,12 +87,22 @@ class DiscoverViewController: UICollectionViewController {
         navigationController?.pushViewController(detailsController, animated: true)
         
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
 
+}
+
+extension DiscoverViewController: UISearchControllerDelegate {
+    
+    func willPresentSearchController(searchController: UISearchController) {
+        dispatch_async(dispatch_get_main_queue(), {
+            searchController.searchResultsController!.view.hidden = false;
+        })
+    }
+    
 }
 
 extension DiscoverViewController: UISearchBarDelegate {

@@ -58,8 +58,8 @@ class MangaManager {
         }
     }
     
-    func searchMangas(conditions: String, callback: MangaList) {
-        Alamofire.request(MLRouter.Get("search\(conditions)", nil))
+    func searchMangas(filter: SearchFilter, callback: MangaList) {
+        Alamofire.request(MLRouter.Get("search", filter.getParamaters()))
             .validate()
             .responseData { (response) -> Void in
                 switch response.result {
