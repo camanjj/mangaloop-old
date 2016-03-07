@@ -51,8 +51,17 @@ class SearchViewController: UITableViewController {
         formSheet.contentViewControllerTransitionStyle = .Fade
         formSheet.presentationController?.contentViewSize = CGSize(width: UIScreen.mainScreen().bounds.width - 20, height: 350)
         
+        formSheet.willDismissContentViewControllerHandler = { vc in
+            
+            let filterController = (vc as! UINavigationController).viewControllers.first! as! SearchFilterViewController
+            self.filter = filterController.filter
+            self.getResults()
+            
+        }
+        
         self.presentViewController(formSheet, animated: true, completion: nil)
 
+        
         
     }
 
@@ -99,6 +108,15 @@ class SearchViewController: UITableViewController {
         
         tableView.dataSource = dataSource
         tableView.reloadData()
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        let manga = dataSource?.itemAtIndexPath(indexPath)
+        
+        let detailsController = MangaDetailsController(manga: manga!)
+        self.presentingViewController!.navigationController?.pushViewController(detailsController, animated: true)
+        
     }
 
 }
