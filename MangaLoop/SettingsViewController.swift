@@ -14,7 +14,7 @@ class SettingsViewController: FormViewController {
     
     let allLanguages = ["English", "Spanish", "French", "German", "Portuguese", "Turkish", "Indonesian", "Greek", "Filipino", "Italian", "Polish", "Thai", "Malay", "Hungarian", "Romanian", "Arabic", "Hebrew", "Russian", "Vietnamese", "Dutch"];
 
-    var memoryCell: LabelRow?
+    var memoryCell: ButtonRow?
     var memory: Int = 0 {
         didSet {
             tableView?.reloadData()
@@ -48,14 +48,14 @@ class SettingsViewController: FormViewController {
                 MangaManager.setToggleSettings(.MatureWarning, value: value)
             }
             
-                <<< CheckRow() {
-                    $0.title = "Send Anyonmous Data"
-                    $0.value = MangaManager.getToggleSettings(.AllowData)
-            }
-            .onChange { row in
-                guard let value = row.value else { return }
-                MangaManager.setToggleSettings(.AllowData, value: value)
-            }
+//            <<< CheckRow() {
+//                $0.title = "Send Anyonmous Data"
+//                $0.value = MangaManager.getToggleSettings(.AllowData)
+//            }
+//            .onChange { row in
+//                guard let value = row.value else { return }
+//                MangaManager.setToggleSettings(.AllowData, value: value)
+//            }
         
         
         
@@ -69,16 +69,16 @@ class SettingsViewController: FormViewController {
         form +++ Section() <<< readerSettingsCell
         
         
-        memoryCell = LabelRow() {
-                $0.title = "Clear Image Cache"
-            }.onCellSelection({ (cell, row) -> () in
-                let pageCache = ImageCache(name: Constants.PageCache)
-                pageCache.clearDiskCacheWithCompletionHandler({ () -> () in
-                    self.memory = 0
-                })
-            }).cellUpdate({ (cell, row) -> () in
-                row.title = "Clear Image Cache (\(self.memory)mb)"
+        memoryCell = ButtonRow() {
+            $0.title = "Clear Image Cache"
+        }.onCellSelection({ (cell, row) -> () in
+            let pageCache = ImageCache(name: Constants.PageCache)
+            pageCache.clearDiskCacheWithCompletionHandler({ () -> () in
+                self.memory = 0
             })
+        }).cellUpdate({ (cell, row) -> () in
+            row.title = "Clear Image Cache (\(self.memory)mb)"
+        })
         
         
         
