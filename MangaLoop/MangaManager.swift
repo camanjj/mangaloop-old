@@ -26,8 +26,8 @@ class MangaManager {
     
     static let sharedManager = MangaManager()
     
-    func getUpdates(callback: MangaList) {
-        Alamofire.request(MLRouter.Get("updates", nil))
+    func getUpdates(page: Int, callback: MangaList) {
+        Alamofire.request(MLRouter.Get("updates", ["page": page]))
             .validate()
             .responseData({ (response) -> Void in
                 

@@ -11,6 +11,7 @@
 		7E3223BB1C82475300A0B46A /* SearchFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3223BA1C82475300A0B46A /* SearchFilterViewController.swift */; };
 		7E3223BD1C8257BE00A0B46A /* DiscoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3223BC1C8257BE00A0B46A /* DiscoverViewController.swift */; };
 		7E3223BF1C8271A500A0B46A /* SearchFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3223BE1C8271A500A0B46A /* SearchFilter.swift */; };
+		7E4B36C41C9268A000D842B3 /* MangaPageList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4B36C31C9268A000D842B3 /* MangaPageList.swift */; };
 		7E56EAAE1C62F53E007E3086 /* FollowManga.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E56EAAD1C62F53E007E3086 /* FollowManga.swift */; };
 		7E6BFE1A1C657E93002831B7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6BFE191C657E93002831B7 /* Constants.swift */; };
 		7E7218AF1C8BF2B90021C693 /* DiscoverViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7E7218AE1C8BF2B90021C693 /* DiscoverViewController.xib */; };
@@ -91,6 +92,7 @@
 		7E3223BA1C82475300A0B46A /* SearchFilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchFilterViewController.swift; sourceTree = "<group>"; };
 		7E3223BC1C8257BE00A0B46A /* DiscoverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverViewController.swift; sourceTree = "<group>"; };
 		7E3223BE1C8271A500A0B46A /* SearchFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchFilter.swift; sourceTree = "<group>"; };
+		7E4B36C31C9268A000D842B3 /* MangaPageList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MangaPageList.swift; sourceTree = "<group>"; };
 		7E56EAAD1C62F53E007E3086 /* FollowManga.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowManga.swift; sourceTree = "<group>"; };
 		7E6BFE191C657E93002831B7 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		7E7218AE1C8BF2B90021C693 /* DiscoverViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DiscoverViewController.xib; sourceTree = "<group>"; };
@@ -301,6 +303,7 @@
 				7E6BFE191C657E93002831B7 /* Constants.swift */,
 				ADC613C61C6C0FC200BE545F /* Extensions.swift */,
 				7EA9DE311C8547B800A6A3EB /* ArrayDataSource.swift */,
+				7E4B36C31C9268A000D842B3 /* MangaPageList.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -599,6 +602,7 @@
 				AD1A1A991C6FFD5E0029222A /* NSTimerEx.swift in Sources */,
 				7E3223BB1C82475300A0B46A /* SearchFilterViewController.swift in Sources */,
 				AD345BFE1C541BEA00E5CF26 /* MangaPreviewItem.swift in Sources */,
+				7E4B36C41C9268A000D842B3 /* MangaPageList.swift in Sources */,
 				AD9243FA1C554A0F00C19BFC /* MLRouter.swift in Sources */,
 				AD8E018C1C509E14009241A1 /* AppDelegate.swift in Sources */,
 				AD4B90F01C55D6610010C6C8 /* ChaptersController.swift in Sources */,

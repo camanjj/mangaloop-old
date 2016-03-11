@@ -12,7 +12,9 @@ import MZFormSheetPresentationController
 import Pantry
 import RealmSwift
 
-class UpdatesViewController: UITableViewController, ChaptersDelegate {
+
+
+class UpdatesViewController: UITableViewController, MangaPageList, ChaptersDelegate {
     
     var page = 1
     var manga: [MangaPreviewItem] = []
@@ -45,9 +47,7 @@ class UpdatesViewController: UITableViewController, ChaptersDelegate {
         tableView.estimatedRowHeight = 44
         
         // add pull to refresh control
-        refreshControl = UIRefreshControl()
-        refreshControl!.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        refreshControl!.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
+        setupRefreshControl()
         
         
         if let manga: [MangaPreviewItem] = Pantry.unpack("update-list") {
@@ -59,14 +59,7 @@ class UpdatesViewController: UITableViewController, ChaptersDelegate {
             fetchUpdates()
         }
         
-        let footerButton = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: 45))
-        footerButton.setTitle("More", forState: .Normal)
-        footerButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
-        footerButton.backgroundColor = UIColor.redColor()
-        footerButton.addTarget(self, action: Selector("moreClick"), forControlEvents: .TouchUpInside)
-        tableView.tableFooterView = footerButton
-        
-        self.footerButton = footerButton
+        footerButton = addFooterButton()
         
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: "longPress:")
         self.tableView.addGestureRecognizer(longPressRecognizer)
@@ -124,7 +117,7 @@ class UpdatesViewController: UITableViewController, ChaptersDelegate {
     func fetchUpdates() {
         
         
-        MangaManager.sharedManager.getUpdates { [unowned self](manga) -> Void in
+        MangaManager.sharedManager.getUpdates (page) { [unowned self](manga) -> Void in
             
             if let refreshControl = self.refreshControl {
                 refreshControl.endRefreshing()

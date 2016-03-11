@@ -12,7 +12,7 @@ import SCLAlertView
 import Pantry
 import RealmSwift
 
-class FollowsController: UITableViewController {
+class FollowsController: UITableViewController, MangaPageList {
     
     var manga: [MangaPreviewItem]? {
         didSet {
@@ -72,20 +72,10 @@ class FollowsController: UITableViewController {
         
         
         // add pull to refresh control
-        refreshControl = UIRefreshControl()
-        refreshControl!.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        refreshControl!.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
-        
+        setupRefreshControl()
         
         // add the footer button
-        let footerButton = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: 45))
-        footerButton.setTitle("More", forState: .Normal)
-        footerButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
-        footerButton.backgroundColor = UIColor.redColor()
-        footerButton.addTarget(self, action: Selector("moreClick"), forControlEvents: .TouchUpInside)
-        tableView.tableFooterView = footerButton
-        
-        self.footerButton = footerButton
+        self.footerButton = addFooterButton()
         
         
         if MangaManager.isSignedIn() {
