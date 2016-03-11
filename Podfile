@@ -23,6 +23,8 @@ pod 'TLTagsControl', :git => 'https://github.com/ali312/TLTagsControl.git'
 pod 'JAMSVGImage', '~> 1.6'
 pod 'Reveal-iOS-SDK', :configurations => ['Debug']
 pod 'PKHUD', '~> 3.0'
+pod 'Fabric'
+pod 'Crashlytics'
 
 target 'MangaLoop' do
 

@@ -9,6 +9,8 @@
 import UIKit
 import JAMSVGImage
 import RealmSwift
+import Fabric
+import Crashlytics
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -24,6 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().barStyle = .Black
         
         
+        Fabric.with([Crashlytics.self])
         
         let config = Realm.Configuration(
             // Set the new schema version. This must be greater than the previously used
