@@ -12,7 +12,7 @@ import Eureka
 protocol SearchFilterViewDelegate {
     
     func didCancel(viewController: SearchFilterViewController)
-    func didApplyFilter(viewController: SearchFilterViewController, filter: SearchFilter)
+    func didApplyFilter(viewController: SearchFilterViewController, filter: SearchFilter?)
     
 }
 
@@ -115,6 +115,22 @@ class SearchFilterViewController: FormViewController {
         }
         
         form +++ Section("Information") <<< completionCell <<< matureCell <<< typesCell
+        
+        
+        let resetCell = ButtonRow() {
+            $0.title = "Reset Filter"
+        }.onCellSelection { (cell, row) -> () in
+            self.filter = SearchFilter()
+            self.tableView?.reloadData()
+        }
+        
+        let removeCell = ButtonRow() {
+            $0.title = "Remove Filter"
+        }.onCellSelection { (cell, row) -> () in
+            self.delegate?.didApplyFilter(self, filter: nil)
+        }
+        
+        form +++ Section() <<< resetCell <<< removeCell
 
     }
     
@@ -123,7 +139,7 @@ class SearchFilterViewController: FormViewController {
     }
     
     func applyClick() {
-        delegate?.didApplyFilter(self, filter: filter!)
+        delegate?.didApplyFilter(self, filter: filter)
     }
 
     override func didReceiveMemoryWarning() {

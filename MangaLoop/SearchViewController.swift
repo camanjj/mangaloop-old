@@ -133,7 +133,7 @@ extension SearchViewController: SearchFilterViewDelegate {
     }
     
     
-    func didApplyFilter(viewController: SearchFilterViewController, filter: SearchFilter) {
+    func didApplyFilter(viewController: SearchFilterViewController, filter: SearchFilter?) {
         viewController.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
 
         self.filter = filter
