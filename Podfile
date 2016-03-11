@@ -14,7 +14,7 @@ pod 'MZFormSheetPresentationController', '~> 2.2'
 pod 'MXSegmentedPager'
 pod 'Kingfisher', '~> 2.0'
 pod 'CircleProgressView', :git => 'https://github.com/CardinalNow/iOS-CircleProgressView.git'
-pod 'Pantry', :head
+pod 'Pantry', :git => 'https://github.com/nickoneill/Pantry.git'
 pod 'RealmSwift', '~> 0.98'
 pod 'DZNEmptyDataSet'
 pod 'SCLAlertView'

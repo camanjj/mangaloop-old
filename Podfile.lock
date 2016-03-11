@@ -19,7 +19,7 @@ PODS:
   - MZAppearance (1.1.6)
   - MZFormSheetPresentationController (2.2.1):
     - MZAppearance
-  - Pantry (HEAD based on 0.2.1)
+  - Pantry (0.2.1)
   - PKHUD (3.0.0)
   - Realm (0.98.1):
     - Realm/Headers (= 0.98.1)
@@ -44,7 +44,7 @@ DEPENDENCIES:
   - Kingfisher (~> 2.0)
   - MXSegmentedPager
   - MZFormSheetPresentationController (~> 2.2)
-  - Pantry (HEAD)
+  - Pantry (from `https://github.com/nickoneill/Pantry.git`)
   - PKHUD (~> 3.0)
   - RealmSwift (~> 0.98)
   - Reveal-iOS-SDK
@@ -56,6 +56,8 @@ DEPENDENCIES:
 EXTERNAL SOURCES:
   CircleProgressView:
     :git: https://github.com/CardinalNow/iOS-CircleProgressView.git
+  Pantry:
+    :git: https://github.com/nickoneill/Pantry.git
   TLTagsControl:
     :git: https://github.com/ali312/TLTagsControl.git
 
@@ -63,6 +65,9 @@ CHECKOUT OPTIONS:
   CircleProgressView:
     :commit: 9a86fe8ab330fe3b586171240011fa07ccdd8c0d
     :git: https://github.com/CardinalNow/iOS-CircleProgressView.git
+  Pantry:
+    :commit: 58e15ff5fe935f29f138f9f62da17c80e1cfbc9d
+    :git: https://github.com/nickoneill/Pantry.git
   TLTagsControl:
     :commit: 1043bb4eab751f4b9a73eef5b445efd2f57bad35
     :git: https://github.com/ali312/TLTagsControl.git

@@ -3,5 +3,13 @@ apple_id "jackson.cameron82@gmail.com" # Your Apple email address
 
 team_id "9Z75PJJYDP"  # Developer Portal Team ID
 
+for_platform :ios do
+  for_lane :beta do
+    say "Beta Lane"
+    app_identifier "com.culdesaq.MangaLoop.Beta"
+   
+  end
+end
+
 # you can even provide different app identifiers, Apple IDs and team names per lane:
 # More information: https://github.com/fastlane/fastlane/blob/master/docs/Appfile.md

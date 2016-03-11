@@ -20,10 +20,12 @@ fastlane_version "1.66.0"
 
 default_platform :ios
 
+
+
 platform :ios do
   before_all do
     # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
-    cocoapods
+    # cocoapods
     
   end
 
@@ -36,8 +38,13 @@ platform :ios do
   desc "This will also make sure the profile is up to date"
   lane :beta do
     # match(type: "appstore") # more information: https://codesigning.guide
-    gym(scheme: "MangaLoop") # Build your app - more options available
-    pilot
+    set_info_plist_value(path: './MangaLoop/Info.plist', key: 'CFBundleIdentifier', value: "com.culdesaq.MangaLoop.Beta")
+    #increment_build_number
+    #cert
+    #sigh(force: true)
+    gym(scheme: "MangaLoop Beta") # Build your app - more options available
+    #badge(alpha: true)
+    pilot(skip_submission: true)
 
     # sh "your_script.sh"
     # You can also use other beta testing services here (run `fastlane actions`)
