@@ -61,6 +61,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let searchController = DiscoverViewController(nibName:"DiscoverViewController", bundle: nil)
         searchController.title = "Discover"
+        searchController.tabBarItem.image = UIImage(fromSVGNamed: Constants.Images.Search, atSize: CGSize(width: 30, height: 30))
         let searchNavigationController = UINavigationController(rootViewController: searchController)
         
         let settingsController = SettingsViewController()
