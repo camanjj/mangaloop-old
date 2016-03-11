@@ -41,28 +41,19 @@ class SearchViewController: UITableViewController {
     
     func filterClick() {
         
-        let filterController = SearchFilterViewController()
+        let filterController = SearchFilterViewController(filter: filter)
+        filterController.delegate = self
         let navController = UINavigationController()
         navController.viewControllers = [filterController]
         let formSheet = MZFormSheetPresentationViewController(contentViewController: navController)
         
-        formSheet.interactivePanGestureDissmisalDirection = .All;
-        formSheet.presentationController?.shouldDismissOnBackgroundViewTap = true
+//        formSheet.interactivePanGestureDissmisalDirection = .All;
+//        formSheet.presentationController?.shouldDismissOnBackgroundViewTap = true
         formSheet.contentViewControllerTransitionStyle = .Fade
         formSheet.presentationController?.contentViewSize = CGSize(width: UIScreen.mainScreen().bounds.width - 20, height: 350)
-        
-        formSheet.willDismissContentViewControllerHandler = { vc in
-            
-            let filterController = (vc as! UINavigationController).viewControllers.first! as! SearchFilterViewController
-            self.filter = filterController.filter
-            self.getResults()
-            
-        }
-        
+
         self.presentViewController(formSheet, animated: true, completion: nil)
 
-        
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -132,5 +123,22 @@ extension SearchViewController: UISearchResultsUpdating, UISearchBarDelegate {
         //this is when the searching should happen
         getResults()
     }
+    
+}
+
+extension SearchViewController: SearchFilterViewDelegate {
+    
+    func didCancel(viewController: SearchFilterViewController) {
+        viewController.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    
+    func didApplyFilter(viewController: SearchFilterViewController, filter: SearchFilter) {
+        viewController.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+
+        self.filter = filter
+        self.getResults()
+    }
+
     
 }

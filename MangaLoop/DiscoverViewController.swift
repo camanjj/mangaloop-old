@@ -104,13 +104,3 @@ extension DiscoverViewController: UISearchControllerDelegate {
     }
     
 }
-
-extension DiscoverViewController: UISearchBarDelegate {
-    func searchBarBookmarkButtonClicked(searchBar: UISearchBar) {
-        
-        let filterController = SearchFilterViewController()
-        navigationController?.pushViewController(filterController, animated: true)
-        
-        
-    }
-}
