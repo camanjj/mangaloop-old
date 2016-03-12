@@ -133,7 +133,10 @@ class MangaPageImageView: UIImageView {
 //    }
     
     func getSize() -> CGSize {
-        let scaledSize = aspectFitSize(image!.size, boundingSize: CGSize(width: UIScreen.mainScreen().bounds.width, height: image!.size.height))
+        
+        guard let image = image else { return UIScreen.mainScreen().bounds.size}
+        
+        let scaledSize = aspectFitSize(image.size, boundingSize: CGSize(width: UIScreen.mainScreen().bounds.width, height: image.size.height))
         return scaledSize
     }
 
