@@ -277,8 +277,9 @@ class MangaPageController: UIViewController, UIScrollViewDelegate {
     }
     
     func updateZoom() {
-        
-        guard let mangaImageView = mangaImageView else {
+      
+        // make sure that the imageview is not nil and contains a valid image
+        guard let mangaImageView = mangaImageView, image = mangaImageView.image else {
             return
         }
         
@@ -293,7 +294,7 @@ class MangaPageController: UIViewController, UIScrollViewDelegate {
         
         
         
-        let zoomScale = view.bounds.size.width / mangaImageView.image!.size.width//min(view.bounds.size.width / mangaImageView.image!.size.width, view.bounds.size.height / mangaImageView.image!.size.height);
+        let zoomScale = view.bounds.size.width / image.size.width//min(view.bounds.size.width / mangaImageView.image!.size.width, view.bounds.size.height / mangaImageView.image!.size.height);
         
         if (zoomScale > 1) {
             self.scrollView.minimumZoomScale = 1;
@@ -304,7 +305,8 @@ class MangaPageController: UIViewController, UIScrollViewDelegate {
         scrollView.zoomScale = 1;
     }
     
-    func aspectFitSize(aspectRatio: CGSize, var boundingSize: CGSize) -> CGSize {
+    func aspectFitSize(aspectRatio: CGSize, boundingSize bSize: CGSize) -> CGSize {
+        var boundingSize = bSize
         let mW = boundingSize.width / aspectRatio.width
         let mH = boundingSize.height / aspectRatio.height
         if mH < mW {
