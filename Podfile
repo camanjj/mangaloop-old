@@ -4,29 +4,31 @@ platform :ios, '9.0'
 use_frameworks!
 
 
-link_with 'MangaLoop', 'ml-playground'
 
-pod 'Alamofire'
-pod 'Kanna', '1.0.2'
-pod 'Unbox'
-pod 'SnapKit', '~> 0.19'
-pod 'MZFormSheetPresentationController', '~> 2.2'
-pod 'MXSegmentedPager'
-pod 'Kingfisher', '~> 2.0'
-pod 'CircleProgressView', :git => 'https://github.com/CardinalNow/iOS-CircleProgressView.git'
-pod 'Pantry', :git => 'https://github.com/nickoneill/Pantry.git'
-pod 'RealmSwift', '~> 0.98'
-pod 'DZNEmptyDataSet'
-pod 'SCLAlertView'
-pod 'Eureka', '~> 1.5'
-pod 'TLTagsControl', :git => 'https://github.com/ali312/TLTagsControl.git'
-pod 'JAMSVGImage', '~> 1.6'
-pod 'Reveal-iOS-SDK', :configurations => ['Debug']
-pod 'PKHUD', '~> 3.0'
-pod 'Fabric'
-pod 'Crashlytics'
 
 target 'MangaLoop' do
+  
+#  link_with 'MangaLoop', 'ml-playground'
+
+  pod 'Alamofire'
+  pod 'Kanna', '1.0.2'
+  pod 'Unbox'
+  pod 'SnapKit', '~> 0.19'
+  pod 'MZFormSheetPresentationController', '~> 2.2'
+  pod 'MXSegmentedPager'
+  pod 'Kingfisher', '~> 2.0'
+  pod 'CircleProgressView', :git => 'https://github.com/CardinalNow/iOS-CircleProgressView.git'
+  pod 'Pantry', :git => 'https://github.com/nickoneill/Pantry.git'
+  pod 'RealmSwift', '~> 1.0'
+  pod 'DZNEmptyDataSet'
+  pod 'SCLAlertView'
+  pod 'Eureka', '~> 1.5'
+  pod 'TLTagsControl', :git => 'https://github.com/ali312/TLTagsControl.git'
+  pod 'JAMSVGImage', '~> 1.6'
+  pod 'Reveal-iOS-SDK', :configurations => ['Debug']
+  pod 'PKHUD', '~> 3.0'
+  pod 'Fabric'
+  pod 'Crashlytics'
 
 end
 

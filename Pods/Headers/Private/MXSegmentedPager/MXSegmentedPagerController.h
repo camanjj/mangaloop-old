@@ -1,1 +1,0 @@
-../../../MXSegmentedPager/MXSegmentedPager/MXSegmentedPagerController.h
