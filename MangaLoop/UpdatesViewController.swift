@@ -32,7 +32,7 @@ class UpdatesViewController: UITableViewController, MangaPageList, ChaptersDeleg
         
         followManga = FollowManga.getAllFollows()
         let realm = try! Realm()
-        followToken = realm.objects(FollowManga).addNotificationBlock { (results, error) -> () in
+        followToken = realm.objects(FollowManga).addNotificationBlock { (changes: RealmCollectionChange) in
             self.followManga = FollowManga.getAllFollows()
             self.tableView.reloadData()
         }
