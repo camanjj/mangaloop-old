@@ -18,7 +18,7 @@ pod 'Pantry', :git => 'https://github.com/nickoneill/Pantry.git'
 pod 'RealmSwift', '~> 0.98'
 pod 'DZNEmptyDataSet'
 pod 'SCLAlertView'
-pod 'Eureka', '~> 1.3'
+pod 'Eureka', '~> 1.5'
 pod 'TLTagsControl', :git => 'https://github.com/ali312/TLTagsControl.git'
 pod 'JAMSVGImage', '~> 1.6'
 pod 'Reveal-iOS-SDK', :configurations => ['Debug']
