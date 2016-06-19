@@ -17,7 +17,10 @@ class SettingsViewController: FormViewController {
     var memoryCell: ButtonRow?
     var memory: Int = 0 {
         didSet {
-            tableView?.reloadData()
+          if let memoryCell = memoryCell {
+            memoryCell.title = "Clear Image Cache (\(memory)mb)"
+            memoryCell.updateCell()
+          }
         }
     }
     
@@ -82,8 +85,7 @@ class SettingsViewController: FormViewController {
         
         
         
-        form +++ Section("")
-            <<< memoryCell!
+        form +++ Section("") <<< memoryCell!
         
         // fetch the memory
         let pageCache = ImageCache(name: Constants.PageCache)
