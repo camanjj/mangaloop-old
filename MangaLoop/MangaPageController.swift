@@ -23,6 +23,8 @@ class MangaPageImageView: UIImageView {
     var link: String
     let progressView = CircleProgressView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
     var imageTask: RetrieveImageTask?
+  
+  var reloadButton: UIButton?
     
     var delegate: MangaPageImageViewDelegate?
     
@@ -46,6 +48,11 @@ class MangaPageImageView: UIImageView {
     }
     
     func downloadMangaPage() {
+      
+      if let reloadButton = reloadButton {
+        reloadButton.removeFromSuperview()
+      }
+      
         contentMode = .ScaleAspectFit
         layer.allowsEdgeAntialiasing = true
 //        translatesAutoresizingMaskIntoConstraints = false
@@ -65,7 +72,9 @@ class MangaPageImageView: UIImageView {
                 
                 // change the suffix for the image
                 if let error = error {
-                    
+                  
+                  print("Link: \(wself.link) error: " + error.localizedDescription)
+                  
                     // the request was cancelled, don't do anything else
                     if error.code == NSURLErrorCancelled {
                         return
@@ -78,8 +87,9 @@ class MangaPageImageView: UIImageView {
                     wself.imageTask = wself.kf_setImageWithURL(NSURL(string: newLink)!, placeholderImage: nil, optionsInfo: [.DownloadPriority(0.4), .TargetCache(cache)], progressBlock: { (receivedSize, totalSize) -> () in
                         wself.progressView.progress = Double(receivedSize)/Double(totalSize)
                         }, completionHandler: { (image, error, cacheType, imageURL) -> () in
-                            if let _ = error {
-                                
+                            if let error = error {
+                              wself.addReloadButton()
+                              print("Link: \(wself.link) error: " + error.localizedDescription)
                                 return
                             }
                             
@@ -104,7 +114,7 @@ class MangaPageImageView: UIImageView {
         }
         
         let scaledSize = aspectFitSize(image!.size, boundingSize: CGSize(width: UIScreen.mainScreen().bounds.width, height: image!.size.height))
-        print(scaledSize)
+//        print(scaledSize)
         snp_remakeConstraints { (make) -> Void in
             make.size.equalTo(scaledSize)
         }
@@ -113,6 +123,25 @@ class MangaPageImageView: UIImageView {
             delegate.imageDownloaded(scaledSize)
         }
     }
+  
+  func addReloadButton() {
+  
+    
+    if let reloadButton = reloadButton {
+      reloadButton.removeFromSuperview()
+    }
+    
+    reloadButton = UIButton()
+    reloadButton?.setTitle("Reload", forState: .Normal)
+    reloadButton?.sizeToFit()
+    
+    addSubview(reloadButton!)
+    reloadButton!.center = center
+    
+    reloadButton?.addTarget(self, action: #selector(downloadMangaPage), forControlEvents: .TouchUpInside)
+    
+  
+  }
     
     func aspectFitSize(aspectRatio: CGSize, var boundingSize: CGSize) -> CGSize {
         let mW = boundingSize.width / aspectRatio.width
@@ -153,50 +182,62 @@ class MangaPageController: UIViewController, UIScrollViewDelegate {
     
     @IBOutlet weak var scrollView: UIScrollView!
     
-    var mangaImageView: MangaPageImageView? = nil
+    var mangaImageView: MangaPageImageView
     var image: UIImage?
     
     var imageTask: RetrieveImageTask?
     
     var didChangeSuffix = false
     
-    init() {
-        super.init(nibName: String(MangaPageController.self), bundle: nil)
-    }
-    
+//    init() {
+//        super.init(nibName: String(MangaPageController.self), bundle: nil)
+//    }
+  
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+  
+  init(page: MangaPageImageView) {
     
+    mangaImageView = page
+    
+    super.init(nibName: String(MangaPageController.self), bundle: nil)
+    
+    mangaImageView.delegate = self
+    mangaImageView.downloadMangaPage()
+
+
+    
+//    self.init()
+
+  }
+  
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let mangaImageView = mangaImageView {
+//        if let mangaImageView = mangaImageView {
             scrollView.addSubview(mangaImageView)
             scrollView.contentSize = mangaImageView.getSize()
-            self.updateZoom()
-//            self.centerImage()
-//            self.updateZoom()
-        }
+            updateZoom()
+          
+//        }
         // add the gestures to the scrollview
         addGestures()
-        
+  
     }
     
     
-    func addMangaPage(page: MangaPageImageView) {
-//        page.transform = CGAffineTransformIdentity
-        mangaImageView = page
-        mangaImageView!.delegate = self
-        if let scrollView = scrollView {
-            scrollView.addSubview(mangaImageView!)
-            scrollView.contentSize = mangaImageView!.getSize()
-            self.updateZoom()
+//    func addMangaPage(page: MangaPageImageView) {
+////        page.transform = CGAffineTransformIdentity
+//                if let scrollView = scrollView {
+//            scrollView.addSubview(mangaImageView!)
+//            scrollView.contentSize = mangaImageView!.getSize()
+//            self.updateZoom()
+//
+//        }
+//        
+//    }
 
-        }
-        
-    }
-    
     func addGestures() {
         
         let singleTap = UITapGestureRecognizer(target: self, action: Selector("singleTap:"))
@@ -260,10 +301,10 @@ class MangaPageController: UIViewController, UIScrollViewDelegate {
     //MARK: Zooming and Panning Methods
     func zoom(rectForScale scale: CGFloat, center: CGPoint) -> CGRect {
         
-        guard let mangaImageView = mangaImageView else {
-            return CGRect.zero
-        }
-        
+//        guard let mangaImageView = mangaImageView else {
+//            return CGRect.zero
+//        }
+      
         var zoomRect = CGRect()
         
         zoomRect.size.height = mangaImageView.frame.height / scale;
@@ -279,10 +320,10 @@ class MangaPageController: UIViewController, UIScrollViewDelegate {
     func updateZoom() {
       
         // make sure that the imageview is not nil and contains a valid image
-        guard let mangaImageView = mangaImageView, image = mangaImageView.image else {
+        guard let image = mangaImageView.image else {
             return
         }
-        
+      
 
         // center the image if it is not longer than the page
         if mangaImageView.getSize().height <= UIScreen.mainScreen().bounds.height {
@@ -320,10 +361,10 @@ class MangaPageController: UIViewController, UIScrollViewDelegate {
     
     func centerImage() {
         
-        guard let mangaImageView = mangaImageView else {
-            return
-        }
-        
+//        guard let mangaImageView = mangaImageView else {
+//            return
+//        }
+      
         let boundsSize = self.scrollView.bounds.size
         var contentsFrame = mangaImageView.frame
         
@@ -348,6 +389,13 @@ class MangaPageController: UIViewController, UIScrollViewDelegate {
     }
     
     func singleTap(gestureRecongizer: UIGestureRecognizer) {
+      
+      if let reloadButton = mangaImageView.reloadButton where CGRectContainsPoint(reloadButton.frame, gestureRecongizer.locationInView(self.mangaImageView)) {
+        mangaImageView.downloadMangaPage()
+        return
+      }
+      
+      
         toggleNavBar()
     }
     

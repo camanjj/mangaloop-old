@@ -177,8 +177,8 @@ class MangaReaderController: UIViewController {
         // remove the pages from the previous super view
         for page in pages {
 //            page.transform = CGAffineTransformIdentity
-            let mangaPageController = MangaPageController()
-            mangaPageController.addMangaPage(page)
+            let mangaPageController = MangaPageController(page: page)
+//            mangaPageController.addMangaPage(page)
             mangaPages.append(mangaPageController)
         }
         
@@ -239,7 +239,7 @@ class MangaReaderController: UIViewController {
                 for page in pages {
                     let mangaPage = MangaPageImageView(link: page)
                     wself.pages.append(mangaPage)
-                    mangaPage.downloadMangaPage()
+//                    mangaPage.downloadMangaPage()
                 }
                 
                 
