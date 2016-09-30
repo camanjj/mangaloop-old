@@ -18,7 +18,7 @@ class DetailController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tagsControl.mode = .List
+        tagsControl.mode = .Edit
 
         // Do any additional setup after loading the view.
     }

@@ -9,7 +9,7 @@ PODS:
   - HMSegmentedControl (1.5.2)
   - JAMSVGImage (1.6.1)
   - Kanna (1.0.2)
-  - Kingfisher (2.0.3)
+  - Kingfisher (2.4.1)
   - MXPagerView (0.1.2)
   - MXParallaxHeader (0.4.3)
   - MXSegmentedPager (3.0.4):
@@ -82,7 +82,7 @@ SPEC CHECKSUMS:
   HMSegmentedControl: 83b9686022d2176fb6457d2bdb61e5d6393fed7d
   JAMSVGImage: 7aa966a310ddf5f53de295d5ce5b930df8ff1eb2
   Kanna: 059afb193a9f8ea34f46cb55a8b11bf4257efad8
-  Kingfisher: 44c1f1912f19371a67d701e67c96d6bb45ca1c8d
+  Kingfisher: 41aed5b6c1ed8fa98cf6d75283ce89cf7890f517
   MXPagerView: b0cc1695ff8470a1bb1628e25e8878eb94606a60
   MXParallaxHeader: 96d9e7c392a26b29b97ddc34bff904a9c0baef27
   MXSegmentedPager: 48a6129c823a3a5c6f5809c43463dbdf8351f528
