@@ -26,8 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIApplication.sharedApplication().statusBarStyle = .LightContent
         UINavigationBar.appearance().barStyle = .Black
       
-      PKHUD.sharedHUD.userInteractionOnUnderlyingViewsEnabled = true
-        
+      
         
         Fabric.with([Crashlytics.self])
         
@@ -94,7 +93,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        let navItemAppearence = UINavigationItem.ap
         
         MangaManager.sharedManager.getAllFollowsIfNeeded(nil)
-        
+      
+      PKHUD.sharedHUD.userInteractionOnUnderlyingViewsEnabled = true
+
+      
         return true
     }
 

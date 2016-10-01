@@ -13,6 +13,7 @@ import SnapKit
 import JAMSVGImage
 import SCLAlertView
 import PKHUD
+import Kingfisher
 
 
 class MangaReaderController: UIViewController {
@@ -21,9 +22,18 @@ class MangaReaderController: UIViewController {
   var pageController: UIPageViewController?
   var webtoonReader: UITableView? // reader for the webtoons
   var manga: MangaItem // the manga that is being read
-  var selectedChapter: Chapter //  the current chapter
-  var pages: [MangaPageImageView]!
-  var mangaPages = [MangaPageController]() // list of pages
+  var selectedChapter: Chapter { //  the current chapter
+    didSet {
+      prefetcher?.stop()
+    }
+    
+  }
+  var mangaPages = [MangaPageController(), MangaPageController(), MangaPageController()] // list of pages
+  var urls: [NSURL]? // the list of all the urls for the pages
+  
+  
+  
+  var prefetcher: ImagePrefetcher?
   
   
   var allChapters: [Chapter]? // all of the chapters for the current manga
@@ -44,8 +54,6 @@ class MangaReaderController: UIViewController {
       return direction == .Webtoon ? .Vertical : .Horizontal
     }
   }
-  
-  
   
   init(manga: MangaItem, chapter: Chapter) {
     self.manga = manga
@@ -111,11 +119,11 @@ class MangaReaderController: UIViewController {
     webtoonReader?.removeFromSuperview()
     
     
-    for page in pages {
+    /* for page in pages {
       page.removeFromSuperview()
       page.delegate = nil
       //            page.setFrame()
-    }
+    } */
     
     if orientation == .Vertical {
       webtoonSetup(currentPage)
@@ -139,9 +147,9 @@ class MangaReaderController: UIViewController {
     
     view.addSubview(webtoonReader!)
     
-    for page in pages {
+    /* for page in pages {
       page.transform = CGAffineTransformIdentity
-    }
+    } */
     
     
     webtoonReader!.delegate = self
@@ -165,29 +173,30 @@ class MangaReaderController: UIViewController {
     //        }
     
     
-    mangaPages = [MangaPageController]()
-    
     
     guard let pageController = pageController else {
       return
     }
     
-    
-    
-    // remove the pages from the previous super view
-    for page in pages {
-      //            page.transform = CGAffineTransformIdentity
-      let mangaPageController = MangaPageController(page: page)
-      //            mangaPageController.addMangaPage(page)
-      mangaPages.append(mangaPageController)
-    }
-    
     var selectedPage: MangaPageController
     
     if currentPage > -1 {
-      selectedPage = mangaPages[currentPage]
+      // selectedPage = mangaPages[currentPage]
+      
+      if currentPage == 0 {
+        selectedPage = mangaPages.first!
+      } else if currentPage == urls!.count - 1 {
+        selectedPage = mangaPages.last!
+      } else {
+        selectedPage = mangaPages[1]
+      }
+      
+      selectedPage.mangaImageView.link = urls![currentPage]
+      
     } else {
+      
       selectedPage = mangaPages.first!
+      selectedPage.mangaImageView.link = urls![0]
     }
     
     
@@ -197,10 +206,12 @@ class MangaReaderController: UIViewController {
       pageController.setViewControllers([selectedPage], direction: .Forward, animated: true, completion: nil)
     }
     
-    // add the page controller to the this view controller
-    addChildViewController(pageController)
-    view.addSubview(pageController.view)
-    pageController.didMoveToParentViewController(self)
+    // add the page controller to the this view controller, if applicable
+    if pageController.view.superview == nil {
+      addChildViewController(pageController)
+      view.addSubview(pageController.view)
+      pageController.didMoveToParentViewController(self)
+    }
     
   }
   
@@ -215,6 +226,7 @@ class MangaReaderController: UIViewController {
         return
       }
       
+      // make sure that the pages are valid
       if let pages = pages {
         
         if pages.isEmpty {
@@ -227,22 +239,17 @@ class MangaReaderController: UIViewController {
         
         print("Got pages")
         
-        // Stop any manga page downloads
-        for mangaPage in wself.mangaPages {
-          mangaPage.cancelDownload()
-        }
+        // stop any pending requests
+        wself.prefetcher?.stop()
         
-        // remove all the previous pages
-        wself.pages = [MangaPageImageView]()
+        // set up the prefetcher with the urls for the pages
+        wself.urls = pages.map { NSURL(string: $0)! }
+        let cache = ImageCache(name: "manga-pages")
+        wself.prefetcher = ImagePrefetcher(urls: wself.urls!, optionsInfo: [.TargetCache(cache)], progressBlock: nil, completionHandler: nil)
+       
+        wself.prefetcher?.start()
         
-        // add the new pages
-        for page in pages {
-          let mangaPage = MangaPageImageView(link: page)
-          wself.pages.append(mangaPage)
-          //                    mangaPage.downloadMangaPage()
-        }
-        
-        
+        // set up the current reader
         wself.setUpReader()
         
       } else {
@@ -257,6 +264,8 @@ class MangaReaderController: UIViewController {
     for page in mangaPages {
       page.cancelDownload()
     }
+    
+    prefetcher?.stop()
     
   }
   
@@ -338,30 +347,26 @@ extension MangaReaderController: UIPageViewControllerDataSource, UIPageViewContr
       return nil
     }
     
-    guard let index = mangaPages.indexOf(viewController as! MangaPageController) else {
+    guard let index = urls?.indexOf((viewController as! MangaPageController).mangaImageView.link!) else {
       return nil
     }
     
-    var nextIndex = 0
+    
+    let nextIndex = isReversed ? index - 1 : index + 1;
     if isReversed {
-      
-      nextIndex = index - 1
-      
       if nextIndex < 0 {
         return nil
       }
-      
     } else {
-      
-      nextIndex = index + 1
-      
-      if nextIndex >= mangaPages.count {
+      if nextIndex >= urls?.count {
         return nil
       }
-      
     }
     
-    return mangaPages[nextIndex]
+    let page = mangaPages[nextIndex % 3]
+    page.mangaImageView.link = urls![nextIndex]
+    return page
+
   }
   
   func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
@@ -371,35 +376,30 @@ extension MangaReaderController: UIPageViewControllerDataSource, UIPageViewContr
     }
     
     
-    guard let index = mangaPages.indexOf(viewController as! MangaPageController) else {
+    guard let index = urls?.indexOf((viewController as! MangaPageController).mangaImageView.link!) else {
       return nil
     }
     
-    var prevIndex = 0
+    
+    let prevIndex = isReversed ? index + 1 : index - 1
     
     if isReversed {
-      
-      prevIndex = index + 1
-      
-      if prevIndex >= mangaPages.count {
+      if prevIndex >= urls?.count {
         return nil
       }
-      
     } else {
-      
-      prevIndex = index - 1
-      
       if prevIndex < 0 {
         return nil
       }
-      
     }
     
-    return mangaPages[prevIndex]
+    let page = mangaPages[prevIndex % 3]
+    page.mangaImageView.link = urls![prevIndex]
+    return page
   }
   
   func presentationCountForPageViewController(pageViewController: UIPageViewController) -> Int {
-    return mangaPages.count
+    return urls?.count ?? 0
   }
   
   func pageViewController(pageViewController: UIPageViewController, spineLocationForInterfaceOrientation orientation: UIInterfaceOrientation) -> UIPageViewControllerSpineLocation {
@@ -419,7 +419,7 @@ extension MangaReaderController: UITableViewDataSource, UITableViewDelegate {
     let cell = tableView.dequeueReusableCellWithIdentifier("page", forIndexPath: indexPath) as! WebtoonCell
     
     
-    let page = pages[indexPath.row]
+    /* let page = pages[indexPath.row]
     
     for view in cell.contentView.subviews {
       view.removeFromSuperview()
@@ -434,7 +434,7 @@ extension MangaReaderController: UITableViewDataSource, UITableViewDelegate {
     page.updateConstraintsIfNeeded()
     
     cell.layoutMargins = UIEdgeInsetsZero;
-    cell.preservesSuperviewLayoutMargins = false;
+    cell.preservesSuperviewLayoutMargins = false; */
     
     return cell
     
@@ -443,7 +443,7 @@ extension MangaReaderController: UITableViewDataSource, UITableViewDelegate {
   
   
   func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return pages.count
+    return urls?.count ?? 0
   }
   
   //    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {

@@ -29,7 +29,7 @@ class MangaManager {
     func getUpdates(page: Int, callback: MangaList) {
         Alamofire.request(MLRouter.Get("updates", ["page": page]))
             .validate()
-            .responseData({ (response) -> Void in
+          .responseData( completionHandler: { (response) -> Void in
                 
                 switch response.result {
                 case .Success(let data):
@@ -139,7 +139,7 @@ class MangaManager {
                         
                         
                         Alamofire.request(.GET, "https://bato.to/")
-                            .responseData({ (response) -> Void in
+                            .responseData(completionHandler: { (response) -> Void in
                                 print(response.response)
                                 if let data = response.result.value,
                                     html = NSString(data: data, encoding: NSASCIIStringEncoding),

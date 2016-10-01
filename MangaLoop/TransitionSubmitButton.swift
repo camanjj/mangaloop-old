@@ -94,7 +94,7 @@ public class TKTransitionSubmitButton : UIButton, UIViewControllerTransitioningD
         startFinishAnimation(duration, completion: completion)
     }
 
-    public override func animationDidStop(anim: CAAnimation!, finished flag: Bool) {
+    public func animationDidStop(anim: CAAnimation!, finished flag: Bool) {
         let a = anim as! CABasicAnimation
         if a.keyPath == "transform.scale" {
             didEndFinishAnimation?()
@@ -126,7 +126,7 @@ public class TKTransitionSubmitButton : UIButton, UIViewControllerTransitioningD
         expandAnim.toValue = 26.0
         expandAnim.timingFunction = expandCurve
         expandAnim.duration = 0.3
-        expandAnim.delegate = self
+        //expandAnim.delegate = self
         expandAnim.fillMode = kCAFillModeForwards
         expandAnim.removedOnCompletion = false
         layer.addAnimation(expandAnim, forKey: expandAnim.keyPath)
