@@ -11,6 +11,7 @@ import JAMSVGImage
 import RealmSwift
 import Fabric
 import Crashlytics
+import PKHUD
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -24,6 +25,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // sets the status bar to white
         UIApplication.sharedApplication().statusBarStyle = .LightContent
         UINavigationBar.appearance().barStyle = .Black
+      
+      PKHUD.sharedHUD.userInteractionOnUnderlyingViewsEnabled = true
         
         
         Fabric.with([Crashlytics.self])

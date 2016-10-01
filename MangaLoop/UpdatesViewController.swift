@@ -107,7 +107,7 @@ class UpdatesViewController: UITableViewController, MangaPageList, ChaptersDeleg
     }
     
     func moreClick() {
-        page++
+        page += 1
         activityIndicator.startAnimating()
         tableView.tableFooterView = activityIndicator
         fetchUpdates()
