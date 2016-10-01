@@ -24,6 +24,7 @@ class MangaReaderController: UIViewController {
   var manga: MangaItem // the manga that is being read
   var selectedChapter: Chapter { //  the current chapter
     didSet {
+      navigationItem.title = selectedChapter.title
       prefetcher?.stop()
     }
     
@@ -77,6 +78,7 @@ class MangaReaderController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    navigationItem.title = selectedChapter.title
     navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Stop, target: self, action: #selector(closeClick))
     
     // config the toolbar
@@ -85,7 +87,11 @@ class MangaReaderController: UIViewController {
     let settingsItem = UIBarButtonItem(image: UIImage(fromSVGNamed: Constants.Images.ReaderSettings, atSize: itemSize), style: .Plain, target: self, action: #selector(settingsClick))
     let chaptersItem = UIBarButtonItem(image: UIImage(fromSVGNamed: Constants.Images.List, atSize: itemSize), style: .Plain, target: self, action: #selector(chaptersClick))
     let infoItem = UIBarButtonItem(image: UIImage(fromSVGNamed: Constants.Images.Info, atSize: itemSize), style: .Plain, target: self, action: #selector(infoClick))
-    toolbarItems = [settingsItem, chaptersItem, infoItem]
+    
+    let fixedSpace = UIBarButtonItem(barButtonSystemItem: .FixedSpace, target: nil, action: nil)
+    fixedSpace.width = 40;
+    
+    toolbarItems = [settingsItem, fixedSpace, chaptersItem, fixedSpace, infoItem]
     
     view.backgroundColor = UIColor.whiteColor()
     
