@@ -1,6 +1,6 @@
 {
   "name": "Pantry",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "license": "MIT",
   "summary": "The missing light persistence layer for Swift",
   "homepage": "https://github.com/nickoneill/Pantry",
@@ -10,7 +10,7 @@
   },
   "source": {
     "git": "https://github.com/nickoneill/Pantry.git",
-    "tag": "0.2.1"
+    "tag": "0.2.2"
   },
   "platforms": {
     "ios": "8.0"

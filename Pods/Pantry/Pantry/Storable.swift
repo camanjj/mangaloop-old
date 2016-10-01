@@ -91,7 +91,7 @@ public enum StorageExpiry {
 /**
 Default storable types
 
-Default types are `Bool`, `String`, `Int`, `Float`, `Double`
+Default types are `Bool`, `String`, `Int`, `Float`, `Double`, `NSDate`
 */
 public protocol StorableDefaultType {
 }
@@ -101,6 +101,7 @@ extension String: StorableDefaultType { }
 extension Int: StorableDefaultType { }
 extension Float: StorableDefaultType { }
 extension Double: StorableDefaultType { }
+extension NSDate: StorableDefaultType { }
 
 // MARK: Enums with Raw Values
 
@@ -111,7 +112,7 @@ extension Double: StorableDefaultType { }
 *  Enums without a raw value e.g. with associated types are not supported.
 */
 public protocol StorableRawEnum: Storable {
-    typealias StorableRawType: StorableDefaultType
+    associatedtype StorableRawType: StorableDefaultType
 
     /// Provided automatically for enum's that have a raw value
     var rawValue: StorableRawType { get }

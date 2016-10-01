@@ -118,7 +118,19 @@ public class JSONWarehouse: Warehouseable, WarehouseCacheable {
     }
     
     func removeCache() {
-        try! NSFileManager.defaultManager().removeItemAtURL(cacheFileURL())
+        do {
+            try NSFileManager.defaultManager().removeItemAtURL(cacheFileURL())
+        } catch {
+            print("error removing cache",error)
+        }
+    }
+    
+    static func removeAllCache() {
+        do {
+            try NSFileManager.defaultManager().removeItemAtURL(JSONWarehouse.cacheDirectory)
+        } catch {
+            print("error removing all cache",error)
+        }
     }
     
     func loadCache() -> AnyObject? {
@@ -159,14 +171,26 @@ public class JSONWarehouse: Warehouseable, WarehouseCacheable {
         }
     }
     
-    func cacheFileURL() -> NSURL {
+    static var cacheDirectory: NSURL {
         let url = NSFileManager.defaultManager().URLsForDirectory(.CachesDirectory, inDomains: .UserDomainMask).first!
         
         let writeDirectory = url.URLByAppendingPathComponent("com.thatthinginswift.pantry")
-        let cacheLocation = writeDirectory.URLByAppendingPathComponent(self.key)
-        
-        try! NSFileManager.defaultManager().createDirectoryAtURL(writeDirectory, withIntermediateDirectories: true, attributes: nil)
-        
-        return cacheLocation
+        #if swift(>=2.3)
+            return writeDirectory!
+        #else
+            return writeDirectory
+        #endif
+
+    }
+    
+    func cacheFileURL() -> NSURL {
+        let cacheDirectory = JSONWarehouse.cacheDirectory
+        let cacheLocation = cacheDirectory.URLByAppendingPathComponent(self.key)
+        try! NSFileManager.defaultManager().createDirectoryAtURL(cacheDirectory, withIntermediateDirectories: true, attributes: nil)
+        #if swift(>=2.3)
+            return cacheLocation!
+        #else
+            return cacheLocation
+        #endif
     }
 }
