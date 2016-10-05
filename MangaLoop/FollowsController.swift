@@ -56,12 +56,12 @@ class FollowsController: UITableViewController, MangaPageList {
     searchController.hidesNavigationBarDuringPresentation = false
     definesPresentationContext = true
     searchController.searchBar.delegate = self
-    navigationItem.titleView = searchController.searchBar
+    tableView.tableHeaderView = searchController.searchBar
     
     
-    let logoutImage = UIImage(fromSVGNamed: Constants.Images.Logout, atSize: CGSize(width: 28, height: 28))
+//    let logoutImage = UIImage(fromSVGNamed: Constants.Images.Logout, atSize: CGSize(width: 28, height: 28))
     
-    navigationItem.rightBarButtonItem = UIBarButtonItem(image: logoutImage, style: .Plain, target: self, action: Selector("signOutClick"))
+    navigationItem.rightBarButtonItem = UIBarButtonItem(title: "logout", style: .Plain, target: self, action: #selector(signOutClick))//UIBarButtonItem(image: logoutImage, style: .Plain, target: self, action: #selector(signOutClick))
     
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
@@ -84,7 +84,7 @@ class FollowsController: UITableViewController, MangaPageList {
     
     if MangaManager.isSignedIn() {
       
-      searchController.searchBar.placeholder = "Search Follows"
+      searchController.searchBar.placeholder = "Search All Follows"
       searchController.searchBar.showsBookmarkButton = true
       
       
