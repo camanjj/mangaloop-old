@@ -174,27 +174,61 @@ class MangaManager {
         }
 
     }
+  
+  func getSecret(cookies: [String:String], callback: SuccessCallback) {
     
-    func logout() {
+    
+    Alamofire.request(.GET, "https://bato.to/")
+      .responseData(completionHandler: { (response) -> Void in
+        print(response.response)
+        if let data = response.result.value,
+          let html = NSString(data: data, encoding: NSASCIIStringEncoding),
+          let doc = Kanna.HTML(html: html as String, encoding: NSUTF8StringEncoding) {
+          
+          // get the secret key from the htnl
+          if let statusNode = doc.css("#statusForm").first,
+            href = statusNode["action"],
+            components = NSURLComponents(string: href),
+            queryParams = components.queryItems,
+            secret = queryParams.filter({$0.name == "k"}).first?.value {
+            
+            let userDefaults = NSUserDefaults.standardUserDefaults()
+            userDefaults.setObject(cookies, forKey: Constants.Defaults.Cookies)
+            userDefaults.setObject(secret, forKey: Constants.Defaults.Secret)
+            userDefaults.setBool(true, forKey: Constants.Defaults.IsSignedIn)
+            userDefaults.synchronize()
+            callback(true)
+          }
+          
+          
+        } else {
+          callback(false)
+        }
         
+      })
+    
+  }
+  
+    func logout() {
+      
         // remove the
         let userDefaults = NSUserDefaults.standardUserDefaults()
         userDefaults.removeObjectForKey(Constants.Defaults.Cookies)
         userDefaults.removeObjectForKey(Constants.Defaults.IsSignedIn)
         userDefaults.removeObjectForKey(Constants.Defaults.Secret)
         userDefaults.synchronize()
-        
-        
+      
+      
         // remnove all of the follow manga from the db
         let realm = try! Realm()
         let allFollows = realm.objects(FollowManga)
-        
+      
         try! realm.write {
             realm.delete(allFollows)
         }
-        
+      
     }
-    
+  
     //MARK: Helper class functions
     static func isSignedIn() -> Bool {
         return NSUserDefaults.standardUserDefaults().boolForKey(Constants.Defaults.IsSignedIn)
