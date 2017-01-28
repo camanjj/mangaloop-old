@@ -22,13 +22,13 @@ class UpdatesViewController: UITableViewController, MangaPageList, ChaptersDeleg
     var followManga: [FollowManga]?
     var followToken: NotificationToken!
     
-    var activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
+    var activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
     var footerButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         
         followManga = FollowManga.getAllFollows()
         let realm = try! Realm()
@@ -38,11 +38,11 @@ class UpdatesViewController: UITableViewController, MangaPageList, ChaptersDeleg
         }
         
         
-        navigationController?.navigationBar.translucent = false
+        navigationController?.navigationBar.isTranslucent = false
         
         title = "Updates"
         
-        tableView.registerClass(MangaCell.self, forCellReuseIdentifier: MangaCell.defaultReusableId)
+        tableView.register(MangaCell.self, forCellReuseIdentifier: MangaCell.defaultReusableId)
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 44
         
@@ -61,17 +61,17 @@ class UpdatesViewController: UITableViewController, MangaPageList, ChaptersDeleg
         
         footerButton = addFooterButton()
         
-        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: "longPress:")
+        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(UpdatesViewController.longPress(_:)))
         self.tableView.addGestureRecognizer(longPressRecognizer)
         
     }
     
-    func longPress(longPressGestureRecognizer: UILongPressGestureRecognizer) {
+    func longPress(_ longPressGestureRecognizer: UILongPressGestureRecognizer) {
         
-        if longPressGestureRecognizer.state == UIGestureRecognizerState.Began {
+        if longPressGestureRecognizer.state == UIGestureRecognizerState.began {
             
-            let touchPoint = longPressGestureRecognizer.locationInView(self.tableView)
-            if let indexPath = self.tableView.indexPathForRowAtPoint(touchPoint) {
+            let touchPoint = longPressGestureRecognizer.location(in: self.tableView)
+            if let indexPath = self.tableView.indexPathForRow(at: touchPoint) {
                 
                 // your code here, get the row for the indexPath or do whatever you want
                 print(indexPath)
@@ -83,7 +83,7 @@ class UpdatesViewController: UITableViewController, MangaPageList, ChaptersDeleg
         }
     }
     
-    func showChapters(manga: MangaPreviewItem) {
+    func showChapters(_ manga: MangaPreviewItem) {
         
         
         let chaptersController = ChaptersController(manga: manga, chapters: manga.chapters, delegate: self)
@@ -91,17 +91,17 @@ class UpdatesViewController: UITableViewController, MangaPageList, ChaptersDeleg
         navController.viewControllers = [chaptersController]
         let formSheet = MZFormSheetPresentationViewController(contentViewController: navController)
         
-        formSheet.interactivePanGestureDissmisalDirection = .All;
+        formSheet.interactivePanGestureDismissalDirection = .all;
         //                formSheet.allowDismissByPanningPresentedView = true
         formSheet.presentationController?.shouldDismissOnBackgroundViewTap = true
-        formSheet.contentViewControllerTransitionStyle = .Fade
+        formSheet.contentViewControllerTransitionStyle = .fade
         //                formSheet.presentationController?.shouldApplyBackgroundBlurEffect = true
         
         
-        self.presentViewController(formSheet, animated: true, completion: nil)
+        self.present(formSheet, animated: true, completion: nil)
     }
     
-    func refresh(object: AnyObject) {
+    func refresh(_ object: AnyObject) {
         page = 1 // reset the page counter
         fetchUpdates()
     }
@@ -147,44 +147,44 @@ class UpdatesViewController: UITableViewController, MangaPageList, ChaptersDeleg
     
     
     //MARK: Chapter Delegate
-    func chaptersControllerDidSelectChapter(chapter: Chapter, manga: MangaItem) {
+    func chaptersControllerDidSelectChapter(_ chapter: Chapter, manga: MangaItem) {
         
-        self.dismissViewControllerAnimated(true) { [weak self] () -> Void in
+        self.dismiss(animated: true) { [weak self] () -> Void in
             
             let reader = MangaReaderController.createReader(manga, chapter: chapter)
-            self?.presentViewController(reader, animated: true, completion: nil)
+            self?.present(reader, animated: true, completion: nil)
             
         }
     }
     
     // MARK: UITableView DataSource/Delegate Methods
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return manga.count
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(MangaCell.defaultReusableId, forIndexPath: indexPath) as! MangaCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: MangaCell.defaultReusableId, for: indexPath) as! MangaCell
         
         let manga = self.manga[indexPath.row]
         let isFollowing: Bool! = followManga != nil ? !followManga!.filter({$0.id == manga.mangaId}).isEmpty : false
         cell.configure(manga, isFollowing: isFollowing)
-        cell.chaptersButton.addTarget(self, action: Selector("accessoryClick:"), forControlEvents: .TouchUpInside)
+        cell.chaptersButton.addTarget(self, action: #selector(UpdatesViewController.accessoryClick(_:)), for: .touchUpInside)
         
         return cell
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedManga = manga[indexPath.row]
         let detailsController = MangaDetailsController(manga: selectedManga)
         navigationController?.pushViewController(detailsController, animated: true)
     }
     
     
-    func accessoryClick(sender: UIButton!) {
+    func accessoryClick(_ sender: UIButton!) {
         
-        let rect = tableView.convertPoint(sender.center, fromView: sender.superview)
-        let indexPath = tableView.indexPathForRowAtPoint(rect)!
+        let rect = tableView.convert(sender.center, from: sender.superview)
+        let indexPath = tableView.indexPathForRow(at: rect)!
         print(indexPath)
         let selectedManga = manga[indexPath.row]
         

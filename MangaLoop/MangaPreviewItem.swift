@@ -22,7 +22,7 @@ struct MangaPreviewItem: MangaItem {
     
     func isFollowing() -> Bool {
         
-        if NSUserDefaults.standardUserDefaults().boolForKey(Constants.Defaults.IsSignedIn) {
+        if UserDefaults.standard.bool(forKey: Constants.Defaults.IsSignedIn) {
             
             let realm = try! Realm()
             if let _ = realm.objects(FollowManga).filter("id = %@", mangaId).first {
@@ -42,12 +42,12 @@ struct MangaPreviewItem: MangaItem {
 
 
 extension MangaPreviewItem: Unboxable {
-    init(unboxer: Unboxer) {
-        self.title = unboxer.unbox("title")
-        self.link = unboxer.unbox("link")
-        self.mangaId = unboxer.unbox("mangaId")
-        self.chapters = unboxer.unbox("chapters")
-        self.imageLink = unboxer.unbox("imageLink")
+    init(unboxer: Unboxer) throws{
+        self.title = try unboxer.unbox(key: "title")
+        self.link = try unboxer.unbox(key: "link")
+        self.mangaId = try unboxer.unbox(key: "mangaId")
+        self.chapters = try unboxer.unbox(key: "chapters")
+        self.imageLink = try unboxer.unbox(key: "imageLink")
     }
 }
 

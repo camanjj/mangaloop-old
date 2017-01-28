@@ -31,7 +31,7 @@ class DetailHeaderView: UIView {
 //        followButton.layer.borderColor = followButton.tintColor.CGColor
     }
     
-    @IBAction func followClick(sender: AnyObject) {
+    @IBAction func followClick(_ sender: AnyObject) {
         if let delegate = delegate {
             followButton.startLoadingAnimation()
             delegate.followClick()

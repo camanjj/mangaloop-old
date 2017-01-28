@@ -7,40 +7,30 @@
 //
 
 import UIKit
-import WebKit
 import JAMSVGImage
 
 class LoginWebViewController: UIViewController {
   
+  typealias LoginActionBlock = (LoginAction) -> ()
   
   enum LoadStatus {
-    case Initial, Wait, Refresh
+    case initial, wait, refresh
   }
   
-  var initialUrl: NSURL
-  var loginWebView: WKWebView?
-  lazy var processPool = WKProcessPool()
+  enum LoginAction {
+    // NOTE: failure happens when getting the secret key fails
+    case cancel, success, failure
+  }
   
-  var load: LoadStatus = .Initial
+  var initialUrl: URL
+  var loginWebView: UIWebView?
   
-  lazy var userContentController = WKUserContentController()
+  var load: LoadStatus = .initial
+  var completeBlock: LoginActionBlock
   
-  lazy private var configuration: WKWebViewConfiguration = {
-    let configuration = WKWebViewConfiguration()
-    
-    
-    // enable javascript
-    let preferences = WKPreferences()
-    preferences.javaScriptEnabled = true
-    
-    configuration.userContentController = self.userContentController
-    configuration.preferences = preferences
-    configuration.processPool = self.processPool
-    return configuration
-  }()
-  
-  init(link: NSURL) {
+  init(link: URL, completeBlock: @escaping LoginActionBlock) {
     initialUrl = link
+    self.completeBlock = completeBlock
     super.init(nibName: nil, bundle: nil)
   }
   
@@ -51,86 +41,54 @@ class LoginWebViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    let webView = setupWebView()
+    // setup the webview
+    let webView = UIWebView()
+    webView.delegate = self
+    webView.frame = view.bounds
     view.addSubview(webView)
-    let req = NSMutableURLRequest(URL: initialUrl)
-    webView.loadRequest(req)
-    
+    let req = NSMutableURLRequest(url: initialUrl)
+    webView.loadRequest(req as URLRequest)
     self.loginWebView = webView
     
     navigationController?.setToolbarHidden(false, animated: true)
     
-    // create label for the toolbar
-    let label = UILabel()
-    label.text = "close after login"
-    label.sizeToFit()
-    
     // setup the toolbar items
-    let messageButton = UIBarButtonItem(customView: label)
-    let canelItem = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: #selector(cancel))
-    let spacer = UIBarButtonItem(barButtonSystemItem: .FixedSpace, target: nil, action: nil)
+    let spacer = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
     spacer.width = 30
-    let closeButton = UIBarButtonItem(barButtonSystemItem: .Stop, target: self, action: #selector(closeWebView))
-    let flexSpace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil);
+    let closeButton = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(cancel))
+    let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil);
     
-    toolbarItems = [canelItem, flexSpace, messageButton, flexSpace, closeButton]
+    toolbarItems = [flexSpace, closeButton]
     
   }
   
-  override func viewWillDisappear(animated: Bool) {
+  override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
   }
   
-  func setupWebView() -> WKWebView {
-    let webView = WKWebView(frame: CGRect.zero, configuration: configuration)
-    webView.navigationDelegate = self
-    webView.allowsBackForwardNavigationGestures = true
-    webView.frame = view.bounds
-    return webView;
-  }
-  
-  override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
-    if (keyPath == "estimatedProgress") { // listen to changes and updated view
-      
-    }
-  }
   
   func cancel() {
+    completeBlock(.cancel)
+  }
+  
+  func getSecret(_ cookies: [String:String]) {
     
-    if let tabController = presentingViewController as? UITabBarController,
-      navController = tabController.selectedViewController as? UINavigationController,
-      followsController = navController.topViewController as? FollowsController {
-      // used to make sure the follows view does not attempt login after
-      followsController.attemptingLogin = false
+    MangaManager.sharedManager.getSecret(cookies) { [weak self](success) in
+      
+      guard let wself = self else { return }
+      
+      if success == true {
+        wself.completeBlock(.success)
+      } else {
+        wself.completeBlock(.failure)
+      }
+      
     }
     
-    closeWebView()
   }
   
   func closeWebView() {
-    resetProcessPool()
-    loginWebView?.removeFromSuperview()
-    loginWebView = nil;
-    //completeCallback?()
-    presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
-  }
-  
-  func check() {
-    self.processPool = WKProcessPool()
-    resetProcessPool()
-    loginWebView?.removeFromSuperview()
-    loginWebView = nil;
-    
-    let delay = 2 * Double(NSEC_PER_SEC)
-    let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
-    dispatch_after(time, dispatch_get_main_queue()) {
-      // After 2 seconds this line will be executed
-      self.loginWebView = self.setupWebView()
-      self.view.addSubview(self.loginWebView!)
-      let req = NSMutableURLRequest(URL: NSURL(string: "http://bato.to/")!)
-      self.loginWebView!.loadRequest(req)
-    }
-    
+    presentingViewController?.dismiss(animated: true, completion: nil)
   }
   
   deinit {
@@ -142,56 +100,29 @@ class LoginWebViewController: UIViewController {
     // Dispose of any resources that can be recreated.
   }
   
-  func resetProcessPool() {
-    assert(NSThread.isMainThread())
-    configuration.processPool = WKProcessPool()
-  }
-  
-  
-  
 }
 
-extension LoginWebViewController: WKNavigationDelegate {
+
+
+extension LoginWebViewController: UIWebViewDelegate {
   
-  func webView(webView: WKWebView, didFinishNavigation navigation: WKNavigation!) {
-    
-    
-    if load == .Initial {
-      load = .Refresh
-    }
-    
-    
-    /*if load == .Refresh {
-      resetProcessPool()
-      self.loginWebView?.removeFromSuperview()
-      // self.webView?.removeObserver(self, forKeyPath: "estimatedProgress")
-      self.loginWebView = setupWebView()
-      let req = NSMutableURLRequest(URL: webView.URL!)
-      self.loginWebView!.loadRequest(req)
-      view.addSubview(self.loginWebView!)
-      load = .Wait
-    }*/
-    
-    if webView.URL?.absoluteString?.containsString("app=core&module=global&section=login") != true {
-      // closeWebView()
-    }
-    
-  }
-  
-  func webView(webView: WKWebView, decidePolicyForNavigationResponse navigationResponse: WKNavigationResponse, decisionHandler: (WKNavigationResponsePolicy) -> Void) {
-    
-    if let httpResponse = navigationResponse.response as? NSHTTPURLResponse {
-      if let headers = httpResponse.allHeaderFields as? [String: String], url = httpResponse.URL {
-        let cookies = NSHTTPCookie.cookiesWithResponseHeaderFields(headers, forURL: url)
-        
-//        for cookie in cookies {
-//          print("found cookie " + cookie.name + " " + cookie.value)
-//        }
+  func webViewDidFinishLoad(_ webView: UIWebView) {
+    if webView.request?.url?.absoluteString != "https://bato.to/forums/index.php?app=core&module=global&section=login" {
+      // check of the cookies are present
+      if let cookies = HTTPCookieStorage.shared.cookies(for: URL(string: "http://bato.to/")!) {
+        let loginCookies = cookies.filter { ["member_id", "pass_hash"].contains($0.name) }
+        if loginCookies.count == 2 {
+          // we have found the proper cookies
+          let values = cookies.reduce([String:String](), {
+            var dict: [String:String] = $0
+            dict[$1.name] = $1.value
+            return dict
+          })
+          
+          getSecret(values)
+        }
       }
     }
-    
-    decisionHandler(.Allow)
   }
   
 }
-

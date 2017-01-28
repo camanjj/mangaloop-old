@@ -14,6 +14,30 @@ import JAMSVGImage
 import SCLAlertView
 import PKHUD
 import Kingfisher
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func >= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l >= r
+  default:
+    return !(lhs < rhs)
+  }
+}
+
 
 
 class MangaReaderController: UIViewController {
@@ -30,7 +54,7 @@ class MangaReaderController: UIViewController {
     
   }
   var mangaPages = [MangaPageController(), MangaPageController(), MangaPageController()] // list of pages
-  var urls: [NSURL]? // the list of all the urls for the pages
+  var urls: [URL]? // the list of all the urls for the pages
   
   
   
@@ -44,7 +68,7 @@ class MangaReaderController: UIViewController {
   var transitionStyle: UIPageViewControllerTransitionStyle {
     get {
       let trans = MangaManager.getReaderSettings(.Transition)
-      return trans == .Curl ? .PageCurl : .Scroll
+      return trans == .Curl ? .pageCurl : .scroll
     }
   }
   
@@ -52,7 +76,7 @@ class MangaReaderController: UIViewController {
     get {
       let direction = MangaManager.getReaderSettings(.Direction)
       isReversed = direction == .RightToLeft
-      return direction == .Webtoon ? .Vertical : .Horizontal
+      return direction == .Webtoon ? .vertical : .horizontal
     }
   }
   
@@ -64,7 +88,7 @@ class MangaReaderController: UIViewController {
   }
   
   // creates the reader and embeds it in a navigation controller
-  class func createReader(manga: MangaItem, chapter: Chapter, allChapters: [Chapter]? = nil) -> UINavigationController {
+  class func createReader(_ manga: MangaItem, chapter: Chapter, allChapters: [Chapter]? = nil) -> UINavigationController {
     let reader = MangaReaderController(manga: manga, chapter: chapter)
     reader.allChapters = allChapters
     let navController = UINavigationController(rootViewController: reader)
@@ -79,26 +103,26 @@ class MangaReaderController: UIViewController {
     super.viewDidLoad()
     
     navigationItem.title = selectedChapter.title
-    navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Stop, target: self, action: #selector(closeClick))
+    navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(closeClick))
     
     // config the toolbar
     navigationController?.setToolbarHidden(false, animated: false)
     let itemSize = CGSize(width: 25, height: 25)
-    let settingsItem = UIBarButtonItem(image: UIImage(fromSVGNamed: Constants.Images.ReaderSettings, atSize: itemSize), style: .Plain, target: self, action: #selector(settingsClick))
-    let chaptersItem = UIBarButtonItem(image: UIImage(fromSVGNamed: Constants.Images.List, atSize: itemSize), style: .Plain, target: self, action: #selector(chaptersClick))
-    let infoItem = UIBarButtonItem(image: UIImage(fromSVGNamed: Constants.Images.Info, atSize: itemSize), style: .Plain, target: self, action: #selector(infoClick))
+    let settingsItem = UIBarButtonItem(image: UIImage(fromSVGNamed: Constants.Images.ReaderSettings, at: itemSize), style: .plain, target: self, action: #selector(settingsClick))
+    let chaptersItem = UIBarButtonItem(image: UIImage(fromSVGNamed: Constants.Images.List, at: itemSize), style: .plain, target: self, action: #selector(chaptersClick))
+    let infoItem = UIBarButtonItem(image: UIImage(fromSVGNamed: Constants.Images.Info, at: itemSize), style: .plain, target: self, action: #selector(infoClick))
     
-    let fixedSpace = UIBarButtonItem(barButtonSystemItem: .FixedSpace, target: nil, action: nil)
+    let fixedSpace = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
     fixedSpace.width = 40;
     
     toolbarItems = [settingsItem, fixedSpace, chaptersItem, fixedSpace, infoItem]
     
-    view.backgroundColor = UIColor.whiteColor()
+    view.backgroundColor = UIColor.white
     
     // config the navigation bar
     automaticallyAdjustsScrollViewInsets = false
-    navigationController?.navigationBar.translucent = true
-    navigationController?.toolbar.translucent = true
+    navigationController?.navigationBar.isTranslucent = true
+    navigationController?.toolbar.isTranslucent = true
     
     fetchPages(selectedChapter.link)
     
@@ -111,12 +135,12 @@ class MangaReaderController: UIViewController {
     if pageController?.view.superview != nil {
       
       let page = pageController!.viewControllers?.last as? MangaPageController
-      currentPage = mangaPages.indexOf(page!)!
+      currentPage = mangaPages.index(of: page!)!
       
       
     } else if webtoonReader?.superview != nil {
       let visibleCells = webtoonReader!.visibleCells
-      currentPage = webtoonReader!.indexPathForCell(visibleCells.first!)!.row
+      currentPage = webtoonReader!.indexPath(for: visibleCells.first!)!.row
     }
     
     // clean up the current view
@@ -131,22 +155,22 @@ class MangaReaderController: UIViewController {
       //            page.setFrame()
     } */
     
-    if orientation == .Vertical {
+    if orientation == .vertical {
       webtoonSetup(currentPage)
     } else {
       pageSetup(currentPage)
     }
   }
   
-  func webtoonSetup(currentPage: Int) {
+  func webtoonSetup(_ currentPage: Int) {
     
     if webtoonReader == nil {
-      webtoonReader = UITableView(frame: UIScreen.mainScreen().bounds)
+      webtoonReader = UITableView(frame: UIScreen.main.bounds)
       
-      let nib = UINib(nibName: String(WebtoonCell.self), bundle: nil)
-      webtoonReader!.registerNib(nib, forCellReuseIdentifier: "page")
-      webtoonReader!.separatorInset = UIEdgeInsetsZero
-      webtoonReader!.separatorColor = UIColor.clearColor()
+      let nib = UINib(nibName: String(describing: WebtoonCell.self), bundle: nil)
+      webtoonReader!.register(nib, forCellReuseIdentifier: "page")
+      webtoonReader!.separatorInset = UIEdgeInsets.zero
+      webtoonReader!.separatorColor = UIColor.clear
       webtoonReader!.rowHeight = UITableViewAutomaticDimension
       webtoonReader!.estimatedRowHeight = 600
     }
@@ -164,12 +188,12 @@ class MangaReaderController: UIViewController {
     
     
     if currentPage > -1 {
-      webtoonReader!.scrollToRowAtIndexPath(NSIndexPath(forRow: currentPage, inSection: 0), atScrollPosition: .None, animated: true)
+      webtoonReader!.scrollToRow(at: IndexPath(row: currentPage, section: 0), at: .none, animated: true)
     }
     
   }
   
-  func pageSetup(currentPage: Int) {
+  func pageSetup(_ currentPage: Int) {
     
     
     //        if pageController == nil {
@@ -207,24 +231,24 @@ class MangaReaderController: UIViewController {
     
     
     if mangaPages.isEmpty {
-      pageController.setViewControllers([UIViewController()], direction: .Forward, animated: true, completion: nil)
+      pageController.setViewControllers([UIViewController()], direction: .forward, animated: true, completion: nil)
     } else {
-      pageController.setViewControllers([selectedPage], direction: .Forward, animated: true, completion: nil)
+      pageController.setViewControllers([selectedPage], direction: .forward, animated: true, completion: nil)
     }
     
     // add the page controller to the this view controller, if applicable
     if pageController.view.superview == nil {
       addChildViewController(pageController)
       view.addSubview(pageController.view)
-      pageController.didMoveToParentViewController(self)
+      pageController.didMove(toParentViewController: self)
     }
     
   }
   
   
-  func fetchPages(link: String) {
+  func fetchPages(_ link: String) {
     
-    HUD.show(.Progress)
+    HUD.show(.progress)
     
     MangaManager.sharedManager.getPages(link) { [weak self] (pages) -> Void in
       
@@ -237,7 +261,7 @@ class MangaReaderController: UIViewController {
         
         if pages.isEmpty {
           print("The pages are empty. Batoto probably is not loading this chapter for some reason")
-          HUD.flash(.Error, withDelay: 2.0)
+          HUD.flash(.error, delay: 2.0)
           return
         }
         
@@ -249,9 +273,9 @@ class MangaReaderController: UIViewController {
         wself.prefetcher?.stop()
         
         // set up the prefetcher with the urls for the pages
-        wself.urls = pages.map { NSURL(string: $0)! }
+        wself.urls = pages.map { URL(string: $0)! }
         let cache = ImageCache(name: "manga-pages")
-        wself.prefetcher = ImagePrefetcher(urls: wself.urls!, optionsInfo: [.TargetCache(cache)], progressBlock: nil, completionHandler: nil)
+        wself.prefetcher = ImagePrefetcher(urls: wself.urls!, options: [.targetCache(cache)], progressBlock: nil, completionHandler: nil)
        
         wself.prefetcher?.start()
         
@@ -259,7 +283,7 @@ class MangaReaderController: UIViewController {
         wself.setUpReader()
         
       } else {
-        HUD.flash(.Error, withDelay: 2.0)
+        HUD.flash(.error, delay: 2.0)
       }
     }
   }
@@ -277,7 +301,7 @@ class MangaReaderController: UIViewController {
   
   func closeClick() {
     stopAllPageDownloads()
-    presentingViewController!.dismissViewControllerAnimated(true, completion: nil)
+    presentingViewController!.dismiss(animated: true, completion: nil)
   }
   
   func settingsClick() {
@@ -289,14 +313,14 @@ class MangaReaderController: UIViewController {
     navController.viewControllers = [settingsController]
     let formSheet = MZFormSheetPresentationViewController(contentViewController: navController)
     
-    formSheet.interactivePanGestureDissmisalDirection = .All;
+    formSheet.interactivePanGestureDismissalDirection = .all;
     //                formSheet.allowDismissByPanningPresentedView = true
     formSheet.presentationController?.shouldDismissOnBackgroundViewTap = true
-    formSheet.contentViewControllerTransitionStyle = .Fade
+    formSheet.contentViewControllerTransitionStyle = .fade
     //                formSheet.presentationController?.shouldApplyBackgroundBlurEffect = true
     
     
-    self.presentViewController(formSheet, animated: true, completion: nil)
+    self.present(formSheet, animated: true, completion: nil)
     
   }
   
@@ -309,14 +333,14 @@ class MangaReaderController: UIViewController {
       navController.viewControllers = [chaptersController]
       let formSheet = MZFormSheetPresentationViewController(contentViewController: navController)
       
-      formSheet.interactivePanGestureDissmisalDirection = .All;
+      formSheet.interactivePanGestureDismissalDirection = .all;
       //                formSheet.allowDismissByPanningPresentedView = true
       formSheet.presentationController?.shouldDismissOnBackgroundViewTap = true
-      formSheet.contentViewControllerTransitionStyle = .Fade
+      formSheet.contentViewControllerTransitionStyle = .fade
       //                formSheet.presentationController?.shouldApplyBackgroundBlurEffect = true
       
       
-      self.presentViewController(formSheet, animated: true, completion: nil)
+      self.present(formSheet, animated: true, completion: nil)
       
     } else {
       //fetch the chapters
@@ -338,22 +362,20 @@ class MangaReaderController: UIViewController {
   }
   
   func infoClick() {
-    
     SCLAlertView().showInfo(manga.title, subTitle: selectedChapter.title)
-    
   }
   
   
 }
 
 extension MangaReaderController: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
-  func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
+  func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
     
     if mangaPages.isEmpty {
       return nil
     }
     
-    guard let index = urls?.indexOf((viewController as! MangaPageController).mangaImageView.link!) else {
+    guard let index = urls?.index(of: (viewController as! MangaPageController).mangaImageView.link!) else {
       return nil
     }
     
@@ -375,14 +397,14 @@ extension MangaReaderController: UIPageViewControllerDataSource, UIPageViewContr
 
   }
   
-  func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
+  func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
     
     if mangaPages.isEmpty {
       return nil
     }
     
     
-    guard let index = urls?.indexOf((viewController as! MangaPageController).mangaImageView.link!) else {
+    guard let index = urls?.index(of: (viewController as! MangaPageController).mangaImageView.link!) else {
       return nil
     }
     
@@ -404,15 +426,15 @@ extension MangaReaderController: UIPageViewControllerDataSource, UIPageViewContr
     return page
   }
   
-  func presentationCountForPageViewController(pageViewController: UIPageViewController) -> Int {
+  func presentationCount(for pageViewController: UIPageViewController) -> Int {
     return urls?.count ?? 0
   }
   
-  func pageViewController(pageViewController: UIPageViewController, spineLocationForInterfaceOrientation orientation: UIInterfaceOrientation) -> UIPageViewControllerSpineLocation {
+  func pageViewController(_ pageViewController: UIPageViewController, spineLocationFor orientation: UIInterfaceOrientation) -> UIPageViewControllerSpineLocation {
     
     let direction = MangaManager.getReaderSettings(.Direction)
     
-    return direction == .RightToLeft ? UIPageViewControllerSpineLocation.Max : UIPageViewControllerSpineLocation.Min
+    return direction == .RightToLeft ? UIPageViewControllerSpineLocation.max : UIPageViewControllerSpineLocation.min
   }
   
   
@@ -420,9 +442,9 @@ extension MangaReaderController: UIPageViewControllerDataSource, UIPageViewContr
 
 extension MangaReaderController: UITableViewDataSource, UITableViewDelegate {
   
-  func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     
-    let cell = tableView.dequeueReusableCellWithIdentifier("page", forIndexPath: indexPath) as! WebtoonCell
+    let cell = tableView.dequeueReusableCell(withIdentifier: "page", for: indexPath) as! WebtoonCell
     
     
     /* let page = pages[indexPath.row]
@@ -448,7 +470,7 @@ extension MangaReaderController: UITableViewDataSource, UITableViewDelegate {
   }
   
   
-  func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return urls?.count ?? 0
   }
   
@@ -472,8 +494,8 @@ extension MangaReaderController: ReaderSettingsDelegate {
 }
 
 extension MangaReaderController: ChaptersDelegate {
-  func chaptersControllerDidSelectChapter(chapter: Chapter, manga: MangaItem) {
-    self.dismissViewControllerAnimated(true) { [weak self] () -> Void in
+  func chaptersControllerDidSelectChapter(_ chapter: Chapter, manga: MangaItem) {
+    self.dismiss(animated: true) { [weak self] () -> Void in
       
       self?.selectedChapter = chapter
       self?.fetchPages(chapter.link)

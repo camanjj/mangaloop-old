@@ -20,11 +20,11 @@ class DiscoverCell: UICollectionViewCell {
         // Initialization code
     }
     
-    func configure(title: String, imageLink: String?) {
+    func configure(_ title: String, imageLink: String?) {
         titleLabel.text = title
         
         if let imageLink = imageLink {
-            mangaImageView.kf_setImageWithURL(NSURL(string: imageLink)!)
+            mangaImageView.kf.setImage(with: ImageResource(downloadURL: URL(string: imageLink)!))
         }
         
     }

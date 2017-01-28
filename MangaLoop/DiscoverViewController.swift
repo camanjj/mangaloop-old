@@ -41,14 +41,14 @@ class DiscoverViewController: UICollectionViewController {
     
         navigationItem.titleView = searchController.searchBar
         
-        let cellNib = UINib(nibName: String(DiscoverCell.self), bundle: nil)
-        collectionView?.registerNib(cellNib, forCellWithReuseIdentifier: DiscoverCell.defaultReusableId)
+        let cellNib = UINib(nibName: String(describing: DiscoverCell.self), bundle: nil)
+        collectionView?.register(cellNib, forCellWithReuseIdentifier: DiscoverCell.defaultReusableId)
         let flowLayout = collectionView?.collectionViewLayout as! UICollectionViewFlowLayout
-        let itemWidth = (UIScreen.mainScreen().bounds.width - 3) / 3
+        let itemWidth = (UIScreen.main.bounds.width - 3) / 3
         flowLayout.itemSize = CGSize(width: itemWidth, height: itemWidth)
         
         if let _: String = Pantry.unpack(Constants.Pantry.PopularFlag),
-            manga: [MangaPreviewItem] = Pantry.unpack(Constants.Pantry.Popular) {
+            let manga: [MangaPreviewItem] = Pantry.unpack(Constants.Pantry.Popular) {
            setDataSource(manga)
         } else {
             fetchPopularManga()
@@ -62,14 +62,14 @@ class DiscoverViewController: UICollectionViewController {
             if let manga = manga {
                 
                 Pantry.pack(manga, key: Constants.Pantry.Popular) // store for six hours
-                Pantry.pack("flag", key: Constants.Pantry.PopularFlag, expires: StorageExpiry.Seconds(60 * 60 * 6))
+                Pantry.pack("flag", key: Constants.Pantry.PopularFlag, expires: StorageExpiry.seconds(60 * 60 * 6))
                 
                 self.setDataSource(manga)
             }
         }
     }
     
-    func setDataSource(manga: [MangaPreviewItem]) {
+    func setDataSource(_ manga: [MangaPreviewItem]) {
         self.dataSource = ArrayDataSource<DiscoverCell, MangaPreviewItem>(items: manga, cellReuseIdentifier: DiscoverCell.defaultReusableId, configureClosure: { (cell, manga) -> Void in
             
             cell.configure(manga.title, imageLink: manga.imageLink)
@@ -79,7 +79,7 @@ class DiscoverViewController: UICollectionViewController {
         self.collectionView?.reloadData()
     }
     
-    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         let manga = dataSource.itemAtIndexPath(indexPath)
         
@@ -97,9 +97,9 @@ class DiscoverViewController: UICollectionViewController {
 
 extension DiscoverViewController: UISearchControllerDelegate {
     
-    func willPresentSearchController(searchController: UISearchController) {
-        dispatch_async(dispatch_get_main_queue(), {
-            searchController.searchResultsController!.view.hidden = false;
+    func willPresentSearchController(_ searchController: UISearchController) {
+        DispatchQueue.main.async(execute: {
+            searchController.searchResultsController!.view.isHidden = false;
         })
     }
     

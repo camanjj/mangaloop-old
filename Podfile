@@ -8,35 +8,27 @@ use_frameworks!
 
 target 'MangaLoop' do
   
-#  link_with 'MangaLoop', 'ml-playground'
 
-  pod 'Alamofire', '~> 3.0'
-  pod 'Kanna', '1.0.2'
+  pod 'Alamofire', '~> 4.0'
+  pod 'Kanna', '~> 2.0'
   pod 'Unbox'
-  pod 'SnapKit', '~> 0.22.0'
+  pod 'SnapKit', '~> 3.0'
   pod 'MZFormSheetPresentationController', '~> 2.2'
   pod 'MXSegmentedPager'
-  pod 'Kingfisher', '~> 2.6.0'
-  pod 'CircleProgressView', '= 1.0.11'
-  pod 'Pantry', :git => 'https://github.com/nickoneill/Pantry.git', :branch => 'swift2'
+  pod 'Kingfisher', '~> 3.0'
+  pod 'CircleProgressView', '~> 1.0'
+  pod 'Pantry', '~> 0.3'
   pod 'RealmSwift', '~> 1.0'
   pod 'DZNEmptyDataSet'
   pod 'SCLAlertView'
-  pod 'Eureka', :git => 'https://github.com/xmartlabs/Eureka.git', :branch => 'swift2.3'
+  pod 'Eureka', '~> 2.0.0-beta.1'
   pod 'TLTagsControl', :git => 'https://github.com/ali312/TLTagsControl.git'
   pod 'JAMSVGImage', '~> 1.6'
-  pod 'Reveal-iOS-SDK', :configurations => ['Debug']
-  pod 'PKHUD', '~> 3.0'
+  pod 'Reveal-iOS-SDK', '~> 1.6.2', :configurations => ['Debug']
+  pod 'PKHUD', '~> 4.0'
   pod 'Fabric'
   pod 'Crashlytics'
 
-  post_install do |installer|
-    installer.pods_project.targets.each do |target|
-      target.build_configurations.each do |configuration|
-        configuration.build_settings['SWIFT_VERSION'] = "2.3"
-      end
-    end
-  end
 
 
 

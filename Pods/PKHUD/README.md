@@ -1,8 +1,17 @@
+[![License](https://img.shields.io/cocoapods/l/PKHUD.svg?style=flat)](https://cocoapods.org/pods/PKHUD) 
+[![Platform](https://img.shields.io/cocoapods/p/PKHUD.svg?style=flat)](http://cocoadocs.org/docsets/PKHUD/3.2.1/) 
+[![CocoaPod](https://img.shields.io/cocoapods/v/PKHUD.svg?style=flat)](https://cocoapods.org/pods/PKHUD)
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+![](https://img.shields.io/badge/Swift 3-compatible-4BC51D.svg?style=flat-square)
+
 ![PKHUD - Swift and easy](https://raw.githubusercontent.com/pkluz/PKHUD/master/README_hero.png)
+
+
+
 <br />
 <br />
 <br />
-A **Swift** based reimplementation of the Apple HUD (Volume, Ringer, Rotation,…) **for iOS 8**.
+A **Swift** based reimplementation of the Apple HUD (Volume, Ringer, Rotation,…) **for iOS 8** and up.
 <br />
 <br />
 ## Features
@@ -11,42 +20,97 @@ A **Swift** based reimplementation of the Apple HUD (Volume, Ringer, Rotation,�
 - Size / **Device agnostic**.
 - Works on top of presented view controllers, alerts,...
 - Comes with several *free* resources - Checkmark, Cross, Progress Indicator,…
-- …as well as animated ones.
+- …as well as **animated** ones.
 - Builds as an **iOS 8 framework**.
 
 ![PKHUD.gif](https://cloud.githubusercontent.com/assets/1275218/10124182/09f4c406-654f-11e5-9cab-0f2e6f470887.gif)
 
-## How To
-First you need to add the framework to your project. The recommended way is to use CocoaPods.
+## Installation
+**The recommended way is to use CocoaPods.**
+
+### CocoaPods
+
+To install PKHUD for Swift 2 using CocoaPods, include the following in your Podfile
+
 ```ruby
-pod "PKHUD"
+  pod 'PKHUD', '~> 3.0'
 ```
+
+To install PKHUD for Swift 3.x using CocoaPods, include the following in your Podfile
+
+```ruby
+  pod 'PKHUD', '~> 4.0'
+```
+
+### Carthage
+
+[Carthage](https://github.com/Carthage/Carthage) is a decentralized dependency manager that builds your dependencies and provides you with binary frameworks.
+
+You can install Carthage with [Homebrew](http://brew.sh/) using the following command:
+
+```bash
+$ brew update
+$ brew install carthage
+```
+
+To integrate PKHUD into your Xcode project using Carthage, specify it in your `Cartfile`:
+
+```ogdl
+github "pkluz/PKHUD" ~> 4.0
+```
+
+Run `carthage update` to build the framework and drag the built `PKHUD.framework` into your Xcode project.
+
+## How To
 
 After adding the framework to your project, you need to import the module
 ```swift
 import PKHUD
 ```
 
-Now, you can proceed to show an arbitrary HUD (and hide it soon after) like this:
+Now, you can proceed to show an arbitrary HUD (and have it automatically disappear a second later) like this:
+```swift
+HUD.flash(.Success, delay: 1.0)
+```
+
+_or_ with a completion handler:
+
+```swift
+HUD.flash(.Success, delay: 1.0) { finished in 
+    // Completion Handler
+}
+```
+
+alternatively, you can use the more verbose and flexible “plumbing” API:
+
 ```swift
 PKHUD.sharedHUD.contentView = PKHUDSuccessView()
 PKHUD.sharedHUD.show()
-PKHUD.sharedHUD.hide(afterDelay: 2.0)
+PKHUD.sharedHUD.hide(afterDelay: 1.0) { success in 
+    // Completion Handler
+}
 ```
 
 You can also hot-swap content views - this can prove useful if you want to display a progress HUD first and transform it into a success or error HUD after an asynchronous operation has finished.
 ```swift
-PKHUD.sharedHUD.contentView = PKHUDProgressView()
-PKHUD.sharedHUD.show()
+HUD.show(.Progress)
         
-let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(2.0 * Double(NSEC_PER_SEC)))
-dispatch_after(delayTime, dispatch_get_main_queue()) {
-    PKHUD.sharedHUD.contentView = PKHUDSuccessView()
-    PKHUD.sharedHUD.hide(afterDelay: 2.0)
+// Now some long running task starts...
+delay(2.0) {
+    // ...and once it finishes we flash the HUD for a second.
+   HUD.flash(.Success, delay: 1.0)
 }
 ```
 
 Please note that there are _multiple_ types of content views that ship with PKHUD. You can find them as separate files in the project folder as well as in the `ContentViews` group in Xcode.
+
+## Communication _(Hat Tip AlamoFire)_
+
+- If you **need help**, use [Stack Overflow](http://stackoverflow.com/questions/tagged/pkhud). (Tag 'pkhud')
+- If you'd like to **ask a general question**, use [Stack Overflow](http://stackoverflow.com/questions/tagged/pkhud).
+- If you **found a bug**, open an issue.
+- If you **have a feature request**, open an issue.
+- If you **want to contribute**, submit a pull request.
 
 ## Customization
 

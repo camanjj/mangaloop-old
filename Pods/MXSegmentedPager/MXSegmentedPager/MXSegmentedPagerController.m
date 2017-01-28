@@ -1,6 +1,6 @@
 // MXSegmentedPagerController.m
 //
-// Copyright (c) 2015 Maxime Epain
+// Copyright (c) 2016 Maxime Epain
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,12 +22,11 @@
 
 #import "MXSegmentedPagerController.h"
 
-@interface MXSegmentedPagerController () <MXPageSegueDelegate>
-
+@interface MXSegmentedPagerController () <MXPageSegueSource>
+@property (nonatomic, strong) NSMutableDictionary<NSNumber *, UIViewController *> *pageViewControllers;
 @end
 
 @implementation MXSegmentedPagerController {
-    UIViewController *_pageViewController;
     NSInteger _pageIndex;
 }
 
@@ -41,11 +40,18 @@
 
 - (UIView *)segmentedPager {
     if (!_segmentedPager) {
-        _segmentedPager = [[MXSegmentedPager alloc] init];
+        _segmentedPager = [MXSegmentedPager new];
         _segmentedPager.delegate    = self;
         _segmentedPager.dataSource  = self;
     }
     return _segmentedPager;
+}
+
+- (NSMutableDictionary<NSNumber *,UIViewController *> *)pageViewControllers {
+    if (!_pageViewControllers) {
+        _pageViewControllers = [NSMutableDictionary new];
+    }
+    return _pageViewControllers;
 }
 
 #pragma mark <MXSegmentedPagerControllerDataSource>
@@ -67,41 +73,39 @@
 - (UIView *)segmentedPager:(MXSegmentedPager *)segmentedPager viewForPageAtIndex:(NSInteger)index {
     
     UIViewController *viewController = [self segmentedPager:segmentedPager viewControllerForPageAtIndex:index];
-    
-    if (viewController) {
-        [self addChildViewController:viewController];
-        [viewController didMoveToParentViewController:self];
-
-        return viewController.view;
-    }
-    return nil;
+    return viewController.view;
 }
 
 - (UIViewController *)segmentedPager:(MXSegmentedPager *)segmentedPager viewControllerForPageAtIndex:(NSInteger)index {
-    if (self.storyboard) {
+    UIViewController *pageViewController = self.pageViewControllers[@(index)];
+    
+    if (!pageViewController && self.storyboard) {
+        NSString *identifier = [self segmentedPager:segmentedPager segueIdentifierForPageAtIndex:index];
         @try {
-            NSString *identifier = [self segmentedPager:segmentedPager segueIdentifierForPageAtIndex:index];
             _pageIndex = index;
+            
             [self performSegueWithIdentifier:identifier sender:nil];
-            return _pageViewController;
+            return self.pageViewControllers[@(index)];
         }
-        @catch(NSException *exception) {}
+        @catch(NSException *exception) {
+            NSLog(@"Error while performing segue with identifier %@ from %@ : %@", identifier, self, exception);
+        }
     }
-    return nil;
+    return pageViewController;
 }
 
 - (NSString *)segmentedPager:(MXSegmentedPager *)segmentedPager segueIdentifierForPageAtIndex:(NSInteger)index {
     return [NSString stringWithFormat:MXSeguePageIdentifierFormat, (long)index];
 }
 
-#pragma mark <MXPageSegueDelegate>
+#pragma mark <MXPageSegueSource>
 
 - (NSInteger)pageIndex {
     return _pageIndex;
 }
 
-- (void)setPageViewController:(UIViewController *)pageViewController {
-    _pageViewController = pageViewController;
+- (void)setPageViewController:(__kindof UIViewController *)pageViewController atIndex:(NSInteger)index {
+    self.pageViewControllers[@(index)] = pageViewController;
 }
 
 @end

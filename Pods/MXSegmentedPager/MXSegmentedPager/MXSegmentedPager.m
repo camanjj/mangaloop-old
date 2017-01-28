@@ -1,6 +1,6 @@
 // MXSegmentedPager.m
 //
-// Copyright (c) 2015 Maxime Epain
+// Copyright (c) 2016 Maxime Epain
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -28,14 +28,11 @@
 @property (nonatomic, strong) MXScrollView          *contentView;
 @property (nonatomic, strong) HMSegmentedControl    *segmentedControl;
 @property (nonatomic, strong) MXPagerView           *pager;
-
-@property (nonatomic, strong) MXProgressBlock progressBlock;
 @end
 
 @implementation MXSegmentedPager {
     CGFloat     _controlHeight;
     NSInteger   _count;
-    BOOL        _moveSegment;
 }
 
 - (void)reloadData {
@@ -86,6 +83,11 @@
     [self.pager reloadData];
 }
 
+- (void)scrollToTopAnimated:(BOOL)animated {
+    [_contentView setContentOffset:CGPointMake(0, -self.contentView.parallaxHeader.height)
+                          animated:animated];
+}
+
 #pragma mark Layout
 
 - (void)layoutSubviews {
@@ -100,7 +102,7 @@
     [self layoutPager];
 }
 
-- (void) layoutContentView {
+- (void)layoutContentView {
     CGRect frame = self.bounds;
     
     frame.origin = CGPointZero;
@@ -110,15 +112,14 @@
     self.contentView.contentInset = UIEdgeInsetsMake(self.contentView.parallaxHeader.height, 0, 0, 0);
 }
 
-- (void) layoutSegmentedControl {
+- (void)layoutSegmentedControl {
     CGRect frame = self.bounds;
     
     frame.origin.x = self.segmentedControlEdgeInsets.left;
     
     if (self.segmentedControlPosition == MXSegmentedControlPositionTop) {
         frame.origin.y = self.segmentedControlEdgeInsets.top;
-    }
-    else {
+    } else {
         frame.origin.y  = frame.size.height;
         frame.origin.y -= _controlHeight;
         frame.origin.y -= self.segmentedControlEdgeInsets.bottom;
@@ -131,7 +132,7 @@
     self.segmentedControl.frame = frame;
 }
 
-- (void) layoutPager {
+- (void)layoutPager {
     CGRect frame = self.bounds;
     
     frame.origin = CGPointZero;
@@ -171,14 +172,13 @@
                     forControlEvents:UIControlEventValueChanged];
         
         [self.contentView addSubview:_segmentedControl];
-        _moveSegment = YES;
     }
     return _segmentedControl;
 }
 
 - (MXPagerView *)pager {
     if (!_pager) {
-        _pager = [[MXPagerView alloc] init];
+        _pager = [[MXPagerView alloc] initWithFrame:self.frame];
         _pager.delegate = self;
         _pager.dataSource = self;
         [self.contentView addSubview:_pager];
@@ -186,7 +186,7 @@
     return _pager;
 }
 
-- (UIView*) selectedPage {
+- (UIView*)selectedPage {
     return self.pager.selectedPage;
 }
 
@@ -203,13 +203,14 @@
 #pragma mark <MXScrollViewDelegate>
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    
     if ([self.delegate respondsToSelector:@selector(segmentedPager:didScrollWithParallaxHeader:)]) {
         [self.delegate segmentedPager:self didScrollWithParallaxHeader:scrollView.parallaxHeader];
     }
-    
-    if (self.progressBlock) {
-        self.progressBlock(self.contentView.parallaxHeader.progress);
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    if ([self.delegate respondsToSelector:@selector(segmentedPager:didEndDraggingWithParallaxHeader:)]) {
+        [self.delegate segmentedPager:self didEndDraggingWithParallaxHeader:scrollView.parallaxHeader];
     }
 }
 
@@ -222,25 +223,28 @@
     return YES;
 }
 
+- (BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView {
+    if ([self.delegate respondsToSelector:@selector(segmentedPagerShouldScrollToTop:)]) {
+        return [self.delegate segmentedPagerShouldScrollToTop:self];
+    }
+    return YES;
+}
+
 #pragma mark HMSegmentedControl target
 
 - (void)pageControlValueChanged:(HMSegmentedControl*)segmentedControl {
-    _moveSegment = NO;
     [self.pager showPageAtIndex:segmentedControl.selectedSegmentIndex animated:YES];
 }
 
 #pragma mark <MXPagerViewDelegate>
 
 - (void)pagerView:(MXPagerView *)pagerView willMoveToPageAtIndex:(NSInteger)index {
-    if (_moveSegment) {
-        [self.segmentedControl setSelectedSegmentIndex:index animated:YES];
-    }
+    [self.segmentedControl setSelectedSegmentIndex:index animated:YES];
 }
 
 - (void)pagerView:(MXPagerView *)pagerView didMoveToPageAtIndex:(NSInteger)index {
     [self.segmentedControl setSelectedSegmentIndex:index animated:NO];
     [self changedToIndex:index];
-    _moveSegment = YES;
 }
 
 #pragma mark <MXPagerViewDataSource>
@@ -249,13 +253,13 @@
     return _count;
 }
 
-- (UIView*) pagerView:(MXPagerView *)pagerView viewForPageAtIndex:(NSInteger)index {
+- (UIView *)pagerView:(MXPagerView *)pagerView viewForPageAtIndex:(NSInteger)index {
     return [self.dataSource segmentedPager:self viewForPageAtIndex:index];
 }
 
 #pragma mark Private methods
 
-- (void) changedToIndex:(NSInteger)index {
+- (void)changedToIndex:(NSInteger)index {
     if ([self.delegate respondsToSelector:@selector(segmentedPager:didSelectViewWithIndex:)]) {
         [self.delegate segmentedPager:self didSelectViewWithIndex:index];
     }
@@ -289,116 +293,5 @@
 - (MXParallaxHeader *)parallaxHeader {
     return self.contentView.parallaxHeader;
 }
-
-@end
-
-#pragma mark VGParallaxHeader Backward compatibility
-
-@implementation MXSegmentedPager (VGParallaxHeader)
-
-- (void)setParallaxHeaderView:(UIView *)view mode:(VGParallaxHeaderMode)mode height:(CGFloat)height {
-    self.parallaxHeader.view    = view;
-    self.parallaxHeader.mode    = (MXParallaxHeaderMode)mode;
-    self.parallaxHeader.height  = height;
-}
-
-- (void)updateParallaxHeaderViewHeight:(CGFloat)height {
-    self.parallaxHeader.height = height;
-}
-
-#pragma mark Properties
-
-- (CGFloat)minimumHeaderHeight {
-    return self.parallaxHeader.minimumHeight;
-}
-
-- (void)setMinimumHeaderHeight:(CGFloat)minimumHeaderHeight {
-    self.parallaxHeader.minimumHeight = minimumHeaderHeight;
-}
-
-@end
-
-@implementation MXParallaxHeader (VGParallaxHeader)
-
-- (VGParallaxHeaderStickyViewPosition)stickyViewPosition {
-    return [objc_getAssociatedObject(self, @selector(stickyViewPosition)) integerValue];
-}
-
-- (void)setStickyViewPosition:(VGParallaxHeaderStickyViewPosition)stickyViewPosition {
-    objc_setAssociatedObject(self, @selector(stickyViewPosition), [NSNumber numberWithInteger:stickyViewPosition], OBJC_ASSOCIATION_COPY_NONATOMIC);
-    [self updateStickyViewConstraints];
-}
-
-- (NSLayoutConstraint *)stickyViewHeightConstraint {
-    NSLayoutConstraint *stickyViewHeightConstraint = objc_getAssociatedObject(self, @selector(stickyViewHeightConstraint));
-    if (!stickyViewHeightConstraint && self.stickyView) {
-        stickyViewHeightConstraint = [NSLayoutConstraint constraintWithItem:self.stickyView
-                                                                  attribute:NSLayoutAttributeHeight
-                                                                  relatedBy:NSLayoutRelationEqual
-                                                                     toItem:nil
-                                                                  attribute:NSLayoutAttributeNotAnAttribute
-                                                                 multiplier:1
-                                                                   constant:0];
-        
-        objc_setAssociatedObject(self, @selector(stickyViewHeightConstraint), stickyViewHeightConstraint, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    }
-    return stickyViewHeightConstraint;
-}
-
-- (void)setStickyViewHeightConstraint:(NSLayoutConstraint *)stickyViewHeightConstraint {
-    if (self.stickyViewHeightConstraint != stickyViewHeightConstraint && self.stickyView.superview == self.contentView) {
-        [self.contentView removeConstraint:self.stickyViewHeightConstraint];
-        [self.contentView addConstraint:stickyViewHeightConstraint];
-        objc_setAssociatedObject(self, @selector(stickyViewHeightConstraint), stickyViewHeightConstraint, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    }
-}
-
-- (UIView *)stickyView {
-    return objc_getAssociatedObject(self, @selector(stickyView));
-}
-
-- (void)setStickyView:(UIView *)stickyView {
-    if (self.stickyView != stickyView) {
-        [self.stickyView removeFromSuperview];
-        objc_setAssociatedObject(self, @selector(stickyView), stickyView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-        [self updateStickyViewConstraints];
-    }
-}
-
-- (void)setStickyView:(__kindof UIView *)stickyView withHeight:(CGFloat)height {
-    self.stickyView = stickyView;
-    self.stickyViewHeightConstraint.constant = height;
-}
-
-- (BOOL)isInsideTableView {
-    return NO;
-}
-
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-- (void)updateStickyViewConstraints {
-    if (self.stickyView) {
-        [self.stickyView removeFromSuperview];
-        [self.contentView addSubview:self.stickyView];
-        
-        self.stickyView.translatesAutoresizingMaskIntoConstraints = NO;
-        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[v]|"
-                                                                                 options:0
-                                                                                 metrics:nil
-                                                                                   views:@{@"v" : self.stickyView}]];
-        
-        NSLayoutAttribute attribute = (self.stickyViewPosition == VGParallaxHeaderStickyViewPositionTop)? NSLayoutAttributeTop : NSLayoutAttributeBottom;
-        [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.stickyView
-                                                                     attribute:attribute
-                                                                     relatedBy:NSLayoutRelationEqual
-                                                                        toItem:self.contentView
-                                                                     attribute:attribute
-                                                                    multiplier:1
-                                                                      constant:0]];
-        
-        [self.contentView addConstraint:self.stickyViewHeightConstraint];
-    }
-}
-#pragma GCC diagnostic pop
 
 @end

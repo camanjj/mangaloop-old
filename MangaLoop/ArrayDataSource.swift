@@ -14,7 +14,7 @@ class ArrayDataSource<CellType: UIView, ItemType>: NSObject, UITableViewDataSour
     var cellReuseIdentifier: String
     var configureClosure: (CellType, ItemType) -> Void
     
-    init(items: [ItemType], cellReuseIdentifier: String, configureClosure: (CellType, ItemType) -> Void) {
+    init(items: [ItemType], cellReuseIdentifier: String, configureClosure: @escaping (CellType, ItemType) -> Void) {
         self.items = items
         self.cellReuseIdentifier = cellReuseIdentifier
         self.configureClosure = configureClosure
@@ -22,18 +22,18 @@ class ArrayDataSource<CellType: UIView, ItemType>: NSObject, UITableViewDataSour
         super.init()
     }
     
-    func itemAtIndexPath(indexPath: NSIndexPath) -> ItemType {
+    func itemAtIndexPath(_ indexPath: IndexPath) -> ItemType {
         return self.items[indexPath.row] as ItemType
     }
     
-    func configureCell(cell: CellType, atIndexPath indexPath:NSIndexPath) {
+    func configureCell(_ cell: CellType, atIndexPath indexPath:IndexPath) {
         let item = itemAtIndexPath(indexPath)
         self.configureClosure(cell, item)
     }
     
     // MARK: UITableViewDataSource
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         if items.count <= 0 {
             return 0
         }
@@ -41,12 +41,12 @@ class ArrayDataSource<CellType: UIView, ItemType>: NSObject, UITableViewDataSour
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.items.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(self.cellReuseIdentifier, forIndexPath: indexPath) as! CellType
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: self.cellReuseIdentifier, for: indexPath) as! CellType
         configureCell(cell, atIndexPath: indexPath)
         
         return cell as! UITableViewCell
@@ -54,11 +54,11 @@ class ArrayDataSource<CellType: UIView, ItemType>: NSObject, UITableViewDataSour
     
     // MARK: - UICollectionViewDataSource
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return items.count
     }
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         if items.count <= 0 {
             return 0
         }
@@ -66,8 +66,8 @@ class ArrayDataSource<CellType: UIView, ItemType>: NSObject, UITableViewDataSour
         return 1
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        var cell = collectionView.dequeueReusableCellWithReuseIdentifier(cellReuseIdentifier, forIndexPath: indexPath) as! CellType
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIdentifier, for: indexPath) as! CellType
         configureCell(cell, atIndexPath: indexPath)
         
         return cell as! UICollectionViewCell

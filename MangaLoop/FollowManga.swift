@@ -19,11 +19,11 @@ class FollowManga : Object, Unboxable {
         return "id"
     }
     
-    convenience required init(unboxer: Unboxer) {
+    convenience required init(unboxer: Unboxer) throws {
         self.init()
-        self.title = unboxer.unbox("title")
-        self.link = unboxer.unbox("link")
-        self.id = unboxer.unbox("id")
+        self.title = try unboxer.unbox(key: "title")
+        self.link = try unboxer.unbox(key: "link")
+        self.id = try unboxer.unbox(key: "id")
     }
     
     
@@ -34,7 +34,7 @@ class FollowManga : Object, Unboxable {
     
     
     // MARK: Class helper methods
-    class func createAndAddFromManga(manga: MangaItem) {
+    class func createAndAddFromManga(_ manga: MangaItem) {
     
         let follow = FollowManga()
         follow.title = manga.title
@@ -50,7 +50,7 @@ class FollowManga : Object, Unboxable {
     
     }
     
-    class func deleteManga(manga: MangaItem) {
+    class func deleteManga(_ manga: MangaItem) {
         
         let realm = try! Realm()
         
@@ -81,7 +81,7 @@ class FollowManga : Object, Unboxable {
         
     }
     
-    class func searchFromText(text: String) -> Results<FollowManga> {
+    class func searchFromText(_ text: String) -> Results<FollowManga> {
     
         let realm = try! Realm()
         let searchPredicate = NSPredicate(format: "SELF.title CONTAINS[c] %@", text)

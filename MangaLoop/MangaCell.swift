@@ -29,8 +29,8 @@ class MangaCell: UITableViewCell {
         let btn = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
         btn.layer.cornerRadius = 8
         btn.layer.borderWidth = 2
-        btn.layer.borderColor = UIColor.redColor().CGColor
-        btn.setTitleColor(UIColor.redColor(), forState: .Normal)
+        btn.layer.borderColor = UIColor.red.cgColor
+        btn.setTitleColor(UIColor.red, for: UIControlState())
 //        btn.setTitle("5", forState: .Normal)
         
         self.accessoryView = btn
@@ -42,23 +42,23 @@ class MangaCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(manga: MangaPreviewItem, isFollowing: Bool = false) {
+    func configure(_ manga: MangaPreviewItem, isFollowing: Bool = false) {
         
         titleLabel.text = manga.title
         
         if let chapters = manga.chapters {
             accessoryView = chaptersButton
-            chaptersButton.setTitle("\(chapters.count)", forState: .Normal)
+            chaptersButton.setTitle("\(chapters.count)", for: UIControlState())
         } else {
             accessoryView = nil
         }
         
         if isFollowing == true {
-            chaptersButton.backgroundColor = UIColor.redColor()
-            chaptersButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+            chaptersButton.backgroundColor = UIColor.red
+            chaptersButton.setTitleColor(UIColor.white, for: UIControlState())
         } else {
-            chaptersButton.backgroundColor = UIColor.clearColor()
-            chaptersButton.setTitleColor(UIColor.redColor(), forState: .Normal)
+            chaptersButton.backgroundColor = UIColor.clear
+            chaptersButton.setTitleColor(UIColor.red, for: UIControlState())
         }
         
     }

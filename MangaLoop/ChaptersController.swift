@@ -11,7 +11,7 @@ import UIKit
 
 
 protocol ChaptersDelegate {
-    func chaptersControllerDidSelectChapter(chapter: Chapter, manga: MangaItem)
+    func chaptersControllerDidSelectChapter(_ chapter: Chapter, manga: MangaItem)
 }
 
 class ChaptersController: UITableViewController {
@@ -21,7 +21,7 @@ class ChaptersController: UITableViewController {
     var manga: MangaItem!
     
     convenience init(manga: MangaItem, chapters: [Chapter]?, delegate: ChaptersDelegate) {
-        self.init(style: UITableViewStyle.Grouped)
+        self.init(style: UITableViewStyle.grouped)
         
         self.manga = manga
         self.delegate = delegate
@@ -30,14 +30,14 @@ class ChaptersController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.registerClass(ItemCell.self, forCellReuseIdentifier: ItemCell.defaultReusableId)
+        tableView.register(ItemCell.self, forCellReuseIdentifier: ItemCell.defaultReusableId)
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 44
         
         navigationItem.title = "Chapters"
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         guard let chapters = self.chapters else {
             return 0
@@ -47,9 +47,9 @@ class ChaptersController: UITableViewController {
         
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier(ItemCell.defaultReusableId, forIndexPath: indexPath) as! ItemCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: ItemCell.defaultReusableId, for: indexPath) as! ItemCell
         
         cell.configure(chapters![indexPath.row])
         
@@ -57,7 +57,7 @@ class ChaptersController: UITableViewController {
         
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let chapter = self.chapters![indexPath.row]
         
         delegate.chaptersControllerDidSelectChapter(chapter, manga: manga)

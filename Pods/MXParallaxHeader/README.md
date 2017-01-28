@@ -2,6 +2,7 @@
 
 [![CI Status](http://img.shields.io/travis/maxep/MXParallaxHeader.svg?style=flat)](https://travis-ci.org/maxep/MXParallaxHeader)
 [![Version](https://img.shields.io/cocoapods/v/MXParallaxHeader.svg?style=flat)](http://cocoapods.org/pods/MXParallaxHeader)
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![License](https://img.shields.io/cocoapods/l/MXParallaxHeader.svg?style=flat)](http://cocoapods.org/pods/MXParallaxHeader)
 [![Platform](https://img.shields.io/cocoapods/p/MXParallaxHeader.svg?style=flat)](http://cocoapods.org/pods/MXParallaxHeader)
 
@@ -11,7 +12,7 @@ In addition, MXScrollView is a UIScrollView subclass with the ability to hook th
 
 |             UIScrollView        |           MXScrollViewController          |
 |---------------------------------|-------------------------------------------|
-|![Demo](Example/UIScrollView.gif)|![Demo](Example/MXScrollViewController.gif)|
+|![Demo](Example-objc/demo1.gif)|![Demo](Example-objc/demo2.gif)|
 
 ## Usage
 

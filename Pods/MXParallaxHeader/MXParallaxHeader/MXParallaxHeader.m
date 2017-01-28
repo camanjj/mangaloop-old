@@ -32,14 +32,18 @@
 static void * const kMXParallaxHeaderKVOContext = (void*)&kMXParallaxHeaderKVOContext;
 
 - (void)willMoveToSuperview:(UIView *)newSuperview {
-    [self.superview removeObserver:self.parent forKeyPath:NSStringFromSelector(@selector(contentOffset)) context:kMXParallaxHeaderKVOContext];
+    if ([self.superview isKindOfClass:[UIScrollView class]]) {
+        [self.superview removeObserver:self.parent forKeyPath:NSStringFromSelector(@selector(contentOffset)) context:kMXParallaxHeaderKVOContext];
+    }
 }
 
-- (void)didMoveToSuperview {
-    [self.superview addObserver:self.parent
-                     forKeyPath:NSStringFromSelector(@selector(contentOffset))
-                        options:NSKeyValueObservingOptionNew
-                        context:kMXParallaxHeaderKVOContext];
+- (void)didMoveToSuperview{
+    if ([self.superview isKindOfClass:[UIScrollView class]]) {
+        [self.superview addObserver:self.parent
+                         forKeyPath:NSStringFromSelector(@selector(contentOffset))
+                            options:NSKeyValueObservingOptionNew
+                            context:kMXParallaxHeaderKVOContext];
+    }
 }
 
 @end
@@ -84,7 +88,7 @@ static void * const kMXParallaxHeaderKVOContext = (void*)&kMXParallaxHeaderKVOCo
     if (_height != height) {
         
         //Adjust content inset
-        self.scrollViewContentTopInset = self.scrollView.contentInset.top - _height + height;
+        [self adjustScrollViewTopInset:self.scrollView.contentInset.top - _height + height];
         
         _height = height;
         [self updateConstraints];
@@ -102,24 +106,23 @@ static void * const kMXParallaxHeaderKVOContext = (void*)&kMXParallaxHeaderKVOCo
         _scrollView = scrollView;
         
         //Adjust content inset
-        self.scrollViewContentTopInset = self.scrollView.contentInset.top + self.height;
+        [self adjustScrollViewTopInset:scrollView.contentInset.top + self.height];
+        [scrollView addSubview:self.contentView];
         
         //Layout content view
-        [scrollView addSubview:self.contentView];
         [self layoutContentView];
-        
         _isObserving = YES;
     }
 }
 
 - (CGFloat)progress {
-    CGFloat x = self.height? (1/self.height) * self.contentView.frame.size.height : 1;
-    return x - 1;
+    CGFloat div = self.height - self.minimumHeight;
+    return (self.contentView.frame.size.height - self.minimumHeight) / (div? : self.height);
 }
 
 #pragma mark Constraints
 
-- (void) updateConstraints {
+- (void)updateConstraints {
     if (!self.view) {
         return;
     }
@@ -132,6 +135,10 @@ static void * const kMXParallaxHeaderKVOContext = (void*)&kMXParallaxHeaderKVOCo
     switch (self.mode) {
         case MXParallaxHeaderModeFill:
             [self setFillModeConstraints];
+            break;
+            
+        case MXParallaxHeaderModeTopFill:
+            [self setTopFillModeConstraints];
             break;
             
         case MXParallaxHeaderModeTop:
@@ -148,9 +155,9 @@ static void * const kMXParallaxHeaderKVOContext = (void*)&kMXParallaxHeaderKVOCo
     }
 }
 
-- (void) setCenterModeConstraints {
+- (void)setCenterModeConstraints {
     
-    NSDictionary *binding  = @{@"v" : self.view};
+    NSDictionary *binding = @{@"v" : self.view};
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[v]|" options:0 metrics:nil views:binding]];
     
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.view
@@ -170,69 +177,50 @@ static void * const kMXParallaxHeaderKVOContext = (void*)&kMXParallaxHeaderKVOCo
                                                                   constant:self.height]];
 }
 
-- (void) setFillModeConstraints {
-    NSDictionary *binding  = @{@"v" : self.view};
+- (void)setFillModeConstraints {
+    NSDictionary *binding = @{@"v" : self.view};
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[v]|" options:0 metrics:nil views:binding]];
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[v]|" options:0 metrics:nil views:binding]];
 }
 
-- (void) setTopModeConstraints {
-    NSDictionary *binding  = @{@"v" : self.view};
+- (void)setTopFillModeConstraints {
+    NSDictionary *binding = @{@"v" : self.view};
+    NSDictionary *metrics = @{@"highPriority" : @(UILayoutPriorityDefaultHigh),
+                              @"height"       : @(self.height)};
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[v]|" options:0 metrics:nil views:binding]];
-    
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.view
-                                                                 attribute:NSLayoutAttributeTop
-                                                                 relatedBy:NSLayoutRelationEqual
-                                                                    toItem:self.contentView
-                                                                 attribute:NSLayoutAttributeTop
-                                                                multiplier:1
-                                                                  constant:0]];
-    
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.view
-                                                                 attribute:NSLayoutAttributeHeight
-                                                                 relatedBy:NSLayoutRelationEqual
-                                                                    toItem:nil
-                                                                 attribute:NSLayoutAttributeNotAnAttribute
-                                                                multiplier:1
-                                                                  constant:self.height]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[v(>=height)]-0.0@highPriority-|" options:0 metrics:metrics views:binding]];
 }
 
-- (void) setBottomModeConstraints {
-    NSDictionary *binding  = @{@"v" : self.view};
+- (void)setTopModeConstraints {
+    NSDictionary *binding = @{@"v" : self.view};
+    NSDictionary *metrics = @{@"height" : @(self.height)};
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[v]|" options:0 metrics:nil views:binding]];
-    
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.view
-                                                                 attribute:NSLayoutAttributeBottom
-                                                                 relatedBy:NSLayoutRelationEqual
-                                                                    toItem:self.contentView
-                                                                 attribute:NSLayoutAttributeBottom
-                                                                multiplier:1
-                                                                  constant:0]];
-    
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.view
-                                                                 attribute:NSLayoutAttributeHeight
-                                                                 relatedBy:NSLayoutRelationEqual
-                                                                    toItem:nil
-                                                                 attribute:NSLayoutAttributeNotAnAttribute
-                                                                multiplier:1
-                                                                  constant:self.height]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[v(==height)]" options:0 metrics:metrics views:binding]];
+}
+
+- (void)setBottomModeConstraints {
+    NSDictionary *binding = @{@"v" : self.view};
+    NSDictionary *metrics = @{@"height" : @(self.height)};
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[v]|" options:0 metrics:nil views:binding]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[v(==height)]|" options:0 metrics:metrics views:binding]];
 }
 
 #pragma mark Private Methods
 
-- (void) layoutContentView {
+- (void)layoutContentView {
     CGFloat minimumHeight = MIN(self.minimumHeight, self.height);
-    CGFloat relativeYOffset = self.height - self.scrollView.contentOffset.y - self.scrollView.contentInset.top;
+    CGFloat relativeYOffset = self.scrollView.contentOffset.y + self.scrollView.contentInset.top - self.height;
+    CGFloat relativeHeight  = -relativeYOffset;
     
     self.contentView.frame = (CGRect){
         .origin.x       = 0,
-        .origin.y       = -relativeYOffset,
+        .origin.y       = relativeYOffset,
         .size.width     = self.scrollView.frame.size.width,
-        .size.height    = MAX(relativeYOffset, minimumHeight)
+        .size.height    = MAX(relativeHeight, minimumHeight)
     };
 }
 
-- (void) setScrollViewContentTopInset:(CGFloat)top {
+- (void)adjustScrollViewTopInset:(CGFloat)top {
     UIEdgeInsets inset = self.scrollView.contentInset;
     
     //Adjust content offset
@@ -255,12 +243,11 @@ static void * const kMXParallaxHeaderKVOContext = (void*)&kMXParallaxHeaderKVOCo
         if ([keyPath isEqualToString:NSStringFromSelector(@selector(contentOffset))]) {
             [self layoutContentView];
             
-            if ([self.view respondsToSelector:@selector(parallaxHeaderDidScroll:)]) {
-                [(id<MXParallaxHeader>)self.view parallaxHeaderDidScroll:self];
+            if ([self.delegate respondsToSelector:@selector(parallaxHeaderDidScroll:)]) {
+                [self.delegate parallaxHeaderDidScroll:self];
             }
         }
-    }
-    else {
+    } else {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     }
 }
@@ -273,10 +260,14 @@ static void * const kMXParallaxHeaderKVOContext = (void*)&kMXParallaxHeaderKVOCo
     MXParallaxHeader *parallaxHeader = objc_getAssociatedObject(self, @selector(parallaxHeader));
     if (!parallaxHeader) {
         parallaxHeader = [MXParallaxHeader new];
-        parallaxHeader.scrollView = self;
-        objc_setAssociatedObject(self, @selector(parallaxHeader), parallaxHeader, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        [self setParallaxHeader:parallaxHeader];
     }
     return parallaxHeader;
+}
+
+- (void)setParallaxHeader:(MXParallaxHeader *)parallaxHeader {
+    parallaxHeader.scrollView = self;
+    objc_setAssociatedObject(self, @selector(parallaxHeader), parallaxHeader, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 @end

@@ -11,7 +11,6 @@ import DZNEmptyDataSet
 import SCLAlertView
 import Pantry
 import RealmSwift
-import WebKit
 import PKHUD
 
 class FollowsController: UITableViewController, MangaPageList {
@@ -20,23 +19,23 @@ class FollowsController: UITableViewController, MangaPageList {
     didSet {
       if let _ = manga {
         // the user is signed in add the sign out message
-        searchController.searchBar.userInteractionEnabled = true
+        searchController.searchBar.isUserInteractionEnabled = true
         searchController.searchBar.placeholder = "Search Follows"
         searchController.searchBar.showsBookmarkButton = false
-        footerButton.hidden = false
+        footerButton.isHidden = false
       } else {
         //manga is nil so the user is not signed in
-        searchController.searchBar.userInteractionEnabled = false
+        searchController.searchBar.isUserInteractionEnabled = false
         searchController.searchBar.placeholder = "Login to search follows"
         searchController.searchBar.showsBookmarkButton = false
-        footerButton.hidden = true
+        footerButton.isHidden = true
       }
     }
   }
   
   var page = 1
   var footerButton: UIButton!
-  var activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
+  var activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
   
   var searchController = UISearchController(searchResultsController: nil)
   var filteredManga: Results<FollowManga>?
@@ -61,7 +60,7 @@ class FollowsController: UITableViewController, MangaPageList {
     
 //    let logoutImage = UIImage(fromSVGNamed: Constants.Images.Logout, atSize: CGSize(width: 28, height: 28))
     
-    navigationItem.rightBarButtonItem = UIBarButtonItem(title: "logout", style: .Plain, target: self, action: #selector(signOutClick))//UIBarButtonItem(image: logoutImage, style: .Plain, target: self, action: #selector(signOutClick))
+    navigationItem.rightBarButtonItem = UIBarButtonItem(title: "logout", style: .plain, target: self, action: #selector(signOutClick))//UIBarButtonItem(image: logoutImage, style: .Plain, target: self, action: #selector(signOutClick))
     
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
@@ -69,8 +68,8 @@ class FollowsController: UITableViewController, MangaPageList {
     // A little trick for removing the cell separators
     self.tableView.tableFooterView = UIView()
     
-    tableView.registerClass(MangaCell.self, forCellReuseIdentifier: MangaCell.defaultReusableId)
-    tableView.registerClass(ItemCell.self, forCellReuseIdentifier: ItemCell.defaultReusableId)
+    tableView.register(MangaCell.self, forCellReuseIdentifier: MangaCell.defaultReusableId)
+    tableView.register(ItemCell.self, forCellReuseIdentifier: ItemCell.defaultReusableId)
     tableView.rowHeight = UITableViewAutomaticDimension
     tableView.estimatedRowHeight = 44
     
@@ -99,8 +98,8 @@ class FollowsController: UITableViewController, MangaPageList {
       }
       
     } else {
-      footerButton.hidden = true
-      searchController.searchBar.userInteractionEnabled = false
+      footerButton.isHidden = true
+      searchController.searchBar.isUserInteractionEnabled = false
       searchController.searchBar.placeholder = "Login to search follows"
       searchController.searchBar.showsBookmarkButton = false
       
@@ -108,56 +107,13 @@ class FollowsController: UITableViewController, MangaPageList {
     
   }
   
-  override func viewWillAppear(animated: Bool) {
+  override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     
-    navigationController?.navigationBar.translucent = false
+    navigationController?.navigationBar.isTranslucent = false
   }
-  
-  lazy private var configuration: WKWebViewConfiguration = {
-    let configuration = WKWebViewConfiguration()
-    
-    
-    // enable javascript
-    let preferences = WKPreferences()
-    preferences.javaScriptEnabled = true
-    
-    configuration.preferences = preferences
-    configuration.processPool = WKProcessPool()
-    return configuration
-  }()
-  
-  
-  override func viewDidAppear(animated: Bool) {
-    super.viewDidAppear(animated)
-    
-    // HACK used to get the cookies from the WKWebView for bato.to
-    // webview has some weird behvior when showing the cookies after login
-    if MangaManager.isSignedIn() == false && attemptingLogin == true {
-    
-      // show HUD
-      PKHUD.sharedHUD.userInteractionOnUnderlyingViewsEnabled = false
-      PKHUD.sharedHUD.contentView = PKHUDTextView(text: "Signing in...")
-      PKHUD.sharedHUD.show()
-      
-      
-      // create a webview to fetch the cookies from bato.to
-      let webView = WKWebView(frame: CGRectZero, configuration: configuration)
-      webView.navigationDelegate = self
-      
-      // going to be removed later after getting the cookies
-      view.addSubview(webView)
-      
-      let url = NSURL(string: "https://bato.to/")!
-      let request = NSURLRequest(URL: url)
-      webView.loadRequest(request)
-    
 
-    }
-    
-  }
-  
-  func refresh(object: AnyObject) {
+  func refresh(_ object: AnyObject) {
     page = 1 // reset the page counter
     fetchFollows()
   }
@@ -191,7 +147,7 @@ class FollowsController: UITableViewController, MangaPageList {
     fetchFollows()
   }
   
-  func handleFollows( manga: [MangaPreviewItem]?) {
+  func handleFollows( _ manga: [MangaPreviewItem]?) {
     
     if let refreshControl = self.refreshControl {
       refreshControl.endRefreshing()
@@ -221,7 +177,7 @@ class FollowsController: UITableViewController, MangaPageList {
     
   }
   
-  func loginWithCookies(cookies: [String:String]) {
+  func loginWithCookies(_ cookies: [String:String]) {
     
     attemptingLogin = false
     print("Attempting secret...")
@@ -247,7 +203,7 @@ class FollowsController: UITableViewController, MangaPageList {
     
   }
   
-  func showLoginError(cookiesError: Bool) {
+  func showLoginError(_ cookiesError: Bool) {
     // dismiss HUD if it is open
     PKHUD.sharedHUD.hide(animated: false, completion: nil)
     
@@ -261,49 +217,49 @@ class FollowsController: UITableViewController, MangaPageList {
       message = "Check your internet connection and try again"
     }
     
-    let alert = UIAlertController(title: "Problem signing in", message: message, preferredStyle: .Alert)
+    let alert = UIAlertController(title: "Problem signing in", message: message, preferredStyle: .alert)
     
-    let okAction = UIAlertAction(title: "Ok", style: .Default, handler: nil)
+    let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
     
     alert.addAction(okAction)
-    presentViewController(alert, animated: true, completion: nil)
+    present(alert, animated: true, completion: nil)
     
   }
   
   
   //MARK: UITableView Datasource methods
-  override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+  override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     
-    if searchController.active {
+    if searchController.isActive {
       return filteredManga?.count ?? 0
     } else {
       return manga?.count ?? 0
     }
   }
   
-  override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+  override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     
     
-    if searchController.active {
+    if searchController.isActive {
       
-      let cell = tableView.dequeueReusableCellWithIdentifier(MangaCell.defaultReusableId, forIndexPath: indexPath) as! MangaCell
+      let cell = tableView.dequeueReusableCell(withIdentifier: MangaCell.defaultReusableId, for: indexPath) as! MangaCell
       let fm = filteredManga![indexPath.row]
       cell.configure(fm.toMangaItem())
       return cell
       
     }
     
-    let cell = tableView.dequeueReusableCellWithIdentifier(ItemCell.defaultReusableId, forIndexPath: indexPath) as! ItemCell
+    let cell = tableView.dequeueReusableCell(withIdentifier: ItemCell.defaultReusableId, for: indexPath) as! ItemCell
     
     let m = manga![indexPath.row]
     cell.configure(m.title, subHeader: m.chapters!.first!.updateTime)
-    cell.accessoryType = .None
+    cell.accessoryType = .none
     
     return cell
   }
   
-  override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    let selectedManga = searchController.active ? filteredManga![indexPath.row].toMangaItem() : manga![indexPath.row]
+  override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    let selectedManga = searchController.isActive ? filteredManga![indexPath.row].toMangaItem() : manga![indexPath.row]
     let detailsController = MangaDetailsController(manga: selectedManga)
     navigationController?.pushViewController(detailsController, animated: true)
   }
@@ -315,105 +271,58 @@ extension FollowsController: DZNEmptyDataSetDelegate, DZNEmptyDataSetSource {
   
   
   //MARK DZNEmptyDataSet Datasource/Delegate methods
-  func buttonTitleForEmptyDataSet(scrollView: UIScrollView!, forState state: UIControlState) -> NSAttributedString! {
+  func buttonTitle(forEmptyDataSet scrollView: UIScrollView!, for state: UIControlState) -> NSAttributedString! {
     
-    if searchController.active {
+    if searchController.isActive {
       return nil
     }
     
     return NSAttributedString(string: "Login")
   }
   
-  func descriptionForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
+  func description(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
     
-    if searchController.active {
+    if searchController.isActive {
       return NSAttributedString(string: "Nothing to see here. Time to follow more manga")
     }
     
     return NSAttributedString(string: "Signing in will allow you to track follows and follow new manga and it will help make this app better because of Bato.to restrictions on guest users.")
   }
   
-  func emptyDataSet(scrollView: UIScrollView!, didTapButton button: UIButton!) {
+  func emptyDataSet(_ scrollView: UIScrollView!, didTap button: UIButton!) {
     //login
     
-    attemptingLogin = true
-    let webController = LoginWebViewController(link: NSURL(string: "https://bato.to/forums/index.php?app=core&module=global&section=login")!)
+    let webController = LoginWebViewController(link: URL(string: "https://bato.to/forums/index.php?app=core&module=global&section=login")!, completeBlock: { [weak self] action in
+      
+      guard let wself = self else { return }
+      wself.dismiss(animated: true, completion: nil)
+      
+      switch action {
+      case .success:
+        MangaManager.sharedManager.getFollowsList(wself.page, callback: wself.handleFollows)
+        MangaManager.sharedManager.getAllFollowsIfNeeded(nil)
+      case .failure:
+        wself.showLoginError(false)
+      case .cancel: break
+      }
+      
+    })
     let navController = UINavigationController(rootViewController: webController)
-    presentViewController(navController, animated: true, completion: nil)
+    present(navController, animated: true, completion: nil)
     
   }
 }
 
 extension FollowsController: UISearchResultsUpdating {
   
-  func updateSearchResultsForSearchController(searchController: UISearchController) {
+  func updateSearchResults(for searchController: UISearchController) {
     filteredManga = FollowManga.searchFromText(searchController.searchBar.text!)
     tableView.reloadData()
   }
 }
 
 extension FollowsController: UISearchBarDelegate {
-  func searchBarBookmarkButtonClicked(searchBar: UISearchBar) {
+  func searchBarBookmarkButtonClicked(_ searchBar: UISearchBar) {
     signOutClick()
-  }
-}
-
-extension FollowsController: WKNavigationDelegate {
-  
-  func webView(webView: WKWebView, didFinishNavigation navigation: WKNavigation!) {
-    
-    // remove the webview fromt the view after one request
-    if webView.superview != nil {
-      webView.stopLoading()
-      webView.removeFromSuperview()
-    }
-    
-  }
-  
-  func webView(webView: WKWebView, decidePolicyForNavigationResponse navigationResponse: WKNavigationResponse, decisionHandler: (WKNavigationResponsePolicy) -> Void) {
-    
-    
-    if let httpResponse = navigationResponse.response as? NSHTTPURLResponse {
-      if let headers = httpResponse.allHeaderFields as? [String: String], url = httpResponse.URL {
-                let cookies = NSHTTPCookie.cookiesWithResponseHeaderFields(headers, forURL: url)
-        
-        let loginCookies = cookies.filter { ["member_id", "pass_hash"].contains($0.name) }
-        print("Checking cookies")
-        
-        
-        if loginCookies.count == 2 {
-          
-          // we got the cookies
-          let values = cookies.reduce([String:String](), combine: {
-            var dict: [String:String] = $0
-            dict[$1.name] = $1.value
-            return dict
-          })
-          
-          NSHTTPCookieStorage.sharedHTTPCookieStorage().setCookies(cookies, forURL: httpResponse.URL, mainDocumentURL: nil)
-          
-         loginWithCookies(values)
-          
-        } else {
-          // we don't have the cookies needed
-          showLoginError(true)
-        }
-      }
-    }
-    
-    decisionHandler(.Allow)
-  }
-  
-  func webView(webView: WKWebView, decidePolicyForNavigationAction navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
-    
-    // only allow request for bato.to
-    if navigationAction.request.URL?.absoluteString == "https://bato.to/" {
-      decisionHandler(.Allow)
-    } else {
-      decisionHandler(.Cancel)
-    }
-    
-    
-    
   }
 }

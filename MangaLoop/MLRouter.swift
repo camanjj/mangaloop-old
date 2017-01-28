@@ -17,59 +17,58 @@ enum MLRouter: URLRequestConvertible {
     typealias Parameters = [String:AnyObject]
     typealias Endpoint = String
     
-    case Get(Endpoint, Parameters?)
-    case Post(Endpoint, Parameters)
+    case get(Endpoint, Parameters?)
+    case post(Endpoint, Parameters)
     
-    var method: Alamofire.Method {
+    var method: Alamofire.HTTPMethod {
         switch self {
-        case .Post:
-            return .POST
-        case .Get:
-            return .GET
+        case .post:
+            return Alamofire.HTTPMethod.post
+        case .get:
+            return Alamofire.HTTPMethod.get
         }
     }
     
     var path: String {
         switch self {
-        case .Post(let endpoint, _):
+        case .post(let endpoint, _):
             return endpoint
-        case .Get(let endpoint, _):
+        case .get(let endpoint, _):
             return endpoint
         }
     }
     
     
-    var URLRequest: NSMutableURLRequest {
+    func asURLRequest() throws -> URLRequest {
         
         
-        let URL = NSURL(string: MLRouter.baseUrlString)!
-        let mutableURLRequest = NSMutableURLRequest(URL: URL.URLByAppendingPathComponent(path)!)
-        mutableURLRequest.HTTPMethod = method.rawValue
+        let URL = Foundation.URL(string: MLRouter.baseUrlString)!
+        var mutableURLRequest = URLRequest(url: URL.appendingPathComponent(path))
+        mutableURLRequest.httpMethod = method.rawValue
         
         
         var cookies = [String:AnyObject]()
         
-        cookies["lang_option"] = MangaManager.languages().joinWithSeparator("%3B")
+        cookies["lang_option"] = MangaManager.languages().joined(separator: "%3B") as AnyObject?
         
         // handle a signed in user
-        if let signInCookies = NSUserDefaults.standardUserDefaults().dictionaryForKey("cookies") {
+        if let signInCookies = UserDefaults.standard.dictionary(forKey: "cookies") {
             for (key, value) in signInCookies {
-                cookies[key] = value
+                cookies[key] = value as AnyObject?
             }
         }
         
-        let cookiesString = cookies.map {"\($0)=\($1)"}.joinWithSeparator("; ")
+        let cookiesString = cookies.map {"\($0)=\($1)"}.joined(separator: "; ")
         mutableURLRequest.setValue(cookiesString, forHTTPHeaderField: "Cookie")
         
         
         switch self {
-        case .Post(_, let parameters):
-            return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest,
-                parameters: parameters).0
-        case .Get(_, let paramaters):
-            return Alamofire.ParameterEncoding.URLEncodedInURL.encode(mutableURLRequest, parameters: paramaters).0
+        case .post(_, let parameters):
+            return try Alamofire.JSONEncoding.default.encode(mutableURLRequest, with: parameters)
+        case .get(_, let paramaters):
+            return try Alamofire.URLEncoding.default.encode(mutableURLRequest, with: paramaters)
         default:
-            return mutableURLRequest
+            return mutableURLRequest as URLRequest
             
         }
         

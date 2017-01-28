@@ -76,9 +76,9 @@ class SettingsViewController: FormViewController {
             $0.title = "Clear Image Cache"
         }.onCellSelection({ (cell, row) -> () in
             let pageCache = ImageCache(name: Constants.PageCache)
-            pageCache.clearDiskCacheWithCompletionHandler({ () -> () in
+            pageCache.clearDiskCache {
                 self.memory = 0
-            })
+            }
         }).cellUpdate({ (cell, row) -> () in
             row.title = "Clear Image Cache (\(self.memory)mb)"
         })
@@ -89,18 +89,18 @@ class SettingsViewController: FormViewController {
         
         // fetch the memory
         let pageCache = ImageCache(name: Constants.PageCache)
-        pageCache.calculateDiskCacheSizeWithCompletionHandler({ (size) -> () in
+        pageCache.calculateDiskCacheSize { (size) -> () in
             self.memory = Int(size) / 1000000
-        })
+        }
         
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         let pageCache = ImageCache(name: Constants.PageCache)
-        pageCache.calculateDiskCacheSizeWithCompletionHandler({ (size) -> () in
+        pageCache.calculateDiskCacheSize { (size) -> () in
             self.memory = Int(size) / 1000000
-        })
+        }
     }
 
 

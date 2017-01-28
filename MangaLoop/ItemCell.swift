@@ -18,7 +18,7 @@ class ItemCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         headerLabel.numberOfLines = 0
-        subHeaderLabel.font = UIFont.systemFontOfSize(12)
+        subHeaderLabel.font = UIFont.systemFont(ofSize: 12)
         contentView.addSubview(headerLabel)
         contentView.addSubview(subHeaderLabel)
         
@@ -42,14 +42,14 @@ class ItemCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(chapter: Chapter) {
+    func configure(_ chapter: Chapter) {
         
-        headerLabel.text = chapter.title.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+        headerLabel.text = chapter.title.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         subHeaderLabel.text = chapter.updateTime
         
     }
     
-    func configure(header: String, subHeader: String? = nil) {
+    func configure(_ header: String, subHeader: String? = nil) {
         headerLabel.text = header
         
         if let subHeader = subHeader {

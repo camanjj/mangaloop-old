@@ -11,8 +11,8 @@ import UIKit
 
 extension UITableView {
     
-    func registerCellClass<T: UITableViewCell where T: ReusableView>(cell: T) {
-        registerClass(T.self, forCellReuseIdentifier: T.defaultReusableId)
+    func registerCellClass<T: UITableViewCell>(_ cell: T) where T: ReusableView {
+        register(T.self, forCellReuseIdentifier: T.defaultReusableId)
     }
     
 }

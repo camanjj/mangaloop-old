@@ -31,22 +31,22 @@ struct MangaDetailItem: MangaItem {
 
 
 extension MangaDetailItem: Unboxable {
-    init(unboxer: Unboxer) {
-        self.title = unboxer.unbox("title")
-        self.link = unboxer.unbox("link")
-        self.mangaId = unboxer.unbox("mangaId")
-        self.chapters = unboxer.unbox("chapters")
-        self.image = unboxer.unbox("image")
+    init(unboxer: Unboxer) throws {
+        self.title = try unboxer.unbox(key:"title")
+        self.link = try unboxer.unbox(key:"link")
+        self.mangaId = try unboxer.unbox(key:"mangaId")
+        self.chapters = unboxer.unbox(key:"chapters")
+        self.image = unboxer.unbox(key:"image")
         
-        self.mature = unboxer.unbox("mature")
-        self.status = unboxer.unbox("status")
-        self.genre = unboxer.unbox("genre")
-        self.summary = unboxer.unbox("summary")
-        self.altNames = unboxer.unbox("altNames")
-        self.artist = unboxer.unbox("artist")
-        self.author = unboxer.unbox("author")
+        self.mature = unboxer.unbox(key:"mature")
+        self.status = try unboxer.unbox(key:"status")
+        self.genre = try unboxer.unbox(key:"genre")
+        self.summary = try unboxer.unbox(key:"summary")
+        self.altNames = unboxer.unbox(key:"altNames")
+        self.artist = try unboxer.unbox(key:"artist")
+        self.author = try unboxer.unbox(key:"author")
         
-        self.following = unboxer.unbox("following")
-        self.followers = unboxer.unbox("followers")
+        self.following = unboxer.unbox(key:"following")
+        self.followers = unboxer.unbox(key:"followers")
     }
 }

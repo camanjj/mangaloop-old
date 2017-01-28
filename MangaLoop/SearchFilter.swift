@@ -54,7 +54,7 @@ class SearchFilter: Object {
         
         params["name"] = term
         
-        return params
+        return params as [String : AnyObject]
         
     }
     

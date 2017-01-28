@@ -47,46 +47,46 @@ class MangaDetailsController: MXSegmentedPagerController, ChaptersDelegate, Deta
         super.viewDidLoad()
         
         
-        navigationController?.navigationBar.translucent = false
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: Selector("safariClick"))
+        navigationController?.navigationBar.isTranslucent = false
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(MangaDetailsController.safariClick))
         extendedLayoutIncludesOpaqueBars = true
         
-        self.segmentedPager.backgroundColor = UIColor.whiteColor()
+        self.segmentedPager.backgroundColor = UIColor.white
         
         // Parallax Header
         self.segmentedPager.parallaxHeader.view = headerView
-        self.segmentedPager.parallaxHeader.mode = MXParallaxHeaderMode.Fill;
+        self.segmentedPager.parallaxHeader.mode = MXParallaxHeaderMode.fill;
         self.segmentedPager.parallaxHeader.height = 250;
         self.segmentedPager.parallaxHeader.minimumHeight = 80;
         
         // Segmented Control customization
-        self.segmentedPager.segmentedControl.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
-        self.segmentedPager.segmentedControl.backgroundColor = UIColor.whiteColor()
-        self.segmentedPager.segmentedControl.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.blackColor()];
-        self.segmentedPager.segmentedControl.selectedTitleTextAttributes = [NSForegroundColorAttributeName : UIColor.orangeColor()]
-        self.segmentedPager.segmentedControl.selectionStyle = HMSegmentedControlSelectionStyleFullWidthStripe
-        self.segmentedPager.segmentedControl.selectionIndicatorColor = UIColor.orangeColor()
+        self.segmentedPager.segmentedControl.selectionIndicatorLocation = .down;
+        self.segmentedPager.segmentedControl.backgroundColor = UIColor.white
+        self.segmentedPager.segmentedControl.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.black];
+        self.segmentedPager.segmentedControl.selectedTitleTextAttributes = [NSForegroundColorAttributeName : UIColor.orange]
+        self.segmentedPager.segmentedControl.selectionStyle = .fullWidthStripe
+        self.segmentedPager.segmentedControl.selectionIndicatorColor = UIColor.orange
         
         fetchInfo()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.translucent = true
-        navigationController?.navigationBar.barTintColor = UIColor.clearColor()
+        self.navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.barTintColor = UIColor.clear
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        navigationController?.navigationBar.translucent = false
-        navigationController?.navigationBar.barTintColor = UIColor.redColor()
+        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.barTintColor = UIColor.red
     }
     
     func fetchInfo() {
         
-        HUD.show(.Progress)
+        HUD.show(.progress)
         
         MangaManager.sharedManager.getMangaDetails(previewItem.link) { [weak self](manga) -> Void in
             
@@ -106,42 +106,42 @@ class MangaDetailsController: MXSegmentedPagerController, ChaptersDelegate, Deta
                 
                 wself.headerView.titleLabel.text = manga.title
                 if let imageUrl = manga.image {
-                    wself.headerView.mangaImageView.kf_showIndicatorWhenLoading = true
-                    wself.headerView.mangaImageView.kf_setImageWithURL(NSURL(string: imageUrl)!)
+                    wself.headerView.mangaImageView.kf.indicatorType = .activity
+                    wself.headerView.mangaImageView.kf.setImage(with: ImageResource(downloadURL: URL(string: imageUrl)!))
                 }
                 
-                if let followers = manga.followers, isFollowing = manga.following {
+                if let followers = manga.followers, let isFollowing = manga.following {
                     wself.headerView.followersLabel.text = "\(followers) Followers"
                     
                     if isFollowing {
-                        wself.headerView.followButton.setTitle("Following", forState: .Normal)
+                        wself.headerView.followButton.setTitle("Following", for: UIControlState())
                     } else {
-                        wself.headerView.followButton.setTitle("+ Follow", forState: .Normal)
+                        wself.headerView.followButton.setTitle("+ Follow", for: UIControlState())
                     }
                     
                     wself.headerView.delegate = wself
                     
                     
-                    wself.headerView.followersLabel.hidden = false
-                    wself.headerView.followButton.hidden = false
+                    wself.headerView.followersLabel.isHidden = false
+                    wself.headerView.followButton.isHidden = false
                     
                 } else {
-                    wself.headerView.followersLabel.hidden = true
-                    wself.headerView.followButton.hidden = true
+                    wself.headerView.followersLabel.isHidden = true
+                    wself.headerView.followButton.isHidden = true
                 }
                 
                 
                 // show warning for mature warning
-                if let mature = manga.mature where !mature.isEmpty && MangaManager.getToggleSettings(.MatureWarning) == true {
+                if let mature = manga.mature, !mature.isEmpty && MangaManager.getToggleSettings(.MatureWarning) == true {
                     
                     let alert = SCLAlertView()
                     alert.addButton("Go back", action: { () -> Void in
-                        wself.navigationController?.popViewControllerAnimated(true)
+                        wself.navigationController?.popViewController(animated: true)
                     })
                     alert.addButton("Continue", action: { () -> Void in
                         wself.segmentedPager.reloadData()
                     })
-                    alert.showCloseButton = false
+//                    alert.showCloseButton = false
                     alert.showWarning("Mature Manga", subTitle: mature)
                     return
                     
@@ -153,7 +153,7 @@ class MangaDetailsController: MXSegmentedPagerController, ChaptersDelegate, Deta
                 wself.segmentedPager.reloadData()
             } else {
                 // failed
-                HUD.flash(.Error, withDelay: 2.0)
+                HUD.flash(.error, delay: 2.0)
             }
         }
     }
@@ -182,37 +182,37 @@ class MangaDetailsController: MXSegmentedPagerController, ChaptersDelegate, Deta
     func safariClick() {
         
         
-        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
-        let webAction = UIAlertAction(title: "Open webpage", style: UIAlertActionStyle.Default) { (action) -> Void in
-            if let link = self.manga?.link, url = NSURL(string: link) {
-                let vc = SFSafariViewController(URL: url, entersReaderIfAvailable: false)
-                self.presentViewController(vc, animated: true, completion: nil)
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let webAction = UIAlertAction(title: "Open webpage", style: UIAlertActionStyle.default) { (action) -> Void in
+            if let link = self.manga?.link, let url = URL(string: link) {
+                let vc = SFSafariViewController(url: url, entersReaderIfAvailable: false)
+                self.present(vc, animated: true, completion: nil)
             }
         }
         
         actionSheet.addAction(cancelAction)
         actionSheet.addAction(webAction)
         
-        presentViewController(actionSheet, animated: true, completion: nil)
+        present(actionSheet, animated: true, completion: nil)
         
 
         
     }
     
     //MARK: Chapters Delegate Method
-    func chaptersControllerDidSelectChapter(chapter: Chapter, manga: MangaItem) {
+    func chaptersControllerDidSelectChapter(_ chapter: Chapter, manga: MangaItem) {
         
         let reader = MangaReaderController.createReader(manga, chapter: chapter, allChapters: self.manga!.chapters)
-        self.presentViewController(reader, animated: true, completion: nil)
+        self.present(reader, animated: true, completion: nil)
     }
     
     //MARK: Pager Data Source Methods
-    override func numberOfPagesInSegmentedPager(segmentedPager: MXSegmentedPager) -> Int {
+    override func numberOfPages(in segmentedPager: MXSegmentedPager) -> Int {
         return 2
     }
     
-    override func segmentedPager(segmentedPager: MXSegmentedPager, titleForSectionAtIndex index: Int) -> String {
+    override func segmentedPager(_ segmentedPager: MXSegmentedPager, titleForSectionAt index: Int) -> String {
         return ["Chapters", "Details"][index]
     }
     
@@ -221,7 +221,7 @@ class MangaDetailsController: MXSegmentedPagerController, ChaptersDelegate, Deta
 //    }
     
 //    override func 
-    override func segmentedPager(segmentedPager: MXSegmentedPager, viewControllerForPageAtIndex index: Int) -> UIViewController {
+    override func segmentedPager(_ segmentedPager: MXSegmentedPager, viewControllerForPageAt index: Int) -> UIViewController {
         return [(manga == nil ? UIViewController() : chaptersTable), detailsView][index]
     }
     

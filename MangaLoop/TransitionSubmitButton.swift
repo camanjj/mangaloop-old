@@ -5,9 +5,9 @@ let PINK = UIColor(red:0.992157, green: 0.215686, blue: 0.403922, alpha: 1)
 let DARK_PINK = UIColor(red:0.798012, green: 0.171076, blue: 0.321758, alpha: 1)
 
 @IBDesignable
-public class TKTransitionSubmitButton : UIButton, UIViewControllerTransitioningDelegate {
+open class TKTransitionSubmitButton : UIButton, UIViewControllerTransitioningDelegate {
     
-    public var didEndFinishAnimation : (()->())? = nil
+    open var didEndFinishAnimation : (()->())? = nil
 
     let springGoEase = CAMediaTimingFunction(controlPoints: 0.45, -0.36, 0.44, 0.92)
     let shrinkCurve = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
@@ -20,12 +20,12 @@ public class TKTransitionSubmitButton : UIButton, UIViewControllerTransitioningD
         return s
     }()
 
-    @IBInspectable public var highlightedBackgroundColor: UIColor? = DARK_PINK {
+    @IBInspectable open var highlightedBackgroundColor: UIColor? = DARK_PINK {
         didSet {
             self.setBackgroundColor()
         }
     }
-    @IBInspectable public var normalBackgroundColor: UIColor? = PINK {
+    @IBInspectable open var normalBackgroundColor: UIColor? = PINK {
         didSet {
             self.setBackgroundColor()
         }
@@ -38,7 +38,7 @@ public class TKTransitionSubmitButton : UIButton, UIViewControllerTransitioningD
         self.setup()
     }
 
-    override public var highlighted: Bool {
+    override open var isHighlighted: Bool {
         didSet {
             self.setBackgroundColor()
         }
@@ -56,7 +56,7 @@ public class TKTransitionSubmitButton : UIButton, UIViewControllerTransitioningD
     }
 
     func setBackgroundColor() {
-        if (highlighted) {
+        if (isHighlighted) {
             self.backgroundColor = highlightedBackgroundColor
         }
         else {
@@ -64,41 +64,41 @@ public class TKTransitionSubmitButton : UIButton, UIViewControllerTransitioningD
         }
     }
 
-    public func startLoadingAnimation() {
-        self.cachedTitle = titleForState(.Normal)
-        self.setTitle("", forState: .Normal)
+    open func startLoadingAnimation() {
+        self.cachedTitle = title(for: UIControlState())
+        self.setTitle("", for: UIControlState())
         self.shrink()
-        NSTimer.schedule(delay: shrinkDuration - 0.25) { timer in
+        Timer.schedule(delay: shrinkDuration - 0.25) { timer in
             self.spiner.animation()
         }
     }
 
-    public func startFinishAnimation(delay: NSTimeInterval, completion:(()->())?) {
-        NSTimer.schedule(delay: delay) { timer in
+    open func startFinishAnimation(_ delay: TimeInterval, completion:(()->())?) {
+        Timer.schedule(delay: delay) { timer in
             self.didEndFinishAnimation = completion
             self.expand()
             self.spiner.stopAnimation()
         }
     }
   
-  public func endAnimation(delay: NSTimeInterval, title: String) {
-    NSTimer.schedule(delay: delay) { timer in
+  open func endAnimation(_ delay: TimeInterval, title: String) {
+    Timer.schedule(delay: delay) { timer in
       self.cachedTitle = title
       self.spiner.stopAnimation()
       self.returnToOriginalState()
     }
   }
 
-    public func animate(duration: NSTimeInterval, completion:(()->())?) {
+    open func animate(_ duration: TimeInterval, completion:(()->())?) {
         startLoadingAnimation()
         startFinishAnimation(duration, completion: completion)
     }
 
-    public func animationDidStop(anim: CAAnimation!, finished flag: Bool) {
+    open func animationDidStop(_ anim: CAAnimation!, finished flag: Bool) {
         let a = anim as! CABasicAnimation
         if a.keyPath == "transform.scale" {
             didEndFinishAnimation?()
-            NSTimer.schedule(delay: 1) { timer in
+            Timer.schedule(delay: 1) { timer in
                 self.returnToOriginalState()
             }
         }
@@ -106,7 +106,7 @@ public class TKTransitionSubmitButton : UIButton, UIViewControllerTransitioningD
     
     func returnToOriginalState() {
         self.layer.removeAllAnimations()
-        self.setTitle(self.cachedTitle, forState: .Normal)
+        self.setTitle(self.cachedTitle, for: UIControlState())
     }
     
     func shrink() {
@@ -116,8 +116,8 @@ public class TKTransitionSubmitButton : UIButton, UIViewControllerTransitioningD
         shrinkAnim.duration = shrinkDuration
         shrinkAnim.timingFunction = shrinkCurve
         shrinkAnim.fillMode = kCAFillModeForwards
-        shrinkAnim.removedOnCompletion = false
-        layer.addAnimation(shrinkAnim, forKey: shrinkAnim.keyPath)
+        shrinkAnim.isRemovedOnCompletion = false
+        layer.add(shrinkAnim, forKey: shrinkAnim.keyPath)
     }
     
     func expand() {
@@ -128,8 +128,8 @@ public class TKTransitionSubmitButton : UIButton, UIViewControllerTransitioningD
         expandAnim.duration = 0.3
         //expandAnim.delegate = self
         expandAnim.fillMode = kCAFillModeForwards
-        expandAnim.removedOnCompletion = false
-        layer.addAnimation(expandAnim, forKey: expandAnim.keyPath)
+        expandAnim.isRemovedOnCompletion = false
+        layer.add(expandAnim, forKey: expandAnim.keyPath)
     }
     
 }

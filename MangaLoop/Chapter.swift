@@ -20,12 +20,12 @@ struct Chapter {
 
 
 extension Chapter: Unboxable {
-    init(unboxer: Unboxer) {
-        self.title = unboxer.unbox("title")
-        self.link = unboxer.unbox("link")
-        self.language = unboxer.unbox("language")
-        self.group = unboxer.unbox("group")
-        self.updateTime = unboxer.unbox("updateTime")
+    init(unboxer: Unboxer) throws {
+        self.title = try unboxer.unbox(key: "title")
+        self.link = try unboxer.unbox(key: "link")
+        self.language = try unboxer.unbox(key: "language")
+        self.group = try unboxer.unbox(key: "group")
+        self.updateTime = try unboxer.unbox(key: "updateTime")
     }
 }
 

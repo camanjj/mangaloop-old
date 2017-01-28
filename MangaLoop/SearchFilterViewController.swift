@@ -11,8 +11,8 @@ import Eureka
 
 protocol SearchFilterViewDelegate {
     
-    func didCancel(viewController: SearchFilterViewController)
-    func didApplyFilter(viewController: SearchFilterViewController, filter: SearchFilter?)
+    func didCancel(_ viewController: SearchFilterViewController)
+    func didApplyFilter(_ viewController: SearchFilterViewController, filter: SearchFilter?)
     
 }
 
@@ -39,8 +39,8 @@ class SearchFilterViewController: FormViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Stop, target: self, action: Selector("closeClick"))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Apply", style: .Plain, target: self, action: Selector("applyClick"))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: Selector("closeClick"))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Apply", style: .plain, target: self, action: Selector("applyClick"))
         title = "Filter"
         
         if filter == nil {
@@ -53,7 +53,7 @@ class SearchFilterViewController: FormViewController {
         }.onChange {
             let values = $0.value
             let genres = Array(values!).map({ self.genres[$0]! })
-            self.filter!.includedGenre = ";i" + genres.joinWithSeparator(";i")
+            self.filter!.includedGenre = ";i" + genres.joined(separator: ";i")
         }
         
         let exludeGenreCell = MultipleSelectorRow<String>() {
@@ -62,7 +62,7 @@ class SearchFilterViewController: FormViewController {
         }.onChange {
             let values = $0.value
             let genres = Array(values!).map({ self.genres[$0]! })
-            self.filter!.excludedGenre = ";e" + genres.joinWithSeparator(";e")
+            self.filter!.excludedGenre = ";e" + genres.joined(separator: ";e")
         }
         
         let inclusionCell = SegmentedRow<String>() {

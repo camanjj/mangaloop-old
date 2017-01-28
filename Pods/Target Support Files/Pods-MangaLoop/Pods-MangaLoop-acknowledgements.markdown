@@ -52,13 +52,13 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ## Crashlytics
 
-Fabric: Copyright 2015 Twitter, Inc. All Rights Reserved. Use of this software is subject to the terms and conditions of the Fabric Software and Services Agreement located at https://fabric.io/terms. Crashlytics Kit: Copyright 2015 Crashlytics, Inc. All Rights Reserved. Use of this software is subject to the terms and conditions of the Crashlytics Terms of Service located at http://try.crashlytics.com/terms/terms-of-service.pdf and the Crashlytics Privacy Policy located at http://try.crashlytics.com/terms/privacy-policy.pdf. OSS: http://get.fabric.io/terms/opensource.txt
+Fabric: Copyright 2016 Twitter, Inc. All Rights Reserved. Use of this software is subject to the terms and conditions of the Fabric Software and Services Agreement located at https://fabric.io/terms. Crashlytics Kit: Copyright 2016 Crashlytics, Inc. All Rights Reserved. Use of this software is subject to the terms and conditions of the Crashlytics Terms of Service located at http://try.crashlytics.com/terms/terms-of-service.pdf and the Crashlytics Privacy Policy located at http://try.crashlytics.com/terms/privacy-policy.pdf. OSS: http://get.fabric.io/terms/opensource.txt
 
 ## DZNEmptyDataSet
 
 The MIT License (MIT)
 
-Copyright (c) 2015 Ignacio Romero Zurbuchen iromero@dzen.cl
+Copyright (c) 2016 Ignacio Romero Zurbuchen iromero@dzen.cl
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the 'Software'), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
@@ -95,7 +95,7 @@ SOFTWARE.
 
 ## Fabric
 
-Fabric: Copyright 2015 Twitter, Inc. All Rights Reserved. Use of this software is subject to the terms and conditions of the Fabric Software and Services Agreement located at https://fabric.io/terms. OSS: http://get.fabric.io/terms/opensource.txt
+Fabric: Copyright 2016 Twitter, Inc. All Rights Reserved. Use of this software is subject to the terms and conditions of the Fabric Software and Services Agreement located at https://fabric.io/terms. OSS: http://get.fabric.io/terms/opensource.txt
 
 ## HMSegmentedControl
 
@@ -175,7 +175,7 @@ SOFTWARE.
 
 The MIT License (MIT)
 
-Copyright (c) 2015 Wei Wang
+Copyright (c) 2017 Wei Wang
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -199,7 +199,7 @@ SOFTWARE.
 
 ## MXPagerView
 
-Copyright (c) 2015 Maxime Epain <maime.epain@gmail.com>
+Copyright (c) 2016 Maxime Epain <maime.epain@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -245,7 +245,7 @@ THE SOFTWARE.
 
 ## MXSegmentedPager
 
-Copyright (c) 2015 Maxime Epain <maxime.epain@gmail.com>
+Copyright (c) 2016 Maxime Epain <maxime.epain@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

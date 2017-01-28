@@ -18,18 +18,18 @@ class SearchViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        tableView.registerClass(MangaCell.self, forCellReuseIdentifier: MangaCell.defaultReusableId)
+        tableView.register(MangaCell.self, forCellReuseIdentifier: MangaCell.defaultReusableId)
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 44
         
         
-        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: 60))
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 60))
         
         let filterButton = UIButton(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: 120, height: 45)))
-        filterButton.setTitle("Filter", forState: .Normal)
+        filterButton.setTitle("Filter", for: UIControlState())
         filterButton.layer.cornerRadius = 5
-        filterButton.backgroundColor = UIColor.redColor()
-        filterButton.addTarget(self, action: Selector("filterClick"), forControlEvents: .TouchUpInside)
+        filterButton.backgroundColor = UIColor.red
+        filterButton.addTarget(self, action: #selector(SearchViewController.filterClick), for: .touchUpInside)
         
         headerView.addSubview(filterButton)
         filterButton.center = headerView.center
@@ -49,10 +49,10 @@ class SearchViewController: UITableViewController {
         
 //        formSheet.interactivePanGestureDissmisalDirection = .All;
 //        formSheet.presentationController?.shouldDismissOnBackgroundViewTap = true
-        formSheet.contentViewControllerTransitionStyle = .Fade
-        formSheet.presentationController?.contentViewSize = CGSize(width: UIScreen.mainScreen().bounds.width - 20, height: 350)
+        formSheet.contentViewControllerTransitionStyle = .fade
+        formSheet.presentationController?.contentViewSize = CGSize(width: UIScreen.main.bounds.width - 20, height: 350)
 
-        self.presentViewController(formSheet, animated: true, completion: nil)
+        self.present(formSheet, animated: true, completion: nil)
 
     }
 
@@ -79,7 +79,7 @@ class SearchViewController: UITableViewController {
         
         MangaManager.sharedManager.searchMangas(filter!, callback: { [weak self] (manga) -> Void in
             
-            if let manga = manga, wself = self {
+            if let manga = manga, let wself = self {
                 
                 wself.setDataSource(manga)
                 
@@ -90,7 +90,7 @@ class SearchViewController: UITableViewController {
         
     }
     
-    func setDataSource(manga: [MangaPreviewItem]) {
+    func setDataSource(_ manga: [MangaPreviewItem]) {
         self.dataSource = ArrayDataSource<MangaCell, MangaPreviewItem>(items: manga, cellReuseIdentifier: MangaCell.defaultReusableId, configureClosure: { (cell, item) -> Void in
             
             cell.configure(item)
@@ -101,7 +101,7 @@ class SearchViewController: UITableViewController {
         tableView.reloadData()
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let manga = dataSource?.itemAtIndexPath(indexPath)
         
@@ -114,12 +114,12 @@ class SearchViewController: UITableViewController {
 
 extension SearchViewController: UISearchResultsUpdating, UISearchBarDelegate {
     
-    func updateSearchResultsForSearchController(searchController: UISearchController) {
+    func updateSearchResults(for searchController: UISearchController) {
         searchText = searchController.searchBar.text!
-        searchController.searchResultsController!.view.hidden = false
+        searchController.searchResultsController!.view.isHidden = false
     }
     
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         //this is when the searching should happen
         getResults()
     }
@@ -128,13 +128,13 @@ extension SearchViewController: UISearchResultsUpdating, UISearchBarDelegate {
 
 extension SearchViewController: SearchFilterViewDelegate {
     
-    func didCancel(viewController: SearchFilterViewController) {
-        viewController.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+    func didCancel(_ viewController: SearchFilterViewController) {
+        viewController.presentingViewController?.dismiss(animated: true, completion: nil)
     }
     
     
-    func didApplyFilter(viewController: SearchFilterViewController, filter: SearchFilter?) {
-        viewController.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+    func didApplyFilter(_ viewController: SearchFilterViewController, filter: SearchFilter?) {
+        viewController.presentingViewController?.dismiss(animated: true, completion: nil)
 
         self.filter = filter
         self.getResults()
