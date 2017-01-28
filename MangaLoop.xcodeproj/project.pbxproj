@@ -459,6 +459,7 @@
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = 9Z75PJJYDP;
 						LastSwiftMigration = 0810;
+						ProvisioningStyle = Manual;
 					};
 					AD8E019B1C509E14009241A1 = {
 						CreatedOnToolsVersion = 7.2;
@@ -875,6 +876,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Cameron Jackson (7Y3T849VQ8)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 9Z75PJJYDP;
 				INFOPLIST_FILE = MangaLoop/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -886,7 +888,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.culdesaq.MangaLoop.Beta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "52cb6540-3e99-4d7d-a7d9-dc22a7b672d6";
+				PROVISIONING_PROFILE_SPECIFIER = "com.culdesaq.MangaLoop.Beta Development";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/MangaLoop/MangaLoop-BridgingHeader.h";
 				SWIFT_VERSION = 3.0;
@@ -900,6 +903,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Cameron Jackson (7Y3T849VQ8)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = MangaLoop/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
