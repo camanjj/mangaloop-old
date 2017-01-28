@@ -228,6 +228,7 @@ class MangaPageController: UIViewController, UIScrollViewDelegate {
     
   }
   
+  /// Adds the gestures the the scrollView
   func addGestures() {
     
     let singleTap = UITapGestureRecognizer(target: self, action: #selector(singleTap(_:)))
@@ -251,6 +252,7 @@ class MangaPageController: UIViewController, UIScrollViewDelegate {
     
   }
   
+  /// toggles the navigationbar
   func toggleNavBar() {
     if let navigationController = navigationController, navigationController.isNavigationBarHidden {
       
@@ -270,6 +272,7 @@ class MangaPageController: UIViewController, UIScrollViewDelegate {
   }
   
   
+  /// increases the prioity of downlading the image
   func makePriority() {
     mangaImageView.imageTask?.downloadTask?.priority = 1.0
   }
@@ -290,11 +293,7 @@ class MangaPageController: UIViewController, UIScrollViewDelegate {
   
   //MARK: Zooming and Panning Methods
   func zoom(rectForScale scale: CGFloat, center: CGPoint) -> CGRect {
-    
-    //        guard let mangaImageView = mangaImageView else {
-    //            return CGRect.zero
-    //        }
-    
+
     var zoomRect = CGRect()
     
     zoomRect.size.height = mangaImageView.frame.height / scale;
@@ -318,9 +317,11 @@ class MangaPageController: UIViewController, UIScrollViewDelegate {
     // center the image if it is not longer than the page
     if mangaImageView.getSize().height <= UIScreen.main.bounds.height {
       
-      mangaImageView.snp.updateConstraints { (make) -> Void in
+      mangaImageView.snp.makeConstraints { (make) -> Void in
         make.center.equalTo(scrollView)
       }
+//      mangaImageView.center = scrollView.center
+//      centerImage()
     }
     
     
