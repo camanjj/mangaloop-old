@@ -32,7 +32,7 @@ class UpdatesViewController: UITableViewController, MangaPageList, ChaptersDeleg
         
         followManga = FollowManga.getAllFollows()
         let realm = try! Realm()
-        followToken = realm.objects(FollowManga).addNotificationBlock { (changes: RealmCollectionChange) in
+      followToken = realm.objects(FollowManga.self).observe { (changes: RealmCollectionChange) in
             self.followManga = FollowManga.getAllFollows()
             self.tableView.reloadData()
         }
@@ -66,7 +66,7 @@ class UpdatesViewController: UITableViewController, MangaPageList, ChaptersDeleg
         
     }
     
-    func longPress(_ longPressGestureRecognizer: UILongPressGestureRecognizer) {
+    @objc func longPress(_ longPressGestureRecognizer: UILongPressGestureRecognizer) {
         
         if longPressGestureRecognizer.state == UIGestureRecognizerState.began {
             
@@ -181,7 +181,7 @@ class UpdatesViewController: UITableViewController, MangaPageList, ChaptersDeleg
     }
     
     
-    func accessoryClick(_ sender: UIButton!) {
+    @objc func accessoryClick(_ sender: UIButton!) {
         
         let rect = tableView.convert(sender.center, from: sender.superview)
         let indexPath = tableView.indexPathForRow(at: rect)!
@@ -194,7 +194,7 @@ class UpdatesViewController: UITableViewController, MangaPageList, ChaptersDeleg
     
     
     deinit {
-        followToken.stop()
+      followToken.invalidate()
     }
     
 }

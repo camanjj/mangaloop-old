@@ -39,7 +39,7 @@ class SearchViewController: UITableViewController {
         
     }
     
-    func filterClick() {
+    @objc func filterClick() {
         
         let filterController = SearchFilterViewController(filter: filter)
         filterController.delegate = self

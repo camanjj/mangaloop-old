@@ -24,14 +24,14 @@ class ItemCell: UITableViewCell {
         
         
         
-        headerLabel.snp_makeConstraints { (make) -> Void in
+        headerLabel.snp.makeConstraints { (make) -> Void in
             make.left.equalTo(10)
             make.right.equalTo(-10)
             make.top.equalTo(5)
         }
         
-        subHeaderLabel.snp_makeConstraints { (make) -> Void in
-            make.top.equalTo(headerLabel.snp_bottom).offset(5)
+        subHeaderLabel.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(headerLabel.snp.bottom).offset(5)
             make.bottom.equalTo(-10)
             make.left.right.equalTo(10)
         }

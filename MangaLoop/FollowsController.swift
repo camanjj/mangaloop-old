@@ -118,7 +118,7 @@ class FollowsController: UITableViewController, MangaPageList {
     fetchFollows()
   }
   
-  func signOutClick() {
+  @objc func signOutClick() {
     
     let alert = SCLAlertView()
     

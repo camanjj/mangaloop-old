@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0B9A7F0F999363F041C8B722 /* Pods_MangaLoop.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C1B3D60806CB7025A00838C /* Pods_MangaLoop.framework */; };
-		1CF1F3733D9B231514CF7DE7 /* Pods_MangaLoopUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFB426AAB487B3082162CC8F /* Pods_MangaLoopUITests.framework */; };
 		7E01C6611C8CC75200EB9B73 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E01C6601C8CC75200EB9B73 /* SearchViewController.swift */; };
 		7E3223BB1C82475300A0B46A /* SearchFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3223BA1C82475300A0B46A /* SearchFilterViewController.swift */; };
 		7E3223BD1C8257BE00A0B46A /* DiscoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3223BC1C8257BE00A0B46A /* DiscoverViewController.swift */; };
@@ -25,6 +24,10 @@
 		7E8F6F671C7194E0009146FF /* updates_icon.svg in Resources */ = {isa = PBXBuildFile; fileRef = 7E8F6F631C7194E0009146FF /* updates_icon.svg */; };
 		7EA9DE321C8547B800A6A3EB /* ArrayDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA9DE311C8547B800A6A3EB /* ArrayDataSource.swift */; };
 		7EDF566E1C643DA100EA3748 /* FollowsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDF566D1C643DA100EA3748 /* FollowsController.swift */; };
+		AD14633E1FFC5E73004914ED /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD14633C1FFC5E70004914ED /* RealmSwift.framework */; };
+		AD14633F1FFC5E73004914ED /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AD14633C1FFC5E70004914ED /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		AD1463401FFC5E73004914ED /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD14633D1FFC5E72004914ED /* Realm.framework */; };
+		AD1463411FFC5E73004914ED /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AD14633D1FFC5E72004914ED /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AD1A1A991C6FFD5E0029222A /* NSTimerEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1A1A941C6FFD5E0029222A /* NSTimerEx.swift */; };
 		AD1A1A9A1C6FFD5E0029222A /* TransitionSubmitButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1A1A951C6FFD5E0029222A /* TransitionSubmitButton.swift */; };
 		AD1A1A9B1C6FFD5E0029222A /* CGRectEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1A1A961C6FFD5E0029222A /* CGRectEx.swift */; };
@@ -52,8 +55,6 @@
 		AD8E01911C509E14009241A1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD8E018F1C509E14009241A1 /* Main.storyboard */; };
 		AD8E01931C509E14009241A1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD8E01921C509E14009241A1 /* Assets.xcassets */; };
 		AD8E01961C509E14009241A1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD8E01941C509E14009241A1 /* LaunchScreen.storyboard */; };
-		AD8E01A11C509E14009241A1 /* MangaLoopTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8E01A01C509E14009241A1 /* MangaLoopTests.swift */; };
-		AD8E01AC1C509E14009241A1 /* MangaLoopUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8E01AB1C509E14009241A1 /* MangaLoopUITests.swift */; };
 		AD9243FA1C554A0F00C19BFC /* MLRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9243F91C554A0F00C19BFC /* MLRouter.swift */; };
 		AD9243FC1C554A5500C19BFC /* MangaManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9243FB1C554A5500C19BFC /* MangaManager.swift */; };
 		AD9243FF1C5576BE00C19BFC /* ReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9243FE1C5576BE00C19BFC /* ReusableView.swift */; };
@@ -66,25 +67,22 @@
 		ADF95C731C75886B005A791D /* ReaderSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADF95C721C75886B005A791D /* ReaderSettingsViewController.swift */; };
 		ADFF06121C571ADF00BC6ABE /* MangaDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADFF06111C571ADF00BC6ABE /* MangaDetailsController.swift */; };
 		ADFF06141C59979A00BC6ABE /* MangaPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADFF06131C59979A00BC6ABE /* MangaPageController.swift */; };
-		D18E25103F9E1FB6CE00F236 /* Pods_MangaLoopTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 725B782524C3A35F74E4C55C /* Pods_MangaLoopTests.framework */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		AD8E019D1C509E14009241A1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AD8E01801C509E13009241A1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = AD8E01871C509E14009241A1;
-			remoteInfo = MangaLoop;
+/* Begin PBXCopyFilesBuildPhase section */
+		AD1463421FFC5E73004914ED /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				AD1463411FFC5E73004914ED /* Realm.framework in Embed Frameworks */,
+				AD14633F1FFC5E73004914ED /* RealmSwift.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
 		};
-		AD8E01A81C509E14009241A1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AD8E01801C509E13009241A1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = AD8E01871C509E14009241A1;
-			remoteInfo = MangaLoop;
-		};
-/* End PBXContainerItemProxy section */
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		05A4758F2C02E35B8C7997DD /* Pods-MangaLoop.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MangaLoop.release.xcconfig"; path = "Pods/Target Support Files/Pods-MangaLoop/Pods-MangaLoop.release.xcconfig"; sourceTree = "<group>"; };
@@ -111,6 +109,8 @@
 		7E8F6F631C7194E0009146FF /* updates_icon.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = updates_icon.svg; sourceTree = "<group>"; };
 		7EA9DE311C8547B800A6A3EB /* ArrayDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayDataSource.swift; sourceTree = "<group>"; };
 		7EDF566D1C643DA100EA3748 /* FollowsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowsController.swift; sourceTree = "<group>"; };
+		AD14633C1FFC5E70004914ED /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = "<group>"; };
+		AD14633D1FFC5E72004914ED /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
 		AD1A1A941C6FFD5E0029222A /* NSTimerEx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSTimerEx.swift; sourceTree = "<group>"; };
 		AD1A1A951C6FFD5E0029222A /* TransitionSubmitButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionSubmitButton.swift; sourceTree = "<group>"; };
 		AD1A1A961C6FFD5E0029222A /* CGRectEx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGRectEx.swift; sourceTree = "<group>"; };
@@ -141,10 +141,8 @@
 		AD8E01921C509E14009241A1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AD8E01951C509E14009241A1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AD8E01971C509E14009241A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AD8E019C1C509E14009241A1 /* MangaLoopTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MangaLoopTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD8E01A01C509E14009241A1 /* MangaLoopTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaLoopTests.swift; sourceTree = "<group>"; };
 		AD8E01A21C509E14009241A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AD8E01A71C509E14009241A1 /* MangaLoopUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MangaLoopUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD8E01AB1C509E14009241A1 /* MangaLoopUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaLoopUITests.swift; sourceTree = "<group>"; };
 		AD8E01AD1C509E14009241A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AD9243F91C554A0F00C19BFC /* MLRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MLRouter.swift; sourceTree = "<group>"; };
@@ -170,23 +168,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD1463401FFC5E73004914ED /* Realm.framework in Frameworks */,
+				AD14633E1FFC5E73004914ED /* RealmSwift.framework in Frameworks */,
 				0B9A7F0F999363F041C8B722 /* Pods_MangaLoop.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		AD8E01991C509E14009241A1 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D18E25103F9E1FB6CE00F236 /* Pods_MangaLoopTests.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		AD8E01A41C509E14009241A1 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				1CF1F3733D9B231514CF7DE7 /* Pods_MangaLoopUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -247,6 +231,8 @@
 		AD8E017F1C509E13009241A1 = {
 			isa = PBXGroup;
 			children = (
+				AD14633D1FFC5E72004914ED /* Realm.framework */,
+				AD14633C1FFC5E70004914ED /* RealmSwift.framework */,
 				AD8E018A1C509E14009241A1 /* MangaLoop */,
 				AD8E019F1C509E14009241A1 /* MangaLoopTests */,
 				AD8E01AA1C509E14009241A1 /* MangaLoopUITests */,
@@ -260,8 +246,6 @@
 			isa = PBXGroup;
 			children = (
 				AD8E01881C509E14009241A1 /* MangaLoop.app */,
-				AD8E019C1C509E14009241A1 /* MangaLoopTests.xctest */,
-				AD8E01A71C509E14009241A1 /* MangaLoopUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -393,6 +377,8 @@
 				7E4B36C21C9263B000D842B3 /* ShellScript */,
 				769A124342E143E11D82E97E /* [CP] Embed Pods Frameworks */,
 				11547244AB623050C74EB65B /* [CP] Copy Pods Resources */,
+				AD1463421FFC5E73004914ED /* Embed Frameworks */,
+				AD1463431FFC5E88004914ED /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -403,48 +389,6 @@
 			productReference = AD8E01881C509E14009241A1 /* MangaLoop.app */;
 			productType = "com.apple.product-type.application";
 		};
-		AD8E019B1C509E14009241A1 /* MangaLoopTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = AD8E01B31C509E14009241A1 /* Build configuration list for PBXNativeTarget "MangaLoopTests" */;
-			buildPhases = (
-				95507D764DD2D51F5AD02841 /* [CP] Check Pods Manifest.lock */,
-				AD8E01981C509E14009241A1 /* Sources */,
-				AD8E01991C509E14009241A1 /* Frameworks */,
-				AD8E019A1C509E14009241A1 /* Resources */,
-				FA525FF29680050EBC625B12 /* [CP] Embed Pods Frameworks */,
-				678FA3BB9695EF6C760E32F8 /* [CP] Copy Pods Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				AD8E019E1C509E14009241A1 /* PBXTargetDependency */,
-			);
-			name = MangaLoopTests;
-			productName = MangaLoopTests;
-			productReference = AD8E019C1C509E14009241A1 /* MangaLoopTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		AD8E01A61C509E14009241A1 /* MangaLoopUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = AD8E01B61C509E14009241A1 /* Build configuration list for PBXNativeTarget "MangaLoopUITests" */;
-			buildPhases = (
-				B554D341B6197A85786FCACF /* [CP] Check Pods Manifest.lock */,
-				AD8E01A31C509E14009241A1 /* Sources */,
-				AD8E01A41C509E14009241A1 /* Frameworks */,
-				AD8E01A51C509E14009241A1 /* Resources */,
-				CABE674357D7C1FAFFA8429D /* [CP] Copy Pods Resources */,
-				FF36396760A23EEF868A3A22 /* [CP] Embed Pods Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				AD8E01A91C509E14009241A1 /* PBXTargetDependency */,
-			);
-			name = MangaLoopUITests;
-			productName = MangaLoopUITests;
-			productReference = AD8E01A71C509E14009241A1 /* MangaLoopUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -452,24 +396,14 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 0720;
+				LastUpgradeCheck = 0920;
 				ORGANIZATIONNAME = Culdesaq;
 				TargetAttributes = {
 					AD8E01871C509E14009241A1 = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = 9Z75PJJYDP;
-						LastSwiftMigration = 0810;
-						ProvisioningStyle = Manual;
-					};
-					AD8E019B1C509E14009241A1 = {
-						CreatedOnToolsVersion = 7.2;
-						LastSwiftMigration = 0810;
-						TestTargetID = AD8E01871C509E14009241A1;
-					};
-					AD8E01A61C509E14009241A1 = {
-						CreatedOnToolsVersion = 7.2;
-						LastSwiftMigration = 0810;
-						TestTargetID = AD8E01871C509E14009241A1;
+						LastSwiftMigration = 0920;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -487,8 +421,6 @@
 			projectRoot = "";
 			targets = (
 				AD8E01871C509E14009241A1 /* MangaLoop */,
-				AD8E019B1C509E14009241A1 /* MangaLoopTests */,
-				AD8E01A61C509E14009241A1 /* MangaLoopUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -518,20 +450,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		AD8E019A1C509E14009241A1 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		AD8E01A51C509E14009241A1 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -550,30 +468,54 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MangaLoop/Pods-MangaLoop-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		678FA3BB9695EF6C760E32F8 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MangaLoopTests/Pods-MangaLoopTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		769A124342E143E11D82E97E /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-MangaLoop/Pods-MangaLoop-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/CircleProgressView/CircleProgressView.framework",
+				"${BUILT_PRODUCTS_DIR}/DZNEmptyDataSet/DZNEmptyDataSet.framework",
+				"${BUILT_PRODUCTS_DIR}/Eureka/Eureka.framework",
+				"${BUILT_PRODUCTS_DIR}/Fuzi/Fuzi.framework",
+				"${BUILT_PRODUCTS_DIR}/HMSegmentedControl/HMSegmentedControl.framework",
+				"${BUILT_PRODUCTS_DIR}/JAMSVGImage/JAMSVGImage.framework",
+				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
+				"${BUILT_PRODUCTS_DIR}/MXPagerView/MXPagerView.framework",
+				"${BUILT_PRODUCTS_DIR}/MXParallaxHeader/MXParallaxHeader.framework",
+				"${BUILT_PRODUCTS_DIR}/MXSegmentedPager/MXSegmentedPager.framework",
+				"${BUILT_PRODUCTS_DIR}/MZAppearance/MZAppearance.framework",
+				"${BUILT_PRODUCTS_DIR}/MZFormSheetPresentationController/MZFormSheetPresentationController.framework",
+				"${BUILT_PRODUCTS_DIR}/PKHUD/PKHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/Pantry/Pantry.framework",
+				"${BUILT_PRODUCTS_DIR}/SCLAlertView/SCLAlertView.framework",
+				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
+				"${BUILT_PRODUCTS_DIR}/TLTagsControl/TLTagsControl.framework",
+				"${BUILT_PRODUCTS_DIR}/Unbox/Unbox.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CircleProgressView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DZNEmptyDataSet.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Eureka.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Fuzi.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HMSegmentedControl.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JAMSVGImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MXPagerView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MXParallaxHeader.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MXSegmentedPager.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MZAppearance.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MZFormSheetPresentationController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PKHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Pantry.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SCLAlertView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TLTagsControl.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Unbox.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -599,89 +541,30 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MangaLoop-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		95507D764DD2D51F5AD02841 /* [CP] Check Pods Manifest.lock */ = {
+		AD1463431FFC5E88004914ED /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		B554D341B6197A85786FCACF /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		CABE674357D7C1FAFFA8429D /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MangaLoopUITests/Pods-MangaLoopUITests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		FA525FF29680050EBC625B12 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MangaLoopTests/Pods-MangaLoopTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		FF36396760A23EEF868A3A22 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MangaLoopUITests/Pods-MangaLoopUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
+			shellScript = "bash \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework/strip-frameworks.sh\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -731,36 +614,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		AD8E01981C509E14009241A1 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				AD8E01A11C509E14009241A1 /* MangaLoopTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		AD8E01A31C509E14009241A1 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				AD8E01AC1C509E14009241A1 /* MangaLoopUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		AD8E019E1C509E14009241A1 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = AD8E01871C509E14009241A1 /* MangaLoop */;
-			targetProxy = AD8E019D1C509E14009241A1 /* PBXContainerItemProxy */;
-		};
-		AD8E01A91C509E14009241A1 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = AD8E01871C509E14009241A1 /* MangaLoop */;
-			targetProxy = AD8E01A81C509E14009241A1 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		AD8E018F1C509E14009241A1 /* Main.storyboard */ = {
@@ -790,13 +644,21 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -837,13 +699,21 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -865,6 +735,7 @@
 				OTHER_LDFLAGS = "";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/cameronjackson/iOS/MangaLoop/MangaLoop/MangaLoop-BridgingHeader.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -876,23 +747,26 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Cameron Jackson (7Y3T849VQ8)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 9Z75PJJYDP;
+				DEVELOPMENT_TEAM = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = MangaLoop/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-framework",
 					"\"Alamofire\"",
-					"-framework",
-					"\"Kanna\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.culdesaq.MangaLoop.Beta;
+				PRODUCT_BUNDLE_IDENTIFIER = com.culdesaq.mangaloop;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "52cb6540-3e99-4d7d-a7d9-dc22a7b672d6";
-				PROVISIONING_PROFILE_SPECIFIER = "com.culdesaq.MangaLoop.Beta Development";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/MangaLoop/MangaLoop-BridgingHeader.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -904,76 +778,24 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: Cameron Jackson (7Y3T849VQ8)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = MangaLoop/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-framework",
 					"\"Alamofire\"",
-					"-framework",
-					"\"Kanna\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.culdesaq.MangaLoop.Beta;
+				PRODUCT_BUNDLE_IDENTIFIER = com.culdesaq.mangaloop;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/MangaLoop/MangaLoop-BridgingHeader.h";
-				SWIFT_VERSION = 3.0;
-			};
-			name = Release;
-		};
-		AD8E01B41C509E14009241A1 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2B6771DFDD05B3A485B0D326 /* Pods-MangaLoopTests.debug.xcconfig */;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				INFOPLIST_FILE = MangaLoopTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.culdesaq.MangaLoopTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MangaLoop.app/MangaLoop";
-			};
-			name = Debug;
-		};
-		AD8E01B51C509E14009241A1 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 14A8B93B926769585CA1AB6A /* Pods-MangaLoopTests.release.xcconfig */;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				INFOPLIST_FILE = MangaLoopTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.culdesaq.MangaLoopTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MangaLoop.app/MangaLoop";
-			};
-			name = Release;
-		};
-		AD8E01B71C509E14009241A1 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2D5CB03AAE2FA9C8C0C9B1EE /* Pods-MangaLoopUITests.debug.xcconfig */;
-			buildSettings = {
-				INFOPLIST_FILE = MangaLoopUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.culdesaq.MangaLoopUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-				TEST_TARGET_NAME = MangaLoop;
-				USES_XCTRUNNER = YES;
-			};
-			name = Debug;
-		};
-		AD8E01B81C509E14009241A1 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 06A0469CD28D2FA8B480006D /* Pods-MangaLoopUITests.release.xcconfig */;
-			buildSettings = {
-				INFOPLIST_FILE = MangaLoopUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.culdesaq.MangaLoopUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-				TEST_TARGET_NAME = MangaLoop;
-				USES_XCTRUNNER = YES;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -994,24 +816,6 @@
 			buildConfigurations = (
 				AD8E01B11C509E14009241A1 /* Debug */,
 				AD8E01B21C509E14009241A1 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		AD8E01B31C509E14009241A1 /* Build configuration list for PBXNativeTarget "MangaLoopTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				AD8E01B41C509E14009241A1 /* Debug */,
-				AD8E01B51C509E14009241A1 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		AD8E01B61C509E14009241A1 /* Build configuration list for PBXNativeTarget "MangaLoopUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				AD8E01B71C509E14009241A1 /* Debug */,
-				AD8E01B81C509E14009241A1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

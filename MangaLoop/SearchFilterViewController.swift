@@ -39,8 +39,8 @@ class SearchFilterViewController: FormViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: Selector("closeClick"))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Apply", style: .plain, target: self, action: Selector("applyClick"))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(SearchFilterViewController.closeClick))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Apply", style: .plain, target: self, action: #selector(SearchFilterViewController.applyClick))
         title = "Filter"
         
         if filter == nil {
@@ -134,11 +134,11 @@ class SearchFilterViewController: FormViewController {
 
     }
     
-    func closeClick() {
+    @objc func closeClick() {
         delegate?.didCancel(self)
     }
     
-    func applyClick() {
+    @objc func applyClick() {
         delegate?.didApplyFilter(self, filter: filter)
     }
 

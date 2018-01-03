@@ -9,7 +9,7 @@
 import Foundation
 import Alamofire
 import Unbox
-import Kanna
+import Fuzi
 import Pantry
 import RealmSwift
 
@@ -144,8 +144,7 @@ class MangaManager {
                             .responseData(completionHandler: { (response) -> Void in
                                 print(response.response)
                                 if let data = response.result.value,
-                                    let html = NSString(data: data, encoding: String.Encoding.ascii.rawValue),
-                                    let doc = Kanna.HTML(html: html as String, encoding: String.Encoding.utf8) {
+                                  let doc = try? HTMLDocument(data: data) {
                                         
                                         // get the secret key from the htnl
                                         if let statusNode = doc.css("#statusForm").first,
@@ -184,8 +183,7 @@ class MangaManager {
       .responseData(completionHandler: { (response) -> Void in
         print(response.response)
         if let data = response.result.value,
-          let html = NSString(data: data, encoding: String.Encoding.ascii.rawValue),
-          let doc = Kanna.HTML(html: html as String, encoding: String.Encoding.utf8) {
+          let doc = try? HTMLDocument(data: data) {
           
           // get the secret key from the htnl
           if let statusNode = doc.css("#statusForm").first,
@@ -231,7 +229,7 @@ class MangaManager {
       
         // remnove all of the follow manga from the db
         let realm = try! Realm()
-        let allFollows = realm.objects(FollowManga)
+      let allFollows = realm.objects(FollowManga.self)
       
         try! realm.write {
             realm.delete(allFollows)
@@ -340,7 +338,7 @@ class MangaManager {
                     let ids = manga.map({$0.id})
                     //find manga that are not followed anymore
                     let predicate = NSPredicate(format: "NOT(id IN %@)", ids)
-                    let unFollowedManga = realm.objects(FollowManga).filter(predicate)
+                    let unFollowedManga = realm.objects(FollowManga.self).filter(predicate)
                     
                     //save and delete unfollowed manga
                     try! realm.write {

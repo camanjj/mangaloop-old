@@ -11,13 +11,13 @@ import RealmSwift
 
 class SearchFilter: Object {
 
-    dynamic var includedGenre = ""
-    dynamic var excludedGenre = ""
-    dynamic var genreIsAnd = true
-    dynamic var completion = ""
-    dynamic var types = ""
-    dynamic var showMature = true
-    dynamic var term = ""
+    @objc dynamic var includedGenre = ""
+    @objc dynamic var excludedGenre = ""
+    @objc dynamic var genreIsAnd = true
+    @objc dynamic var completion = ""
+    @objc dynamic var types = ""
+    @objc dynamic var showMature = true
+    @objc dynamic var term = ""
     
     func getParamaters() -> [String:AnyObject] {
         

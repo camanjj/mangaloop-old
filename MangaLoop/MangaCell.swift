@@ -22,7 +22,7 @@ class MangaCell: UITableViewCell {
         
         titleLabel.text = "Bleach"
         
-        titleLabel.snp_makeConstraints { (make) -> Void in
+        titleLabel.snp.makeConstraints { (make) -> Void in
             make.edges.equalTo(contentView).inset(UIEdgeInsetsMake(12, 10, 12, 10))
         }
         

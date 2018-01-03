@@ -67,7 +67,7 @@ class LoginWebViewController: UIViewController {
   }
   
   
-  func cancel() {
+  @objc func cancel() {
     completeBlock(.cancel)
   }
   

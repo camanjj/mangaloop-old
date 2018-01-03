@@ -11,9 +11,9 @@ import RealmSwift
 import Unbox
 
 class FollowManga : Object, Unboxable {
-    dynamic var title = ""
-    dynamic var id = ""
-    dynamic var link = ""
+    @objc dynamic var title = ""
+    @objc dynamic var id = ""
+    @objc dynamic var link = ""
     
     override static func primaryKey() -> String? {
         return "id"
@@ -54,7 +54,7 @@ class FollowManga : Object, Unboxable {
         
         let realm = try! Realm()
         
-        let deleteFollow = realm.objects(FollowManga).filter("id = %@", manga.mangaId)
+      let deleteFollow = realm.objects(FollowManga.self).filter("id = %@", manga.mangaId)
         
         try! realm.write {
             realm.delete(deleteFollow)
@@ -71,7 +71,7 @@ class FollowManga : Object, Unboxable {
         
         let realm = try! Realm()
         
-        let results = realm.objects(FollowManga)
+      let results = realm.objects(FollowManga.self)
         var manga = [FollowManga]()
         for m in results {
             manga.append(m)
@@ -85,7 +85,7 @@ class FollowManga : Object, Unboxable {
     
         let realm = try! Realm()
         let searchPredicate = NSPredicate(format: "SELF.title CONTAINS[c] %@", text)
-        let results = realm.objects(FollowManga).filter(searchPredicate)
+      let results = realm.objects(FollowManga.self).filter(searchPredicate)
         return results
         
     }

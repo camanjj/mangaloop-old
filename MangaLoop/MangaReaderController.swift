@@ -299,12 +299,12 @@ class MangaReaderController: UIViewController {
     
   }
   
-  func closeClick() {
+  @objc func closeClick() {
     stopAllPageDownloads()
     presentingViewController!.dismiss(animated: true, completion: nil)
   }
   
-  func settingsClick() {
+  @objc func settingsClick() {
     
     let settingsController = ReaderSettingsViewController()
     settingsController.delegate = self
@@ -324,7 +324,7 @@ class MangaReaderController: UIViewController {
     
   }
   
-  func chaptersClick() {
+  @objc func chaptersClick() {
     
     if let allChapters = allChapters {
       
@@ -361,7 +361,7 @@ class MangaReaderController: UIViewController {
     
   }
   
-  func infoClick() {
+  @objc func infoClick() {
     SCLAlertView().showInfo(manga.title, subTitle: selectedChapter.title)
   }
   

@@ -62,8 +62,8 @@ class MangaDetailsController: MXSegmentedPagerController, ChaptersDelegate, Deta
         // Segmented Control customization
         self.segmentedPager.segmentedControl.selectionIndicatorLocation = .down;
         self.segmentedPager.segmentedControl.backgroundColor = UIColor.white
-        self.segmentedPager.segmentedControl.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.black];
-        self.segmentedPager.segmentedControl.selectedTitleTextAttributes = [NSForegroundColorAttributeName : UIColor.orange]
+        self.segmentedPager.segmentedControl.titleTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor.black];
+        self.segmentedPager.segmentedControl.selectedTitleTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor.orange]
         self.segmentedPager.segmentedControl.selectionStyle = .fullWidthStripe
         self.segmentedPager.segmentedControl.selectionIndicatorColor = UIColor.orange
         
@@ -179,7 +179,7 @@ class MangaDetailsController: MXSegmentedPagerController, ChaptersDelegate, Deta
         
     }
     
-    func safariClick() {
+    @objc func safariClick() {
         
         
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)

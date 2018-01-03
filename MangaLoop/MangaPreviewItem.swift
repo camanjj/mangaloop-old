@@ -25,7 +25,7 @@ struct MangaPreviewItem: MangaItem {
         if UserDefaults.standard.bool(forKey: Constants.Defaults.IsSignedIn) {
             
             let realm = try! Realm()
-            if let _ = realm.objects(FollowManga).filter("id = %@", mangaId).first {
+            if let _ = realm.objects(FollowManga.self).filter("id = %@", mangaId).first {
                 return true
             } else {
                 return false

@@ -87,7 +87,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         navAppearence.barTintColor = UIColor.red
         navAppearence.tintColor = UIColor.white
         navAppearence.isTranslucent = false
-        navAppearence.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
+        navAppearence.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
         
         
 //        let navItemAppearence = UINavigationItem.ap

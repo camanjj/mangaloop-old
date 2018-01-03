@@ -57,7 +57,7 @@ class MangaPageImageView: UIImageView {
     }
   }
   
-  func downloadMangaPage() {
+  @objc func downloadMangaPage() {
     
     // only procced if we have a url
     guard let link = link else { return }
@@ -367,7 +367,7 @@ class MangaPageController: UIViewController, UIScrollViewDelegate {
     centerImage()
   }
   
-  func singleTap(_ gestureRecongizer: UIGestureRecognizer) {
+  @objc func singleTap(_ gestureRecongizer: UIGestureRecognizer) {
     
     if let reloadButton = mangaImageView.reloadButton, reloadButton.frame.contains(gestureRecongizer.location(in: self.mangaImageView)) {
       mangaImageView.downloadMangaPage()
@@ -378,7 +378,7 @@ class MangaPageController: UIViewController, UIScrollViewDelegate {
     toggleNavBar()
   }
   
-  func doubleTap(_ gestureRecongizer: UIGestureRecognizer) {
+  @objc func doubleTap(_ gestureRecongizer: UIGestureRecognizer) {
     
     let pointInView = gestureRecongizer.location(in: mangaImageView)
     
@@ -391,7 +391,7 @@ class MangaPageController: UIViewController, UIScrollViewDelegate {
     }
   }
   
-  func twoFingerTap(_ gestureRecongizer: UIGestureRecognizer) {
+  @objc func twoFingerTap(_ gestureRecongizer: UIGestureRecognizer) {
     
   }
   
