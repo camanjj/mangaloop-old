@@ -1,6 +1,6 @@
 // MXSegmentedPager.m
 //
-// Copyright (c) 2016 Maxime Epain
+// Copyright (c) 2017 Maxime Epain
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -117,12 +117,14 @@
     
     frame.origin.x = self.segmentedControlEdgeInsets.left;
     
-    if (self.segmentedControlPosition == MXSegmentedControlPositionTop) {
-        frame.origin.y = self.segmentedControlEdgeInsets.top;
-    } else {
+    if (self.segmentedControlPosition == MXSegmentedControlPositionBottom) {
         frame.origin.y  = frame.size.height;
         frame.origin.y -= _controlHeight;
         frame.origin.y -= self.segmentedControlEdgeInsets.bottom;
+    } else if(self.segmentedControlPosition == MXSegmentedControlPositionTopOver) {
+        frame.origin.y = -_controlHeight;
+    } else {
+        frame.origin.y = self.segmentedControlEdgeInsets.top;
     }
 
     frame.size.width -= self.segmentedControlEdgeInsets.left;
@@ -143,9 +145,12 @@
         frame.origin.y += self.segmentedControlEdgeInsets.bottom;
     }
     
-    frame.size.height -= _controlHeight;
-    frame.size.height -= self.segmentedControlEdgeInsets.top;
-    frame.size.height -= self.segmentedControlEdgeInsets.bottom;
+    if (self.segmentedControlPosition != MXSegmentedControlPositionTopOver) {
+        frame.size.height -= _controlHeight;
+        frame.size.height -= self.segmentedControlEdgeInsets.top;
+        frame.size.height -= self.segmentedControlEdgeInsets.bottom;
+    }
+    
     frame.size.height -= self.contentView.parallaxHeader.minimumHeight;
     
     self.pager.frame = frame;
@@ -203,18 +208,22 @@
 #pragma mark <MXScrollViewDelegate>
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if ([self.delegate respondsToSelector:@selector(segmentedPager:didScrollWithParallaxHeader:)]) {
+    if (scrollView == self.contentView && [self.delegate respondsToSelector:@selector(segmentedPager:didScrollWithParallaxHeader:)]) {
         [self.delegate segmentedPager:self didScrollWithParallaxHeader:scrollView.parallaxHeader];
     }
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    if ([self.delegate respondsToSelector:@selector(segmentedPager:didEndDraggingWithParallaxHeader:)]) {
+    if (scrollView == self.contentView && [self.delegate respondsToSelector:@selector(segmentedPager:didEndDraggingWithParallaxHeader:)]) {
         [self.delegate segmentedPager:self didEndDraggingWithParallaxHeader:scrollView.parallaxHeader];
     }
 }
 
 - (BOOL)scrollView:(MXScrollView *)scrollView shouldScrollWithSubView:(UIView *)subView {
+    if (subView == self.pager) {
+        return NO;
+    }
+    
     UIView<MXPageProtocol> *page = (id) self.pager.selectedPage;
     
     if ([page respondsToSelector:@selector(segmentedPager:shouldScrollWithView:)]) {
@@ -238,13 +247,25 @@
 
 #pragma mark <MXPagerViewDelegate>
 
-- (void)pagerView:(MXPagerView *)pagerView willMoveToPageAtIndex:(NSInteger)index {
+- (void)pagerView:(MXPagerView *)pagerView willMoveToPage:(UIView *)page atIndex:(NSInteger)index {
     [self.segmentedControl setSelectedSegmentIndex:index animated:YES];
 }
 
-- (void)pagerView:(MXPagerView *)pagerView didMoveToPageAtIndex:(NSInteger)index {
+- (void)pagerView:(MXPagerView *)pagerView didMoveToPage:(UIView *)page atIndex:(NSInteger)index {
     [self.segmentedControl setSelectedSegmentIndex:index animated:NO];
     [self changedToIndex:index];
+}
+
+- (void)pagerView:(MXPagerView *)pagerView willDisplayPage:(UIView *)page atIndex:(NSInteger)index {
+    if ([self.delegate respondsToSelector:@selector(segmentedPager:willDisplayPage:atIndex:)]) {
+        [self.delegate segmentedPager:self willDisplayPage:page atIndex:index];
+    }
+}
+
+- (void)pagerView:(MXPagerView *)pagerView didEndDisplayingPage:(UIView *)page atIndex:(NSInteger)index {
+    if ([self.delegate respondsToSelector:@selector(segmentedPager:didEndDisplayingPage:atIndex:)]) {
+        [self.delegate segmentedPager:self didEndDisplayingPage:page atIndex:index];
+    }
 }
 
 #pragma mark <MXPagerViewDataSource>

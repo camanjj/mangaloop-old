@@ -73,14 +73,16 @@
     
     tagSubviews_ = [NSMutableArray array];
     
+    _font = [UIFont fontWithName:@"HelveticaNeue" size:14];
+    
     tagInputField_ = [[UITextField alloc] initWithFrame:self.frame];
     tagInputField_.layer.cornerRadius = 5;
     tagInputField_.layer.borderColor = [UIColor lightGrayColor].CGColor;
     tagInputField_.backgroundColor = [UIColor whiteColor];
     tagInputField_.delegate = self;
-    tagInputField_.font = [UIFont fontWithName:@"HelveticaNeue" size:14];
     tagInputField_.placeholder = @"tag";
     tagInputField_.autocorrectionType = UITextAutocorrectionTypeNo;
+    tagInputField_.font = _font;
     
     if (_mode == TLTagsControlModeEdit) {
         [self addSubview:tagInputField_];
@@ -198,11 +200,12 @@
     UIColor *tagDeleteButtonColor = _tagsDeleteButtonColor != nil ? _tagsDeleteButtonColor : [UIColor blackColor];
     
     
+    tagInputField_.font = self.font;
     
     for (NSString *tag in _tags) {
         float width = [tag boundingRectWithSize:CGSizeMake(3000,tagInputField_.frame.size.height)
                                         options:NSStringDrawingUsesLineFragmentOrigin
-                                     attributes:@{NSFontAttributeName:tagInputField_.font}
+                                     attributes:@{NSFontAttributeName:self.font}
                                         context:nil].size.width;
         
         UIView *tagView = [[UIView alloc] initWithFrame:tagInputField_.frame];
@@ -213,7 +216,7 @@
         
         UILabel *tagLabel = [[UILabel alloc] init];
         CGRect labelFrame = tagLabel.frame;
-        tagLabel.font = tagInputField_.font;
+        tagLabel.font = self.font;
         labelFrame.size.width = width + 16;
         labelFrame.size.height = tagInputField_.frame.size.height;
         tagLabel.text = tag;
@@ -225,7 +228,7 @@
         if (_mode == TLTagsControlModeEdit) {
             UIButton *deleteTagButton = [[UIButton alloc] initWithFrame:tagInputField_.frame];
             CGRect buttonFrame = deleteTagButton.frame;
-            [deleteTagButton.titleLabel setFont:tagInputField_.font];
+            [deleteTagButton.titleLabel setFont:self.font];
             [deleteTagButton addTarget:self action:@selector(deleteTagButton:) forControlEvents:UIControlEventTouchUpInside];
             buttonFrame.size.width = deleteTagButton.frame.size.height;
             buttonFrame.size.height = tagInputField_.frame.size.height;
@@ -290,6 +293,10 @@
     NSInteger index = [tagSubviews_ indexOfObject:view];
     [_tags removeObjectAtIndex:index];
     [self reloadTagSubviews];
+    
+    if ([self.tapDelegate respondsToSelector:@selector(tagsControl:removedAtIndex:)]) {
+        [self.tapDelegate tagsControl:self removedAtIndex:index];
+    }
 }
 
 - (void)tagButtonPressed:(id)sender {
@@ -363,7 +370,11 @@
 
 - (void)gestureAction:(id)sender {
     UITapGestureRecognizer *tapRecognizer = (UITapGestureRecognizer *)sender;
-    [tapDelegate tagsControl:self tappedAtIndex:tapRecognizer.view.tag];
+    if ([self.tapDelegate respondsToSelector:@selector(tagsControl:tappedAtIndex:)]) {
+        [tapDelegate tagsControl:self tappedAtIndex:tapRecognizer.view.tag];
+    }
 }
-
+- (void)setKeyboardFocus {
+    [tagInputField_ becomeFirstResponder];
+}
 @end

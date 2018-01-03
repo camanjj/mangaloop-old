@@ -14,7 +14,7 @@
 #import "MZFormSheetContentSizingNavigationController.h"
 #import "MZFormSheetContentSizingNavigationControllerAnimator.h"
 #import "MZFormSheetPresentationContentSizing.h"
-#import "MZFormSheetPresentationController Swift Example-Bridging-Header.h"
+#import "MZFormSheetPresentationController-Bridging-Header.h"
 #import "MZFormSheetPresentationController.h"
 #import "MZFormSheetPresentationViewController.h"
 #import "MZFormSheetPresentationViewControllerAnimatedTransitioning.h"
